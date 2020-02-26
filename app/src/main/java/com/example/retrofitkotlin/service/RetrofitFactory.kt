@@ -40,11 +40,10 @@ object RetrofitFactory {
                 .build()
         }
 
-    fun retrofit(baseUrl : String) : Retrofit = Retrofit.Builder()
+    fun retrofit(baseURL : String) : Retrofit = Retrofit.Builder()
         .client(client)
-        .baseUrl(baseUrl)
+        .baseUrl(baseURL)
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
-
 }
