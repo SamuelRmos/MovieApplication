@@ -1,6 +1,5 @@
 package com.example.retrofitkotlin.viewmodel
 
-import android.provider.SyncStateContract
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitkotlin.Constants
@@ -22,13 +21,13 @@ class MovieViewModel : ViewModel() {
     get() = parentJob + Dispatchers.Default
 
     private val scope = CoroutineScope(coroutineContext)
-    private val respository : MovieRepository = MovieRepository(tmdbApi)
+    private val repository : MovieRepository = MovieRepository(tmdbApi)
 
     val popularMoviesLiveData = MutableLiveData<MutableList<TmdMovie>>()
 
     fun fetchMovies(){
         scope.launch {
-            val popularMovies = respository.getPopularMovies()
+            val popularMovies = repository.getPopularMovies()
             popularMoviesLiveData.postValue(popularMovies)
         }
     }
