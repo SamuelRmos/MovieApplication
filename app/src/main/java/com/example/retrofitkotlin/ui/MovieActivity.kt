@@ -9,20 +9,9 @@ import com.example.retrofitkotlin.viewmodel.MovieViewModel
 
 class MovieActivity : AppCompatActivity() {
 
-    private lateinit var tmdbViewModel: MovieViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie)
-
-        tmdbViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
-
-        tmdbViewModel.fetchMovies()
-
-        tmdbViewModel.popularMoviesLiveData.observe(this, Observer {
-
-        })
-
 
     }
 }

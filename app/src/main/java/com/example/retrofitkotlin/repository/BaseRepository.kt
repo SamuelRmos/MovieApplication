@@ -7,15 +7,16 @@ import java.io.IOException
 
 open class BaseRepository {
 
-    suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>, errorMessage: String): T?{
+    suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>, errorMessage: String): T? {
 
-        val result : Result<T> = safeApiResult(call,errorMessage)
-        var data : T? = null
+        val result: Result<T> = safeApiResult(call, errorMessage)
+        var data: T? = null
 
-        when(result){
+        when (result) {
+
             is Result.Success ->
                 data = result.data
-            is Result.Error ->{
+            is Result.Error -> {
                 Log.d("1.DataRespository", "$errorMessage & Exception - ${result.exception}")
 
             }
@@ -23,8 +24,11 @@ open class BaseRepository {
         return data
     }
 
-    private suspend fun <T : Any> safeApiResult(call: suspend () ->  Response<T>,
-                                                errorMessage: String) : Result<T> {
+    private suspend fun <T : Any> safeApiResult(
+        call: suspend () -> Response<T>,
+        errorMessage: String
+    ): Result<T> {
+
         val response = call.invoke()
         if (response.isSuccessful) return Result.Success(
             response.body()!!

@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin.service
 
 import com.example.retrofitkotlin.BuildConfig
-import com.example.retrofitkotlin.Constants
+import com.example.retrofitkotlin.util.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
