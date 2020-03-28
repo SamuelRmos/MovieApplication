@@ -7,7 +7,8 @@ data class TmdMovie(
     val overview: String,
     val adult: Boolean,
     val poster_path: String,
-    val release_date: String
+    val release_date: String,
+    val backdrop_path: String
 )
 
 data class TmdbMovieResponse(

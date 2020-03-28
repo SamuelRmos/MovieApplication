@@ -5,9 +5,24 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 
 object ImageBinding {
+
     @JvmStatic
     @BindingAdapter("android:src")
-    fun setImageUrl(view: ImageView, url: String){
-        Glide.with(view.context).load(Constants.baseUrlImage+url).into(view)
+    fun ImageView.setImageUrl(url: String?) {
+        url?.let {
+            Glide.with(context)
+                .load(Constants.baseUrlImage + it)
+                .into(this)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadPhoto")
+    fun ImageView.setBackImage(url: String?) {
+        url?.let {
+            Glide.with(context)
+                .load(Constants.baseImageBack + it)
+                .into(this)
+        }
     }
 }

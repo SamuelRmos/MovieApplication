@@ -5,9 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
+
         <variable
             name="tmdbMovie"
             type="com.example.retrofitkotlin.data.TmdMovie" />
@@ -16,8 +18,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:ignore="ContentDescription"
-        android:onClick="@{clickListener}">
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{clickListener}"
+        tools:ignore="ContentDescription">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,11 +48,10 @@
                 android:layout_marginRight="4dp"
                 android:text="@{tmdbMovie.title}"
                 android:textSize="12sp"
-                app:fontFamily="@font/roboto"
                 app:layout_constraintBottom_toTopOf="@+id/txtRelease"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.153" />
 
             <TextView
                 android:id="@+id/txtTitleMovie"
@@ -58,7 +62,7 @@
                 android:layout_marginRight="2dp"
                 android:gravity="center"
                 android:text="@string/title"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 app:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toStartOf="@+id/txtMovie"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -72,7 +76,7 @@
                 android:layout_marginBottom="28dp"
                 android:gravity="center"
                 android:text="@string/release"
-                android:textSize="12sp"
+                android:textSize="15sp"
                 app:fontFamily="@font/roboto"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/txtRelease"
@@ -88,7 +92,6 @@
                 android:layout_marginBottom="28dp"
                 android:text="@{tmdbMovie.release_date}"
                 android:textSize="12sp"
-                app:fontFamily="@font/roboto"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 

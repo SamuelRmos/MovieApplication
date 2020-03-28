@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
+        android:id="@+id/movieFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -15,7 +16,9 @@
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:context=".ui.MovieActivity"
-            tools:listitem="@layout/item_layout"/>
+            tools:listitem="@layout/item_layout"
+            android:clickable="true"
+            android:focusable="true"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

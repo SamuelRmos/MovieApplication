@@ -1,21 +1,24 @@
 package com.example.retrofitkotlin
 
-import android.system.Os.bind
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitkotlin.data.TmdMovie
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
+import com.example.retrofitkotlin.ui.MovieDetailsFragment
+import com.example.retrofitkotlin.ui.MovieFragmentDirections
 
 class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
         val movie = getItem(position)
+
         holder.apply {
-            bind(createOnClickListener(), movie)
+            bind(createOnClickListener(position), movie)
             itemView.tag = movie
         }
     }
@@ -28,8 +31,11 @@ class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(DiffCallback
         )
     }
 
-    private fun createOnClickListener(): View.OnClickListener {
-        return View.OnClickListener { }
+    private fun createOnClickListener(position: Int): View.OnClickListener {
+        return View.OnClickListener {
+           val direction = MovieFragmentDirections.actionDetailsFragment(position)
+            it.findNavController().navigate(direction)
+        }
     }
 
 
