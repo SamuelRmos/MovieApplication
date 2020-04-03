@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="tmdbDetail"
             type="com.example.retrofitkotlin.data.TmdMovie" />

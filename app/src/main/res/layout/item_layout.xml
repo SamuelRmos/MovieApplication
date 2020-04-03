@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
-        android:focusable="true"
         android:onClick="@{clickListener}"
         tools:ignore="ContentDescription">
 
