@@ -16,83 +16,28 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="150dp"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:onClick="@{clickListener}"
-        tools:ignore="ContentDescription">
+        tools:ignore="ContentDescription"
+        app:cardBackgroundColor="@color/colorPrimaryDark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="110dp">
+            android:layout_width="180dp"
+            android:layout_height="150dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark">
 
             <ImageView
                 android:id="@+id/imgPoster"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
+                android:layout_width="150dp"
+                android:layout_height="130dp"
                 android:src="@{tmdbMovie.poster_path}"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtMovie"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:text="@{tmdbMovie.title}"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/txtRelease"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.153" />
-
-            <TextView
-                android:id="@+id/txtTitleMovie"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="2dp"
-                android:layout_marginRight="2dp"
-                android:gravity="center"
-                android:text="@string/title"
-                android:textSize="15sp"
-                app:fontFamily="@font/roboto"
-                app:layout_constraintEnd_toStartOf="@+id/txtMovie"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txtTitleRelease"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
-                android:layout_marginRight="2dp"
-                android:layout_marginBottom="28dp"
-                android:gravity="center"
-                android:text="@string/release"
-                android:textSize="15sp"
-                app:fontFamily="@font/roboto"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txtRelease"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitleMovie"
-                app:layout_constraintVertical_bias="1.0" />
-
-            <TextView
-                android:id="@+id/txtRelease"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:layout_marginRight="4dp"
-                android:layout_marginBottom="28dp"
-                android:text="@{tmdbMovie.release_date}"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

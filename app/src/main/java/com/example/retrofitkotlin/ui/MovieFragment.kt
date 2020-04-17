@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.retrofitkotlin.MovieAdapter
-import com.example.retrofitkotlin.data.TmdMovie
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
 import com.example.retrofitkotlin.util.hide
 import com.example.retrofitkotlin.viewmodel.MovieViewModel
@@ -19,29 +17,27 @@ import com.example.retrofitkotlin.viewmodel.MovieViewModel
 class MovieFragment : Fragment() {
 
     private lateinit var viewModel: MovieViewModel
+    private lateinit var binding: FragmentMoviesBinding
+    private var gridLayoutManager: GridLayoutManager? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
-
-        val binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        binding = FragmentMoviesBinding.inflate(
+            inflater,
+            container,
+            false
+        )
         context ?: return binding.root
 
-        val adapter = MovieAdapter()
-        binding.recyclerView.addItemDecoration(
-            DividerItemDecoration(
-                context,
-                LinearLayoutManager.VERTICAL
-            )
-        )
-        binding.recyclerView.adapter = adapter
-
-        subscribeUi(binding, adapter)
-
+        setAdapter()
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -54,5 +50,19 @@ class MovieFragment : Fragment() {
                 binding.progressBar.hide()
             }
         })
+    }
+
+    private fun setAdapter() {
+        val adapter = MovieAdapter()
+        gridLayoutManager = GridLayoutManager(
+            context,
+            2,
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        binding.recyclerView.layoutManager = gridLayoutManager
+        binding.recyclerView.setHasFixedSize(true)
+        binding.recyclerView.adapter = adapter
+        subscribeUi(binding, adapter)
     }
 }

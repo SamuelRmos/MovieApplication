@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin
+package com.example.retrofitkotlin.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitkotlin.data.TmdMovie
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
-import com.example.retrofitkotlin.ui.MovieDetailsFragment
-import com.example.retrofitkotlin.ui.MovieFragmentDirections
 
-class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(DiffCallback()) {
+class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(
+    DiffCallback()
+) {
 
-    override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = getItem(position)
 
         holder.apply {
