@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
 import com.example.retrofitkotlin.util.hide
 import com.example.retrofitkotlin.viewmodel.MovieViewModel
+import com.example.retrofitkotlin.viewmodel.MovieViewModelFactory
 
 class MovieFragment : Fragment() {
 
@@ -22,7 +22,9 @@ class MovieFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MovieViewModel::class.java)
+        val movieViewModelFactory = MovieViewModelFactory()
+        viewModel = ViewModelProvider(this, movieViewModelFactory)
+            .get(MovieViewModel::class.java)
     }
 
     override fun onCreateView(

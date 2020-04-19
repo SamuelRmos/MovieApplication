@@ -22,7 +22,8 @@
         android:clickable="true"
         android:onClick="@{clickListener}"
         tools:ignore="ContentDescription"
-        app:cardBackgroundColor="@color/colorPrimaryDark">
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        android:focusable="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="180dp"

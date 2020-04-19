@@ -11,11 +11,13 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark">
 
             <ImageView
                 android:id="@+id/ivposter"
@@ -35,6 +37,7 @@
                 android:gravity="center"
                 android:text="@{tmdbDetail.title}"
                 android:textSize="17sp"
+                android:textColor="@color/colorText"
                 app:fontFamily="@font/roboto"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
@@ -48,6 +51,7 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@{tmdbDetail.overview}"
+                android:textColor="@color/colorText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
