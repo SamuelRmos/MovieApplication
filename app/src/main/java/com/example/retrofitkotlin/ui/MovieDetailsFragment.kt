@@ -4,18 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
-import com.example.retrofitkotlin.data.TmdMovie
+import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.databinding.DetailFragmentBinding
-import com.example.retrofitkotlin.util.Constants
-import com.example.retrofitkotlin.util.ImageBinding
-import com.example.retrofitkotlin.util.hide
+import com.example.retrofitkotlin.extensions.hide
 import com.example.retrofitkotlin.viewmodel.MovieViewModel
 import com.example.retrofitkotlin.viewmodel.MovieViewModelFactory
 

@@ -1,8 +1,9 @@
 package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.MovieApplication
-import com.example.retrofitkotlin.data.TmdMovie
+import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.di.ApiComponent
+import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.service.TmdbApi
 import retrofit2.Retrofit
 import javax.inject.Inject

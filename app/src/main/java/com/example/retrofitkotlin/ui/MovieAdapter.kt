@@ -7,7 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.retrofitkotlin.data.TmdMovie
+import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
 
 class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(

@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
-import com.example.retrofitkotlin.util.hide
+import com.example.retrofitkotlin.extensions.hide
 import com.example.retrofitkotlin.viewmodel.MovieViewModel
 import com.example.retrofitkotlin.viewmodel.MovieViewModelFactory
 
@@ -44,16 +44,6 @@ class MovieFragment : Fragment() {
         return binding.root
     }
 
-    private fun subscribeUi(binding: FragmentMoviesBinding, adapter: MovieAdapter) {
-        viewModel.fetchMovies()
-        viewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
-                binding.progressBar.hide()
-            }
-        })
-    }
-
     private fun setAdapter() {
         val adapter = MovieAdapter()
         gridLayoutManager = GridLayoutManager(
@@ -67,4 +57,15 @@ class MovieFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         subscribeUi(binding, adapter)
     }
+    
+    private fun subscribeUi(binding: FragmentMoviesBinding, adapter: MovieAdapter) {
+        viewModel.fetchMovies()
+        viewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                adapter.submitList(it)
+                binding.progressBar.hide()
+            }
+        })
+    }
+
 }

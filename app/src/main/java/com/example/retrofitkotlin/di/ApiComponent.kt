@@ -9,10 +9,8 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class, ApiModule::class])
+@Component(modules = [AppModule::class, ApiModule::class, PersistenceModule::class])
 interface ApiComponent {
     fun inject(retrofitRepository: MovieRepository)
-    fun inject(movieViewModel: MovieViewModel)
-    fun inject(movieFragment: MovieFragment)
     fun inject(movieViewModelFactory: MovieViewModelFactory)
 }

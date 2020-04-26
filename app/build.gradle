@@ -8,6 +8,10 @@ android {
     compileSdkVersion 28
     buildToolsVersion "29.0.2"
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     defaultConfig {
         applicationId "com.example.retrofitkotlin"
         minSdkVersion 14
@@ -15,6 +19,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -32,7 +37,8 @@ android {
             resValue 'string', "api_key", tmdbApiKey
 
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
         }
     }
 
@@ -53,6 +59,7 @@ dependencies {
     def kotlinCoroutineVersion = "1.0.1"
     def materialDesign = "1.1.0"
     def liveData="2.2.0"
+    def roomVersion ="2.2.5"
 
     //Moshi
     implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
@@ -65,7 +72,7 @@ dependencies {
 
     //Okhttp3
     implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.1.0'
 
     //Kotlin Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
@@ -76,6 +83,8 @@ dependencies {
 
     //LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$liveData"
+    implementation "androidx.room:room-runtime:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 
     // Dagger
     def daggerVersion = '2.23.2'
@@ -95,6 +104,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.android.support:multidex:1.0.3'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

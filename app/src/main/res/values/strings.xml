@@ -3,4 +3,5 @@
     <string name="title">Title:</string>
     <string name="release">Release:</string>
     <string name="bein">BeinVienido</string>
+    <string name="movie_db">movie.db</string>
 </resources>

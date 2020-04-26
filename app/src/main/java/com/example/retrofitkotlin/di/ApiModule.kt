@@ -14,10 +14,10 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApiModule constructor(private var baseURL: String) {
+class ApiModule constructor(private val baseURL: String) {
 
     private val authInterceptor = Interceptor { chain ->
-        val newUrl = chain.request().url()
+        val newUrl = chain.request().url
             .newBuilder()
             .addQueryParameter("api_key", Constants.tmdbApiKey)
             .build()
@@ -28,9 +28,10 @@ class ApiModule constructor(private var baseURL: String) {
         chain.proceed(newRequest)
     }
 
-    private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
+    private val loggingInterceptor =
+        HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
 
     private val client =
         if (BuildConfig.DEBUG) {
@@ -47,7 +48,7 @@ class ApiModule constructor(private var baseURL: String) {
 
     @Singleton
     @Provides
-    fun provideRetrofit() : Retrofit = Retrofit.Builder()
+    fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .client(client)
         .baseUrl(baseURL)
         .addConverterFactory(MoshiConverterFactory.create())

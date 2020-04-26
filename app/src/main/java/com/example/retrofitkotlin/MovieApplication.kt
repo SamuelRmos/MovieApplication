@@ -5,12 +5,13 @@ import android.content.Context
 import com.example.retrofitkotlin.di.ApiComponent
 import com.example.retrofitkotlin.di.ApiModule
 import com.example.retrofitkotlin.di.DaggerApiComponent
+import com.example.retrofitkotlin.di.PersistenceModule
 import com.example.retrofitkotlin.util.Constants
 
 class MovieApplication : Application() {
 
     companion object {
-        var ctx: Context? = null
+        lateinit var ctx: Context
         lateinit var apiComponent: ApiComponent
     }
 
@@ -24,6 +25,7 @@ class MovieApplication : Application() {
         apiComponent = DaggerApiComponent
             .builder()
             .apiModule(ApiModule(Constants.baseURL))
+            .persistenceModule(PersistenceModule(ctx))
             .build()
         return apiComponent
     }

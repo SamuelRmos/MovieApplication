@@ -12,7 +12,7 @@
 
         <variable
             name="tmdbMovie"
-            type="com.example.retrofitkotlin.data.TmdMovie" />
+            type="com.example.retrofitkotlin.model.TmdMovie" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -34,7 +34,7 @@
                 android:id="@+id/imgPoster"
                 android:layout_width="150dp"
                 android:layout_height="130dp"
-                android:src="@{tmdbMovie.poster_path}"
+                app:loadPhoto="@{tmdbMovie.poster_path}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

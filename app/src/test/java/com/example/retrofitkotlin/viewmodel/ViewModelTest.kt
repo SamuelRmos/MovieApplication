@@ -2,7 +2,7 @@ package com.example.retrofitkotlin.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.example.retrofitkotlin.data.TmdMovie
+import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.repository.MovieRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert

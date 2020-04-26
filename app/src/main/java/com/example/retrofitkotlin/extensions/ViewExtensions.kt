@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.util
+package com.example.retrofitkotlin.extensions
 
 import android.view.View
 import android.widget.ProgressBar
