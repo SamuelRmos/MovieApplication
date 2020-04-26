@@ -2,10 +2,7 @@ package com.example.retrofitkotlin
 
 import android.app.Application
 import android.content.Context
-import com.example.retrofitkotlin.di.ApiComponent
-import com.example.retrofitkotlin.di.ApiModule
-import com.example.retrofitkotlin.di.DaggerApiComponent
-import com.example.retrofitkotlin.di.PersistenceModule
+import com.example.retrofitkotlin.di.*
 import com.example.retrofitkotlin.util.Constants
 
 class MovieApplication : Application() {
@@ -26,6 +23,7 @@ class MovieApplication : Application() {
             .builder()
             .apiModule(ApiModule(Constants.baseURL))
             .persistenceModule(PersistenceModule(ctx))
+            .appModule(AppModule(this))
             .build()
         return apiComponent
     }

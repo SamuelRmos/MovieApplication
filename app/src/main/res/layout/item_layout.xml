@@ -15,25 +15,29 @@
             type="com.example.retrofitkotlin.model.TmdMovie" />
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="180dp"
-        android:layout_height="150dp"
-        android:background="?attr/selectableItemBackground"
-        android:clickable="true"
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:background="@color/background1"
+        android:foreground="?attr/selectableItemBackground"
         android:onClick="@{clickListener}"
         tools:ignore="ContentDescription"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
-        android:focusable="true">
+        app:cardBackgroundColor="@color/background1"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="180dp"
-            android:layout_height="150dp"
-            app:cardBackgroundColor="@color/colorPrimaryDark">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            tools:ignore="UnusedAttribute">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imgPoster"
-                android:layout_width="150dp"
-                android:layout_height="130dp"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
                 app:loadPhoto="@{tmdbMovie.poster_path}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -41,5 +45,5 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

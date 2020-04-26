@@ -7,7 +7,7 @@
         android:id="@+id/movieFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/background2">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -15,18 +15,12 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:scrollbars="vertical"
+            android:padding="4dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
             tools:context=".ui.MovieActivity"
-            tools:listitem="@layout/item_layout"
-            android:clickable="true"
-            android:focusable="true"/>
+            tools:listitem="@layout/item_layout"/>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            tools:visibility="visible"/>
 
     </FrameLayout>
 </layout>

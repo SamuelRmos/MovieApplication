@@ -45,16 +45,22 @@ class MovieDetailsFragment : Fragment() {
             it?.let {
                 bind(binding, it.get(arguments?.let { it1 ->
                     MovieDetailsFragmentArgs.fromBundle(it1).position
-                }!!))
+                }!!), viewModel.createOnClickListener())
                 binding.progressBar.hide()
             }
         })
     }
 
-    fun bind(binding: DetailFragmentBinding, item: TmdMovie) {
+    fun bind(
+        binding: DetailFragmentBinding,
+        item: TmdMovie,
+        listener: View.OnClickListener
+    ) {
         binding.apply {
             tmdbDetail = item
+            clickListener = listener
             executePendingBindings()
         }
     }
+
 }

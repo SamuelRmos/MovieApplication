@@ -81,6 +81,9 @@ dependencies {
     //Material Design
     implementation "com.google.android.material:material:$materialDesign"
 
+    def veilVersion="1.0.8"
+    implementation "com.github.skydoves:androidveil:$veilVersion"
+
     //LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$liveData"
     implementation "androidx.room:room-runtime:$roomVersion"
@@ -118,5 +121,6 @@ dependencies {
     implementation "org.mockito:mockito-core:$mockitoVersion"
     implementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation 'android.arch.core:core-testing:1.1.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
 }

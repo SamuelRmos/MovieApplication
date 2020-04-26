@@ -15,11 +15,8 @@ import com.example.retrofitkotlin.viewmodel.MovieViewModel
 import com.example.retrofitkotlin.viewmodel.MovieViewModelFactory
 
 class MovieFragment : Fragment() {
-
     private lateinit var viewModel: MovieViewModel
     private lateinit var binding: FragmentMoviesBinding
-    private var gridLayoutManager: GridLayoutManager? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val movieViewModelFactory = MovieViewModelFactory()
@@ -46,13 +43,6 @@ class MovieFragment : Fragment() {
 
     private fun setAdapter() {
         val adapter = MovieAdapter()
-        gridLayoutManager = GridLayoutManager(
-            context,
-            2,
-            LinearLayoutManager.VERTICAL,
-            false
-        )
-        binding.recyclerView.layoutManager = gridLayoutManager
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = adapter
         subscribeUi(binding, adapter)
