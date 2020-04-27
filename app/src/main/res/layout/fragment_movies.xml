@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <FrameLayout
@@ -9,18 +8,17 @@
         android:layout_height="match_parent"
         android:background="@color/background2">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.skydoves.androidveil.VeilRecyclerFrameView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbars="vertical"
-            android:padding="4dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:context=".ui.MovieActivity"
-            tools:listitem="@layout/item_layout"/>
-
-
+            app:veilFrame_baseAlpha="0.6"
+            app:veilFrame_baseColor="@android:color/holo_red_dark"
+            app:veilFrame_highlightAlpha="1.0"
+            app:veilFrame_highlightColor="@android:color/holo_red_light"
+            app:veilFrame_layout="@layout/item_layout"
+            app:veilFrame_radius="4dp"
+            app:veilFrame_shimmerEnable="true"
+            app:veilFrame_veiled="true" />
     </FrameLayout>
 </layout>
