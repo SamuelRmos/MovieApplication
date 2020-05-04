@@ -22,8 +22,9 @@ class MovieApplication : Application() {
         apiComponent = DaggerApiComponent
             .builder()
             .apiModule(ApiModule(Constants.baseURL))
-            .persistenceModule(PersistenceModule(ctx))
+            .persistenceModule(PersistenceModule())
             .appModule(AppModule(this))
+            .detailRepositoryModule(DetailRepositoryModule())
             .build()
         return apiComponent
     }

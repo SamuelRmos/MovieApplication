@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.retrofitkotlin"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -81,11 +81,12 @@ dependencies {
     //Material Design
     implementation "com.google.android.material:material:$materialDesign"
 
-    def veilVersion="1.0.8"
-    implementation "com.github.skydoves:androidveil:$veilVersion"
+    def whatIfVersion = '1.0.4'
+    implementation "com.github.skydoves:whatif:$whatIfVersion"
 
     //LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:$liveData"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$liveData"
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
 

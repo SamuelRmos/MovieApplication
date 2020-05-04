@@ -13,12 +13,10 @@ open class BaseRepository {
         var data: T? = null
 
         when (result) {
-
             is Result.Success ->
                 data = result.data
             is Result.Error -> {
                 Log.d("1.DataRespository", "$errorMessage & Exception - ${result.exception}")
-
             }
         }
         return data

@@ -1,9 +1,9 @@
-package com.example.retrofitkotlin.util
+package com.example.retrofitkotlin.binding
 
-import android.widget.ImageView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.example.retrofitkotlin.util.Constants
 
 object ImageBinding {
     @JvmStatic
@@ -12,6 +12,7 @@ object ImageBinding {
         url?.let {
             Glide.with(context)
                 .load(Constants.baseImageBack + it)
+                .centerCrop()
                 .into(this)
         }
     }

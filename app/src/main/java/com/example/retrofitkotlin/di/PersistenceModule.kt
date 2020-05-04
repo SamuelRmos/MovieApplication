@@ -11,14 +11,14 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class PersistenceModule(private val context: Context) {
+class PersistenceModule {
 
     @Singleton
     @Provides
-    fun provideRoomDatabase(): AppDataBase = Room.databaseBuilder(
-        context,
+    fun provideRoomDatabase(application: MovieApplication): AppDataBase = Room.databaseBuilder(
+        application,
         AppDataBase::class.java,
-        context.getString(R.string.movie_db))
+        application.getString(R.string.movie_db))
         .allowMainThreadQueries()
         .fallbackToDestructiveMigration()
         .build()

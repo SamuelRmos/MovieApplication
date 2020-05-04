@@ -13,15 +13,7 @@ import com.example.retrofitkotlin.databinding.ItemLayoutBinding
 class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(
     DiffCallback()
 ) {
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val movie = getItem(position)
-
-        holder.apply {
-            bind(createOnClickListener(position), movie)
-            itemView.tag = movie
-        }
-    }
+    private val items = mutableListOf<TmdMovie>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -31,13 +23,26 @@ class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(
         )
     }
 
-    private fun createOnClickListener(position: Int): View.OnClickListener {
-        return View.OnClickListener {
-           val direction = MovieFragmentDirections.actionDetailsFragment(position)
-            it.findNavController().navigate(direction)
+    fun updateMovieList(movies: List<TmdMovie>) {
+        items.clear()
+        items.addAll(movies)
+        notifyDataSetChanged()
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val movie = items[position]
+        holder.apply {
+            bind(createOnClickListener(movie.id), movie)
+            itemView.tag = position
         }
     }
 
+    private fun createOnClickListener(idMovie: Int): View.OnClickListener {
+        return View.OnClickListener {
+            val direction = MovieFragmentDirections.actionDetailsFragment(idMovie)
+            it.findNavController().navigate(direction)
+        }
+    }
 
     class ViewHolder(
         private val binding: ItemLayoutBinding
