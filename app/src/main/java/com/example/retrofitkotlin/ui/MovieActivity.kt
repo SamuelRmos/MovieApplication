@@ -1,6 +1,7 @@
 package com.example.retrofitkotlin.ui
 
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.retrofitkotlin.databinding.ActivityMovieBinding
 
@@ -13,5 +14,12 @@ class MovieActivity : AppCompatActivity() {
         binding = ActivityMovieBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

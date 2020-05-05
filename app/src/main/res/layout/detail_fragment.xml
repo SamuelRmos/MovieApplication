@@ -11,6 +11,10 @@
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="activity"
+            type="androidx.appcompat.app.AppCompatActivity" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -26,9 +30,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background2"
-                app:contentScrim="@android:color/transparent"
+                app:contentScrim="@color/background2"
                 app:expandedTitleGravity="top|left"
                 app:expandedTitleTextAppearance="@style/CollapsedExpandedTitleText"
+                app:collapsedTitleTextAppearance="@style/TextStyle"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,18 +52,19 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:loadPhoto="@{tmdbDetail.backdrop_path}" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/detail_close"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_margin="5dp"
-                        android:padding="10dp"
-                        android:onClick="@{clickListener}"
-                        android:src="@drawable/ic_arrow_back"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/detail_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:simpleToolbarTitle="@{tmdbDetail.title}"
+                    app:simpleToolbarWithHome="@{activity}"
+                    app:titleTextColor="@color/colorText"
+                    />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

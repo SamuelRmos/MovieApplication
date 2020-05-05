@@ -26,13 +26,14 @@ class MovieFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentMoviesBinding.inflate(
             inflater,
             container,
             false
-        ).apply {
-            viewModel = movieViewModel
-        }
+        )
+
+        binding.apply { viewModel = movieViewModel }
         context ?: return binding.root
 
         setAdapter()
