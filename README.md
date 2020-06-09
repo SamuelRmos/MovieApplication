@@ -11,7 +11,7 @@ Application builded using: </br>
 - Navigation Component.</br> 
 
 # Screenshot
-<p align="center">
-<img src=https://media.giphy.com/media/dUIPdWlswI3xRTlTfh/giphy.gif width="270" height="480" />
-<//p>
 
+<p align="center">
+<img src="https://media.giphy.com/media/MCcxLPPn8sm7Axeg0s/giphy.gif" />
+<//p>
