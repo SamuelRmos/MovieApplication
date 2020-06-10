@@ -13,5 +13,5 @@ Application builded using: </br>
 # Screenshot
 
 <p align="center">
-<img src="https://media.giphy.com/media/MCcxLPPn8sm7Axeg0s/giphy.gif" />
+<img src="https://media.giphy.com/media/XdJWJnHjOoHUJJhyq6/giphy.gif" />
 <//p>
