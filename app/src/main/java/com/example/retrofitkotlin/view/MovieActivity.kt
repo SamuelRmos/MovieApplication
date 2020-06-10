@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.ui
+package com.example.retrofitkotlin.view
 
 import android.os.Bundle
 import android.view.MenuItem

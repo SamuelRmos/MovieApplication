@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin.di
 
 import com.example.retrofitkotlin.BuildConfig
-import com.example.retrofitkotlin.repository.MovieRepository
+import com.example.retrofitkotlin.service.TmdbApi
 import com.example.retrofitkotlin.util.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
@@ -48,14 +48,12 @@ class ApiModule constructor(private val baseURL: String) {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
+    fun provideRetrofit(): TmdbApi = Retrofit.Builder()
         .client(client)
         .baseUrl(baseURL)
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
-
-    @Provides
-    fun provideRetroRepository(): MovieRepository = MovieRepository()
+        .create(TmdbApi::class.java)
 
 }

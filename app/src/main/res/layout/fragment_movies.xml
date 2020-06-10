@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.example.retrofitkotlin.viewmodel.MovieViewModel" />
-
-    </data>
-
     <FrameLayout
         android:id="@+id/movieFragment"
         android:layout_width="match_parent"
@@ -22,7 +15,6 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:padding="4dp"
-            app:adapterMovieList="@{viewModel.popularMoviesLiveData}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:listitem="@layout/item_layout" />

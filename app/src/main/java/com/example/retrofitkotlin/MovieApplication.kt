@@ -24,7 +24,7 @@ class MovieApplication : Application() {
             .apiModule(ApiModule(Constants.baseURL))
             .persistenceModule(PersistenceModule())
             .appModule(AppModule(this))
-            .detailRepositoryModule(DetailRepositoryModule())
+            .repositoryModule(RepositoryModule())
             .build()
         return apiComponent
     }

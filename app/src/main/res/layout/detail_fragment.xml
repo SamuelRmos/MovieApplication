@@ -8,6 +8,7 @@
         <variable
             name="tmdbDetail"
             type="com.example.retrofitkotlin.model.TmdMovie" />
+
         <variable
             name="clickListener"
             type="android.view.View.OnClickListener" />
@@ -30,10 +31,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/background2"
+                app:collapsedTitleTextAppearance="@style/TextStyle"
                 app:contentScrim="@color/background2"
                 app:expandedTitleGravity="top|left"
                 app:expandedTitleTextAppearance="@style/CollapsedExpandedTitleText"
-                app:collapsedTitleTextAppearance="@style/TextStyle"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,12 +46,12 @@
                         android:id="@+id/ivposter"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:scaleType="centerCrop"
+                        android:adjustViewBounds="true"
                         app:layout_constraintDimensionRatio="1:1.2"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:loadPhoto="@{tmdbDetail.backdrop_path}" />
+                        app:loadPhoto="@{tmdbDetail.poster_path}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,8 +64,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:simpleToolbarTitle="@{tmdbDetail.title}"
                     app:simpleToolbarWithHome="@{activity}"
-                    app:titleTextColor="@color/colorText"
-                    />
+                    app:titleTextColor="@color/colorText" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 

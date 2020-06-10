@@ -6,6 +6,7 @@ import com.bumptech.glide.Glide
 import com.example.retrofitkotlin.util.Constants
 
 object ImageBinding {
+
     @JvmStatic
     @BindingAdapter("loadPhoto")
     fun AppCompatImageView.setBackImage(url: String?) {

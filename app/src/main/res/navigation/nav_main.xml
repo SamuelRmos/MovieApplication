@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.example.retrofitkotlin.ui.MovieFragment"
+        android:name="com.example.retrofitkotlin.view.MovieFragment"
         android:label="MovieFragment" >
         <action
             android:id="@+id/actionDetailsFragment"
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.example.retrofitkotlin.ui.MovieDetailsFragment"
+        android:name="com.example.retrofitkotlin.view.MovieDetailsFragment"
         android:label="MovieDetailsFragment" >
         <action
             android:id="@+id/actionMovieFragment"

@@ -1,26 +1,24 @@
-package com.example.retrofitkotlin.ui
+package com.example.retrofitkotlin.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
+import com.example.retrofitkotlin.model.TmdMovie
 
-class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(
-    DiffCallback()
-) {
-    private val items = mutableListOf<TmdMovie>()
+class MovieAdapter(list: MutableList<TmdMovie>) :
+    RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+
+    private var items = list
+    private lateinit var binding: ItemLayoutBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            ItemLayoutBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            )
+        binding = ItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
+        return ViewHolder(binding)
     }
 
     fun updateMovieList(movies: List<TmdMovie>) {
@@ -37,6 +35,8 @@ class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(
         }
     }
 
+    override fun getItemCount(): Int = items.size
+
     private fun createOnClickListener(idMovie: Int): View.OnClickListener {
         return View.OnClickListener {
             val direction = MovieFragmentDirections.actionDetailsFragment(idMovie)
@@ -44,9 +44,8 @@ class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(
         }
     }
 
-    class ViewHolder(
-        private val binding: ItemLayoutBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: ItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(listener: View.OnClickListener, item: TmdMovie) {
             binding.apply {
@@ -55,15 +54,5 @@ class MovieAdapter : ListAdapter<TmdMovie, MovieAdapter.ViewHolder>(
                 executePendingBindings()
             }
         }
-    }
-}
-
-private class DiffCallback : DiffUtil.ItemCallback<TmdMovie>() {
-    override fun areItemsTheSame(oldItem: TmdMovie, newItem: TmdMovie): Boolean {
-        return oldItem.id == newItem.id
-    }
-
-    override fun areContentsTheSame(oldItem: TmdMovie, newItem: TmdMovie): Boolean {
-        return oldItem == newItem
     }
 }

@@ -8,7 +8,7 @@ import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.repository.MovieRepository
 import javax.inject.Inject
 
-class MovieViewModelFactory : ViewModelProvider.Factory {
+class ViewModelFactory : ViewModelProvider.Factory {
     @Inject
     lateinit var movieRepository: MovieRepository
 
@@ -19,8 +19,10 @@ class MovieViewModelFactory : ViewModelProvider.Factory {
     lateinit var movieApplication: MovieApplication
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+
         val apiComponent: ApiComponent = MovieApplication.apiComponent
         apiComponent.inject(this)
+
         if (modelClass.isAssignableFrom(MovieViewModel::class.java))
             return MovieViewModel(
                 movieRepository,

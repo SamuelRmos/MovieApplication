@@ -1,6 +1,5 @@
 package com.example.retrofitkotlin.binding
 
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import com.example.retrofitkotlin.R

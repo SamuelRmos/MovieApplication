@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.ui
+package com.example.retrofitkotlin.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,17 +9,17 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
 import com.example.retrofitkotlin.viewmodel.MovieViewModel
-import com.example.retrofitkotlin.viewmodel.MovieViewModelFactory
+import com.example.retrofitkotlin.viewmodel.ViewModelFactory
 
 class MovieFragment : Fragment() {
-    private lateinit var movieViewModel: MovieViewModel
-    private lateinit var binding: FragmentMoviesBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        movieViewModel = ViewModelProvider(this, MovieViewModelFactory())
+    private val movieViewModel: MovieViewModel by lazy {
+        ViewModelProvider(this, ViewModelFactory())
             .get(MovieViewModel::class.java)
     }
+
+    private lateinit var binding: FragmentMoviesBinding
+    private lateinit var mMovieAdapter: MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,29 +32,16 @@ class MovieFragment : Fragment() {
             container,
             false
         )
-
-        binding.apply { viewModel = movieViewModel }
-        context ?: return binding.root
-
-        setAdapter()
-        setHasOptionsMenu(true)
+        subscribeUi()
         return binding.root
     }
 
-    private fun setAdapter() {
-        val adapter = MovieAdapter()
-        binding.recyclerView.run {
-            setAdapter(adapter)
-        }
-        subscribeUi(adapter)
-    }
+    private fun subscribeUi() {
 
-    private fun subscribeUi(adapter: MovieAdapter) {
+        mMovieAdapter = MovieAdapter(arrayListOf())
+        binding.recyclerView.adapter = mMovieAdapter
         movieViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                adapter.submitList(it)
-            }
+            mMovieAdapter.updateMovieList(it)
         })
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.ui
+package com.example.retrofitkotlin.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.example.retrofitkotlin.databinding.DetailFragmentBinding
 import com.example.retrofitkotlin.extensions.hide
 import com.example.retrofitkotlin.model.TmdMovie
@@ -14,38 +15,39 @@ import com.example.retrofitkotlin.viewmodel.DetailViewModelFactory
 import com.example.retrofitkotlin.viewmodel.MovieDetailViewModel
 
 class MovieDetailsFragment : Fragment() {
-    private lateinit var viewModel: MovieDetailViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, DetailViewModelFactory())
+    private val viewModel: MovieDetailViewModel by lazy {
+        ViewModelProvider(this, DetailViewModelFactory())
             .get(MovieDetailViewModel::class.java)
-        setHasOptionsMenu(true)
     }
+
+    private val arg: MovieDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val binding = DetailFragmentBinding.inflate(
             inflater,
             container,
             false
         )
+
         val movieActivity = activity as AppCompatActivity
         binding.apply {
             activity = movieActivity
         }
-        context ?: return binding.root
+
+        setHasOptionsMenu(true)
         subscribeUi(binding)
         return binding.root
     }
 
     private fun subscribeUi(binding: DetailFragmentBinding) {
-        val movie = viewModel.getMovie(arguments.let {
-            MovieDetailsFragmentArgs.fromBundle(it!!).idMovie
-        })
+
+        val movie = viewModel.getMovie(arg.idMovie)
         bind(binding, movie, viewModel.createOnClickListener())
         binding.progressBar.hide()
     }
