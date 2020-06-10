@@ -2,7 +2,7 @@
 Application builded using: </br> 
 - Kotlin;</br>  
 - Retrofit2; </br>  
-- Dagger2; </br> 
+- Dependency Injection (Dagger2); </br> 
 - Glide;</br> 
 - RecyclerView;</br> 
 - Databinding;</br> 
