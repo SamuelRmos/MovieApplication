@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin.repository
 
 import android.util.Log
-import com.example.retrofitkotlin.service.Result
+import com.example.retrofitkotlin.network.Result
 import retrofit2.Response
 import java.io.IOException
 

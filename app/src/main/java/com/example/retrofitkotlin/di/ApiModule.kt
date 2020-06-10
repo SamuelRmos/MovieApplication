@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin.di
 
 import com.example.retrofitkotlin.BuildConfig
-import com.example.retrofitkotlin.service.TmdbApi
+import com.example.retrofitkotlin.network.TmdbApi
 import com.example.retrofitkotlin.util.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module

@@ -3,7 +3,7 @@ package com.example.retrofitkotlin.di
 import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.repository.DetailRepository
 import com.example.retrofitkotlin.repository.MovieRepository
-import com.example.retrofitkotlin.service.TmdbApi
+import com.example.retrofitkotlin.network.TmdbApi
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -17,5 +17,6 @@ class RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRetroRepository(movieApi: TmdbApi): MovieRepository = MovieRepository(movieApi)
+    fun provideRetroRepository(movieApi: TmdbApi, movieDao: MovieDao): MovieRepository =
+        MovieRepository(movieApi, movieDao)
 }

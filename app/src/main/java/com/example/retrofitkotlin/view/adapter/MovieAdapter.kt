@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.view
+package com.example.retrofitkotlin.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
 import com.example.retrofitkotlin.model.TmdMovie
+import com.example.retrofitkotlin.view.fragment.MovieFragmentDirections
 
 class MovieAdapter(list: MutableList<TmdMovie>) :
     RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
@@ -18,7 +19,9 @@ class MovieAdapter(list: MutableList<TmdMovie>) :
         binding = ItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return ViewHolder(binding)
+        return ViewHolder(
+            binding
+        )
     }
 
     fun updateMovieList(movies: List<TmdMovie>) {

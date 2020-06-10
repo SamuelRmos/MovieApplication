@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.view
+package com.example.retrofitkotlin.view.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
-import com.example.retrofitkotlin.viewmodel.MovieViewModel
-import com.example.retrofitkotlin.viewmodel.ViewModelFactory
+import com.example.retrofitkotlin.view.adapter.MovieAdapter
+import com.example.retrofitkotlin.view.viewmodel.MovieViewModel
+import com.example.retrofitkotlin.view.viewmodel.ViewModelFactory
 
 class MovieFragment : Fragment() {
 
@@ -38,7 +39,8 @@ class MovieFragment : Fragment() {
 
     private fun subscribeUi() {
 
-        mMovieAdapter = MovieAdapter(arrayListOf())
+        mMovieAdapter =
+            MovieAdapter(arrayListOf())
         binding.recyclerView.adapter = mMovieAdapter
         movieViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
             mMovieAdapter.updateMovieList(it)

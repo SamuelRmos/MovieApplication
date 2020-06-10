@@ -7,6 +7,7 @@ import javax.inject.Singleton
 
 @Module
 class AppModule constructor(private val movieApplication: MovieApplication) {
+
     @Singleton
     @Provides
     fun provideMovieApplication(): MovieApplication = movieApplication
