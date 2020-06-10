@@ -8,5 +8,10 @@ Application builded using: </br>
 - Databinding;</br> 
 - Viewbinding;</br> 
 - Kotlin Coroutine; </br> 
-- Navigation Component.
+- Navigation Component.</br> 
 
+# Screenshot
+
+<p align="center">
+<img src="https://media.giphy.com/media/XdJWJnHjOoHUJJhyq6/giphy.gif" />
+<//p>
