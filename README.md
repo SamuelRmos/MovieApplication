@@ -8,7 +8,9 @@ Application builded using: </br>
 - Databinding;</br> 
 - Viewbinding;</br> 
 - Kotlin Coroutine; </br> 
-- Navigation Component.</br> 
+- Navigation Component;</br> 
+- Espresso;</br>
+- Mockk.</br> 
 
 # Screenshot
 
