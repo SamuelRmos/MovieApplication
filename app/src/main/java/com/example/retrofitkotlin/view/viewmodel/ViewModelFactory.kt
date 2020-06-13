@@ -7,6 +7,7 @@ import com.example.retrofitkotlin.di.ApiComponent
 import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.repository.DetailRepository
 import com.example.retrofitkotlin.repository.MovieRepository
+import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
 class ViewModelFactory : ViewModelProvider.Factory {
@@ -28,7 +29,12 @@ class ViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(MovieViewModel::class.java) ->
-                MovieViewModel(movieRepository, movieApplication) as T
+                MovieViewModel(
+                    movieRepository,
+                    movieApplication,
+                    Dispatchers.Main,
+                    Dispatchers.IO
+                ) as T
 
             modelClass.isAssignableFrom(MovieDetailViewModel::class.java) ->
                 MovieDetailViewModel(repository) as T

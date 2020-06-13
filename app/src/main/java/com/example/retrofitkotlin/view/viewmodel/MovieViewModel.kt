@@ -2,31 +2,45 @@ package com.example.retrofitkotlin.view.viewmodel
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.model.TmdMovie
-import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.repository.MovieRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 class MovieViewModel(
-    private val movieRepository: MovieRepository, private val movieApplication: MovieApplication
+    private val movieRepository: MovieRepository,
+    private val movieApplication: MovieApplication,
+    mainDispatcher: CoroutineDispatcher,
+    ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    val popularMoviesLiveData = fetchMovies()
+    private val job = SupervisorJob()
+    private val isConnected = isNetworkAvailable(movieApplication)
 
-    private fun fetchMovies(): MutableLiveData<MutableList<TmdMovie>> {
+    private val mUiScope = CoroutineScope(mainDispatcher + job)
+    private val mIoScope = CoroutineScope(ioDispatcher + job)
 
-        val movieList = MutableLiveData<MutableList<TmdMovie>>()
-        val isConnected = isNetworkAvailable(movieApplication)
+    val popularMoviesLiveData = MutableLiveData<MutableList<TmdMovie>>()
 
-        runBlocking {
-            movieList.postValue(movieRepository.getPopularMovies(isConnected))
+    fun fetchMovies() {
+
+        if (popularMoviesLiveData.value == null) {
+            mUiScope.launch {
+                try {
+                    val data = mIoScope.async {
+                        return@async movieRepository.getPopularMovies(isConnected)
+                    }.await()
+
+                    try {
+                        popularMoviesLiveData.value = data
+                    } catch (e: Exception) {
+                    }
+                } catch (e: Exception) {
+                }
+            }
         }
-
-        return movieList
     }
 
     private fun isNetworkAvailable(context: Context): Boolean {

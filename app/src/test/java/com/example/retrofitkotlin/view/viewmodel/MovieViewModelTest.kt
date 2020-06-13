@@ -11,6 +11,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.Assert.assertNotNull
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -20,6 +21,7 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class MovieViewModelTest {
+
     //region constants
 
     //end region constants
@@ -28,6 +30,7 @@ class MovieViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
+    private val mDispatcher = Dispatchers.Unconfined
 
     private lateinit var sut: MovieViewModel
     private val mMovieRepo = mockk<MovieRepository>(relaxed = true)
@@ -47,7 +50,8 @@ class MovieViewModelTest {
         every { mApplication.getSystemService(Context.CONNECTIVITY_SERVICE) } returns manager
         every { manager.activeNetworkInfo!!.isConnectedOrConnecting } returns true
 
-        sut = MovieViewModel(mMovieRepo, mApplication)
+        sut = MovieViewModel(mMovieRepo, mApplication, mDispatcher, mDispatcher)
+        sut.fetchMovies()
         sut.popularMoviesLiveData.observeForever {  }
 
         assertNotNull(sut.popularMoviesLiveData.value)

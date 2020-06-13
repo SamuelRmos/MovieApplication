@@ -39,9 +39,10 @@ class MovieFragment : Fragment() {
 
     private fun subscribeUi() {
 
-        mMovieAdapter =
-            MovieAdapter(arrayListOf())
+        mMovieAdapter = MovieAdapter(arrayListOf())
         binding.recyclerView.adapter = mMovieAdapter
+
+        movieViewModel.fetchMovies()
         movieViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
             mMovieAdapter.updateMovieList(it)
         })
