@@ -19,6 +19,7 @@ class DetailRepositoryTest {
     //end region constants
 
     //region helper fields
+
     private lateinit var sut: DetailRepository
     private val movieDao = mockk<MovieDao>()
 
