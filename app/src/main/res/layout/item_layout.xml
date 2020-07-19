@@ -11,7 +11,7 @@
             type="android.view.View.OnClickListener" />
 
         <variable
-            name="tmdbMovie"
+            name="movie"
             type="com.example.retrofitkotlin.model.TmdMovie" />
     </data>
 
@@ -22,10 +22,10 @@
         android:background="@color/background1"
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{clickListener}"
-        tools:ignore="ContentDescription"
         app:cardBackgroundColor="@color/background1"
         app:cardCornerRadius="8dp"
-        app:cardElevation="6dp">
+        app:cardElevation="6dp"
+        tools:ignore="ContentDescription">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,15 +34,16 @@
             android:orientation="vertical"
             tools:ignore="UnusedAttribute">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgPoster"
+            <ImageView
+                android:id="@+id/iv_Poster"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                app:loadPhoto="@{tmdbMovie.poster_path}"
+                android:transitionName="@{@string/transition_image(movie.id)}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:loadPhoto="@{movie.poster_path}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

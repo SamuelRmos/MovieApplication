@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="tmdbDetail"
+            name="movie"
             type="com.example.retrofitkotlin.model.TmdMovie" />
 
         <variable
@@ -42,16 +42,17 @@
                     android:layout_height="wrap_content"
                     android:background="@color/background2">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivposter"
+                    <ImageView
+                        android:id="@+id/iv_Poster"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
+                        android:transitionName="@{@string/transition_image(movie.id)}"
                         android:adjustViewBounds="true"
                         app:layout_constraintDimensionRatio="1:1.2"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:loadPhoto="@{tmdbDetail.poster_path}" />
+                        app:loadPhoto="@{movie.poster_path}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -62,7 +63,7 @@
                     app:layout_collapseMode="pin"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:simpleToolbarTitle="@{tmdbDetail.title}"
+                    app:simpleToolbarTitle="@{movie.title}"
                     app:simpleToolbarWithHome="@{activity}"
                     app:titleTextColor="@color/colorText" />
             </com.google.android.material.appbar.CollapsingToolbarLayout>
@@ -83,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@{tmdbDetail.title}"
+                    android:text="@{movie.title}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textColor="@color/colorText"
                     android:textSize="28sp"
@@ -100,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="@{tmdbDetail.overview}"
+                    android:text="@{movie.overview}"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
                     android:textColor="@color/colorText"
                     android:textStyle="italic"

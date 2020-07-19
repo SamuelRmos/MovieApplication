@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
+import com.example.retrofitkotlin.extensions.toTransitionGroup
 import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.view.fragment.MovieFragmentDirections
 
@@ -19,9 +21,7 @@ class MovieAdapter(list: MutableList<TmdMovie>) :
         binding = ItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return ViewHolder(
-            binding
-        )
+        return ViewHolder(binding)
     }
 
     fun updateMovieList(movies: List<TmdMovie>) {
@@ -33,17 +33,19 @@ class MovieAdapter(list: MutableList<TmdMovie>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = items[position]
         holder.apply {
-            bind(createOnClickListener(movie.id), movie)
+            bind(createOnClickListener(movie), movie)
             itemView.tag = position
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    private fun createOnClickListener(idMovie: Int): View.OnClickListener {
+    private fun createOnClickListener(movie: TmdMovie): View.OnClickListener {
         return View.OnClickListener {
-            val direction = MovieFragmentDirections.actionDetailsFragment(idMovie)
-            it.findNavController().navigate(direction)
+            it.findNavController().navigate(
+                MovieFragmentDirections.actionDetailsFragment(movie),
+                FragmentNavigatorExtras(binding.ivPoster.toTransitionGroup())
+            )
         }
     }
 
@@ -53,7 +55,7 @@ class MovieAdapter(list: MutableList<TmdMovie>) :
         fun bind(listener: View.OnClickListener, item: TmdMovie) {
             binding.apply {
                 clickListener = listener
-                tmdbMovie = item
+                movie = item
                 executePendingBindings()
             }
         }

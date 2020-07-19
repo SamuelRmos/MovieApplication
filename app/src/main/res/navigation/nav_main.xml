@@ -10,11 +10,7 @@
         android:label="MovieFragment" >
         <action
             android:id="@+id/actionDetailsFragment"
-            app:destination="@id/movieDetailsFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/movieDetailsFragment"/>
     </fragment>
 
     <fragment
@@ -28,6 +24,8 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-        <argument android:name="idMovie" app:argType="integer" />
+        <argument
+            android:name="movie"
+            app:argType="com.example.retrofitkotlin.model.TmdMovie" />
     </fragment>
 </navigation>

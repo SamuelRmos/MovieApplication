@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.retrofitkotlin"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -57,7 +57,7 @@ dependencies {
     def retrofit2_version = "2.6.0"
     def okhttp3_version = "3.12.0"
     def kotlinCoroutineVersion = "1.0.1"
-    def materialDesign = "1.1.0"
+    def materialDesign = "1.3.0-alpha01"
     def liveData="2.2.0"
     def roomVersion ="2.2.5"
 
@@ -124,7 +124,7 @@ dependencies {
     def mockwebserver_version = '4.1.0'
     androidTestImplementation "com.squareup.okhttp3:mockwebserver:$mockwebserver_version"
 
-    def navigationVersion = '2.3.0-beta01'
+    def navigationVersion = '2.3.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-dynamic-features-fragment:$navigationVersion"

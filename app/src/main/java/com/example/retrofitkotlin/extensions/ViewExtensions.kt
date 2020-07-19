@@ -16,3 +16,5 @@ fun ProgressBar.hide() {
 fun ProgressBar.show() {
     visibility = View.VISIBLE
 }
+
+fun View.toTransitionGroup() = this to transitionName

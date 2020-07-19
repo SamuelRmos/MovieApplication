@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
+import com.example.retrofitkotlin.extensions.waitForTransition
 import com.example.retrofitkotlin.view.adapter.MovieAdapter
 import com.example.retrofitkotlin.view.viewmodel.MovieViewModel
 import com.example.retrofitkotlin.view.viewmodel.ViewModelFactory
@@ -18,7 +19,6 @@ class MovieFragment : Fragment() {
         ViewModelProvider(this, ViewModelFactory())
             .get(MovieViewModel::class.java)
     }
-
     private lateinit var binding: FragmentMoviesBinding
     private lateinit var mMovieAdapter: MovieAdapter
 
@@ -27,21 +27,19 @@ class MovieFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        binding = FragmentMoviesBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-        subscribeUi()
+        binding = FragmentMoviesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    private fun subscribeUi() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeUi()
+        waitForTransition(binding.recyclerView)
+    }
 
+    private fun subscribeUi() {
         mMovieAdapter = MovieAdapter(arrayListOf())
         binding.recyclerView.adapter = mMovieAdapter
-
         movieViewModel.fetchMovies()
         movieViewModel.popularMoviesLiveData.observe(viewLifecycleOwner, Observer {
             mMovieAdapter.updateMovieList(it)

@@ -1,6 +1,6 @@
 package com.example.retrofitkotlin.binding
 
-import androidx.appcompat.widget.AppCompatImageView
+import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.retrofitkotlin.util.Constants
@@ -9,7 +9,7 @@ object ImageBinding {
 
     @JvmStatic
     @BindingAdapter("loadPhoto")
-    fun AppCompatImageView.setBackImage(url: String?) {
+    fun ImageView.setBackImage(url: String?) {
         url?.let {
             Glide.with(context)
                 .load(Constants.baseImageBack + it)
