@@ -9,9 +9,10 @@ import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.repository.MovieRepository
 import kotlinx.coroutines.*
 
+@Suppress("DEPRECATION")
 class MovieViewModel(
     private val movieRepository: MovieRepository,
-    private val movieApplication: MovieApplication,
+    movieApplication: MovieApplication,
     mainDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {

@@ -4,12 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.di.ApiComponent
-import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.repository.DetailRepository
 import com.example.retrofitkotlin.repository.MovieRepository
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 
+@Suppress("UNCHECKED_CAST")
 class ViewModelFactory : ViewModelProvider.Factory {
 
     @Inject
