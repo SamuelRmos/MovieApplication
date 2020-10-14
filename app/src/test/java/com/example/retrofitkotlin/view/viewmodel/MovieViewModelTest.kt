@@ -1,11 +1,12 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.retrofitkotlin.view.viewmodel
 
-import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.retrofitkotlin.MovieApplication
-import com.example.retrofitkotlin.repository.MovieRepository
+import com.example.retrofitkotlin.repository.MovieRepositoryImpl
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovieList
 import io.mockk.coEvery
 import io.mockk.every
@@ -33,7 +34,7 @@ class MovieViewModelTest {
     private val mDispatcher = Dispatchers.Unconfined
 
     private lateinit var sut: MovieViewModel
-    private val mMovieRepo = mockk<MovieRepository>(relaxed = true)
+    private val mMovieRepo = mockk<MovieRepositoryImpl>(relaxed = true)
     private val mApplication = mockk<MovieApplication>(relaxed = true)
     private val manager = mockk<ConnectivityManager>(relaxed = true)
 

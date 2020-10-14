@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.persistence.MovieDao
@@ -10,17 +12,16 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(JUnit4::class)
-class DetailRepositoryTest {
+class DetailRepositoryImplTest {
     //region constants
 
     //end region constants
 
     //region helper fields
 
-    private lateinit var sut: DetailRepository
+    private lateinit var sut: DetailRepositoryImpl
     private val movieDao = mockk<MovieDao>()
 
     private val mId = 419704
@@ -37,7 +38,7 @@ class DetailRepositoryTest {
 
         every { movieDao.getMovie(419704) } returns mockMovie()
 
-        sut = DetailRepository(movieDao)
+        sut = DetailRepositoryImpl(movieDao)
         val dataReceived = sut.getMovieById(419704)
 
         assertNotNull(dataReceived)

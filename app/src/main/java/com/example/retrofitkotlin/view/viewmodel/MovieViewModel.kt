@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.model.TmdMovie
-import com.example.retrofitkotlin.repository.MovieRepository
+import com.example.retrofitkotlin.repository.MovieRepositoryImpl
 import kotlinx.coroutines.*
 
 @Suppress("DEPRECATION")
 class MovieViewModel(
-    private val movieRepository: MovieRepository,
+    private val movieRepositoryImpl: MovieRepositoryImpl,
     movieApplication: MovieApplication,
     mainDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher
@@ -31,7 +31,7 @@ class MovieViewModel(
             mUiScope.launch {
                 try {
                     val data = mIoScope.async {
-                        return@async movieRepository.getPopularMovies(isConnected)
+                        return@async movieRepositoryImpl.getPopularMovies(isConnected)
                     }.await()
 
                     try {

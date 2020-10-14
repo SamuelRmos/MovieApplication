@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.base.BaseTest
@@ -24,7 +26,7 @@ class MovieRepositoryTest : BaseTest() {
 
     //region helper fields
 
-    private lateinit var sut: MovieRepository
+    private lateinit var sut: MovieRepositoryImpl
     private val movieDao = mockk<MovieDao>(relaxed = true)
 
     // end region helper fields
@@ -40,7 +42,7 @@ class MovieRepositoryTest : BaseTest() {
         mockNetworkResponseWithFileContent("movie_list", HttpURLConnection.HTTP_OK)
 
         coEvery { movieDao.getMovieList() } returns mutableListOf()
-        sut = MovieRepository(createApi(), movieDao)
+        sut = MovieRepositoryImpl(createApi(), movieDao)
 
         val dataReceived = sut.getPopularMovies(true)
         val data = mockMovieList()
@@ -55,7 +57,7 @@ class MovieRepositoryTest : BaseTest() {
     fun `movieRepoTest movieDao retrieveData`() = runBlocking {
 
         every { movieDao.getMovieList() } returns mockMovieList()
-        sut = MovieRepository(createApi(), movieDao)
+        sut = MovieRepositoryImpl(createApi(), movieDao)
 
         val dataReceived = sut.getPopularMovies(false)
         val data = mockMovieList()

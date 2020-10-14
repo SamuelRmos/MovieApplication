@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin.di
 
-import com.example.retrofitkotlin.repository.DetailRepository
-import com.example.retrofitkotlin.repository.MovieRepository
+import com.example.retrofitkotlin.repository.DetailRepositoryImpl
+import com.example.retrofitkotlin.repository.MovieRepositoryImpl
 import com.example.retrofitkotlin.view.viewmodel.ViewModelFactory
 import dagger.Component
 import javax.inject.Singleton
@@ -14,7 +14,7 @@ import javax.inject.Singleton
         RepositoryModule::class]
 )
 interface ApiComponent {
-    fun inject(retrofitRepository: MovieRepository)
-    fun inject(detailRepository: DetailRepository)
+    fun inject(retrofitRepositoryImpl: MovieRepositoryImpl)
+    fun inject(detailRepositoryImpl: DetailRepositoryImpl)
     fun inject(viewModelFactory: ViewModelFactory)
 }

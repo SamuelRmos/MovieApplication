@@ -1,10 +1,7 @@
 package com.example.retrofitkotlin.repository
 
-import com.example.retrofitkotlin.persistence.MovieDao
+import com.example.retrofitkotlin.model.TmdMovie
 
-class DetailRepository constructor(private val movieDao: MovieDao): Repository {
-
-    override var isLoading = false
-
-    fun getMovieById(id: Int) = movieDao.getMovie(id)
+interface DetailRepository {
+    fun getMovieById(id: Int): TmdMovie
 }

@@ -1,6 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.retrofitkotlin.view.viewmodel
 
-import com.example.retrofitkotlin.repository.DetailRepository
+import com.example.retrofitkotlin.repository.DetailRepositoryImpl
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovie
 import io.mockk.every
 import io.mockk.mockk
@@ -20,7 +22,7 @@ class MovieDetailViewModelTest {
     //region helper fields
 
     private lateinit var sut: MovieDetailViewModel
-    private val mDetailRepository = mockk<DetailRepository>(relaxed = true)
+    private val mDetailRepository = mockk<DetailRepositoryImpl>(relaxed = true)
 
     private val mId = 419704
     private val mTitle = "Ad Astra"
