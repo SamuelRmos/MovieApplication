@@ -4,7 +4,7 @@ import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.network.TmdbApi
 import com.example.retrofitkotlin.persistence.MovieDao
 
-class MovieRepositoryImpl constructor(private val movieApi: TmdbApi, private val movieDao: MovieDao) :
+class MovieRepositoryImpl(private val movieApi: TmdbApi, private val movieDao: MovieDao) :
     BaseRepository(), MovieRepository {
 
     private val movieList = movieDao.getMovieList()

@@ -1,6 +1,5 @@
 package com.example.retrofitkotlin.di
 
-import android.content.Context
 import androidx.room.Room
 import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.R

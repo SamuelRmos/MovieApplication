@@ -11,8 +11,7 @@ import com.example.retrofitkotlin.extensions.toTransitionGroup
 import com.example.retrofitkotlin.model.TmdMovie
 import com.example.retrofitkotlin.view.fragment.MovieFragmentDirections
 
-class MovieAdapter(list: MutableList<TmdMovie>) :
-    RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(list: MutableList<TmdMovie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     private var items = list
     private lateinit var binding: ItemLayoutBinding

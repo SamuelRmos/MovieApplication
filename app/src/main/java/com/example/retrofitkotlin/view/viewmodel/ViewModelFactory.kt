@@ -21,12 +21,8 @@ class ViewModelFactory : ViewModelProvider.Factory {
     @Inject
     lateinit var repositoryImpl: DetailRepositoryImpl
 
-    init {
-        val apiComponent: ApiComponent = MovieApplication.apiComponent
-        apiComponent.inject(this)
-    }
-
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        MovieApplication.apiComponent.inject(this)
         return when {
             modelClass.isAssignableFrom(MovieViewModel::class.java) ->
                 MovieViewModel(
