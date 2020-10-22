@@ -3,20 +3,112 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/movieFragment"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background2">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:padding="4dp"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            tools:listitem="@layout/item_layout" />
-    </FrameLayout>
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iv_PosterMostPopular"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:contentDescription="@string/poster_movie_most_popular"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/pulp_fiction" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@drawable/bg_gradient_bottom"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_PosterMostPopular"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_mostPopular"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="@string/most_popular"
+                    android:textColor="@color/colorText"
+                    android:textSize="25sp"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_PosterMostPopular" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_mostPopular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mostPopular" />
+
+                <TextView
+                    android:id="@+id/tv_rated"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="@string/top_rated"
+                    android:textColor="@color/colorText"
+                    android:textSize="25sp"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_mostPopular" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_rated"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_rated" />
+
+                <TextView
+                    android:id="@+id/tv_today"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="@string/top_10_today"
+                    android:textColor="@color/colorText"
+                    android:textSize="25sp"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_rated" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_today"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_today" />
+
+                <TextView
+                    android:id="@+id/tv_classic"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="@font/roboto"
+                    android:padding="10dp"
+                    android:text="@string/classics"
+                    android:textColor="@color/colorText"
+                    android:textSize="25sp"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_today" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_classic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_classic" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </layout>

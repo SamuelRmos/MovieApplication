@@ -4,4 +4,9 @@
     <string name="release">Release:</string>
     <string name="bein">BeinVienido</string>
     <string name="movie_db">movie.db</string>
+    <string name="poster_movie_most_popular">Poster Movie Most Popular</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="top_10_today">Top 10 Today</string>
+    <string name="classics">Classics</string>
 </resources>
