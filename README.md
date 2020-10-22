@@ -1,4 +1,4 @@
-:movie_camera: ## Movie Application
+## Movie Application :movie_camera:
 
 Application builded using: </br> 
 - Kotlin;</br>  
@@ -13,7 +13,7 @@ Application builded using: </br>
 - Espresso;</br>
 - Mockk.</br>
 
-:key: ## Pre-requisites
+## Pre-requisites :key:
 
 To run this project, you need to have a The Movie Database account and get your API key.
 More details [here](https://developers.themoviedb.org/3/getting-started/introduction).
