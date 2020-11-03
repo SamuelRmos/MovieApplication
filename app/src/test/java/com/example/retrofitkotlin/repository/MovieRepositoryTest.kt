@@ -4,6 +4,7 @@ package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.base.BaseTest
 import com.example.retrofitkotlin.persistence.MovieDao
+import com.example.retrofitkotlin.util.CategoryEnum
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovieList
 import io.mockk.coEvery
 import io.mockk.every
@@ -44,7 +45,7 @@ class MovieRepositoryTest : BaseTest() {
         coEvery { movieDao.getMovieList() } returns mutableListOf()
         sut = MovieRepositoryImpl(createApi(), movieDao)
 
-        val dataReceived = sut.getPopularMovies(true)
+        val dataReceived = sut.getListMovies(true, CategoryEnum.POPULAR)
         val data = mockMovieList()
 
         assertNotNull(dataReceived)
@@ -59,7 +60,7 @@ class MovieRepositoryTest : BaseTest() {
         every { movieDao.getMovieList() } returns mockMovieList()
         sut = MovieRepositoryImpl(createApi(), movieDao)
 
-        val dataReceived = sut.getPopularMovies(false)
+        val dataReceived = sut.getListMovies(false, CategoryEnum.POPULAR)
         val data = mockMovieList()
 
         assertNotNull(dataReceived)

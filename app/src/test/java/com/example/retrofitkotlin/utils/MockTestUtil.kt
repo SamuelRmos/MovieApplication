@@ -1,6 +1,7 @@
 package com.example.retrofitkotlin.utils
 
 import com.example.retrofitkotlin.model.TmdMovie
+import com.example.retrofitkotlin.util.CategoryEnum
 
 object MockTestUtil {
 

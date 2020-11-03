@@ -7,6 +7,7 @@ import android.net.ConnectivityManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.repository.MovieRepositoryImpl
+import com.example.retrofitkotlin.util.CategoryEnum
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovieList
 import io.mockk.coEvery
 import io.mockk.every
@@ -47,7 +48,7 @@ class MovieViewModelTest {
     @Test
     fun `movieViewModel fetchData`() = runBlocking {
 
-        coEvery { mMovieRepo.getPopularMovies(true) } returns mockMovieList()
+        coEvery { mMovieRepo.getListMovies(true, CategoryEnum.POPULAR) } returns mockMovieList()
         every { mApplication.getSystemService(Context.CONNECTIVITY_SERVICE) } returns manager
         every { manager.activeNetworkInfo!!.isConnectedOrConnecting } returns true
 
