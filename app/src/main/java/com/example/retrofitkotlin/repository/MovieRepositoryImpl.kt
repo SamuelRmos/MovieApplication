@@ -12,16 +12,19 @@ class MovieRepositoryImpl(private val movieApi: TmdbApi, private val movieDao: M
         isConnected: Boolean,
         id: CategoryEnum
     ): MutableList<TmdMovie>? {
-//        val dataBaseResponse = movieDao.getMovieList(id)
         return when {
             isConnected -> getDataMovie(id)
             else -> null
         }
     }
 
+    override fun getMoviePoster() = movieDao.getMovieList()
+
     private suspend fun getDataMovie(id: CategoryEnum): MutableList<TmdMovie>? {
         val dataReceived = getMovies(id)?.results?.toMutableList()
-        movieDao.insertMovieList(dataReceived)
+        if (id == CategoryEnum.TODAY) {
+            movieDao.insertMovieList(dataReceived)
+        }
         return dataReceived
     }
 

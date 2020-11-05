@@ -5,4 +5,5 @@ import com.example.retrofitkotlin.util.CategoryEnum
 
 interface MovieRepository {
     suspend fun getListMovies(isConnected: Boolean, id: CategoryEnum): MutableList<TmdMovie>?
+    fun getMoviePoster(): MutableList<TmdMovie>
 }

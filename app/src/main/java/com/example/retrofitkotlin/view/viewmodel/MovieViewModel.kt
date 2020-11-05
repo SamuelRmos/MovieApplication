@@ -17,10 +17,12 @@ class MovieViewModel(
     mainDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
+
     private val job = SupervisorJob()
     private val isConnected = isNetworkAvailable(movieApplication)
     private val mUiScope = CoroutineScope(mainDispatcher + job)
     private val mIoScope = CoroutineScope(ioDispatcher + job)
+    val listMovies = MutableLiveData<MutableList<TmdMovie>>()
 
     fun fetchMovies(id: CategoryEnum): MutableLiveData<MutableList<TmdMovie>> {
         val popularMoviesLiveData = MutableLiveData<MutableList<TmdMovie>>()
@@ -42,21 +44,7 @@ class MovieViewModel(
         return popularMoviesLiveData
     }
 
-    fun getListMovies(): MutableList<TmdMovie> {
-        var data = mutableListOf<TmdMovie>()
-        mUiScope.launch {
-            try {
-                data = mIoScope.async {
-                    return@async movieRepositoryImpl.getListMovies(
-                        isConnected,
-                        CategoryEnum.TODAY
-                    )!!
-                }.await()
-            } catch (e: Exception) {
-            }
-        }
-        return data
-    }
+    fun getListMovies() = movieRepositoryImpl.getMoviePoster()
 
     private fun isNetworkAvailable(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
