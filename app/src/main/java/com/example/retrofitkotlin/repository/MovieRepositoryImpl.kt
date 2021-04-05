@@ -1,11 +1,11 @@
 package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.model.TmdMovie
-import com.example.retrofitkotlin.network.TmdbApi
+import com.example.retrofitkotlin.network.MovieApi
 import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.util.CategoryEnum
 
-class MovieRepositoryImpl(private val movieApi: TmdbApi, private val movieDao: MovieDao) :
+class MovieRepositoryImpl(private val movieApi: MovieApi, private val movieDao: MovieDao) :
     BaseRepository(), MovieRepository {
 
     override suspend fun getListMovies(

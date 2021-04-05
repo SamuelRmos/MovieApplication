@@ -19,7 +19,6 @@ import com.example.retrofitkotlin.util.CategoryEnum
 import com.example.retrofitkotlin.view.adapter.MovieAdapter
 import com.example.retrofitkotlin.view.viewmodel.MovieViewModel
 import com.example.retrofitkotlin.view.viewmodel.ViewModelFactory
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {

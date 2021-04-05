@@ -6,13 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.model.TmdMovie
-import com.example.retrofitkotlin.repository.MovieRepositoryImpl
+import com.example.retrofitkotlin.repository.MovieRepository
 import com.example.retrofitkotlin.util.CategoryEnum
 import kotlinx.coroutines.*
 
-@Suppress("DEPRECATION")
 class MovieViewModel(
-    private val movieRepositoryImpl: MovieRepositoryImpl,
+    private val movieRepository: MovieRepository,
     movieApplication: MovieApplication,
     mainDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher
@@ -30,7 +29,7 @@ class MovieViewModel(
             mUiScope.launch {
                 try {
                     val data = mIoScope.async {
-                        return@async movieRepositoryImpl.getListMovies(isConnected, id)
+                        return@async movieRepository.getListMovies(isConnected, id)
                     }.await()
 
                     try {
@@ -44,8 +43,9 @@ class MovieViewModel(
         return popularMoviesLiveData
     }
 
-    fun getListMovies() = movieRepositoryImpl.getMoviePoster()
+    fun getListMovies() = movieRepository.getMoviePoster()
 
+    @Suppress("DEPRECATION")
     private fun isNetworkAvailable(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo!!.isConnectedOrConnecting
