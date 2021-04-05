@@ -6,12 +6,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.model.TmdMovie
-import com.example.retrofitkotlin.repository.MovieRepositoryImpl
+import com.example.retrofitkotlin.repository.MovieRepository
+import com.example.retrofitkotlin.util.CategoryEnum
 import kotlinx.coroutines.*
 
-@Suppress("DEPRECATION")
 class MovieViewModel(
-    private val movieRepositoryImpl: MovieRepositoryImpl,
+    private val movieRepository: MovieRepository,
     movieApplication: MovieApplication,
     mainDispatcher: CoroutineDispatcher,
     ioDispatcher: CoroutineDispatcher
@@ -19,19 +19,17 @@ class MovieViewModel(
 
     private val job = SupervisorJob()
     private val isConnected = isNetworkAvailable(movieApplication)
-
     private val mUiScope = CoroutineScope(mainDispatcher + job)
     private val mIoScope = CoroutineScope(ioDispatcher + job)
+    val listMovies = MutableLiveData<MutableList<TmdMovie>>()
 
-    val popularMoviesLiveData = MutableLiveData<MutableList<TmdMovie>>()
-
-    fun fetchMovies() {
-
+    fun fetchMovies(id: CategoryEnum): MutableLiveData<MutableList<TmdMovie>> {
+        val popularMoviesLiveData = MutableLiveData<MutableList<TmdMovie>>()
         if (popularMoviesLiveData.value == null) {
             mUiScope.launch {
                 try {
                     val data = mIoScope.async {
-                        return@async movieRepositoryImpl.getPopularMovies(isConnected)
+                        return@async movieRepository.getListMovies(isConnected, id)
                     }.await()
 
                     try {
@@ -42,10 +40,13 @@ class MovieViewModel(
                 }
             }
         }
+        return popularMoviesLiveData
     }
 
-    private fun isNetworkAvailable(context: Context): Boolean {
+    fun getListMovies() = movieRepository.getMoviePoster()
 
+    @Suppress("DEPRECATION")
+    private fun isNetworkAvailable(context: Context): Boolean {
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         return cm.activeNetworkInfo!!.isConnectedOrConnecting
     }

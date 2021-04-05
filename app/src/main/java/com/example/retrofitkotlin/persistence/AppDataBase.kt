@@ -2,10 +2,12 @@ package com.example.retrofitkotlin.persistence
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.retrofitkotlin.converters.Converters
 import com.example.retrofitkotlin.model.TmdMovie
 
-@Database(entities = [TmdMovie::class], version = 3, exportSchema = false)
-abstract class AppDataBase : RoomDatabase(){
-
+@Database(entities = [TmdMovie::class], version = 8, exportSchema = false)
+@TypeConverters(Converters::class)
+abstract class AppDataBase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
 }

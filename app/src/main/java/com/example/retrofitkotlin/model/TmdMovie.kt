@@ -1,9 +1,9 @@
 package com.example.retrofitkotlin.model
 
 import android.os.Parcelable
-import androidx.annotation.Nullable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.retrofitkotlin.util.CategoryEnum
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

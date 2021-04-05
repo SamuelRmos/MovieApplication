@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin.base
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.example.retrofitkotlin.network.TmdbApi
+import com.example.retrofitkotlin.network.MovieApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -48,13 +48,13 @@ abstract class BaseUITest {
 
     private fun getMockWebServerUrl() = mockWebServer.url("/").toString()
 
-    fun createApi(): TmdbApi {
+    fun createApi(): MovieApi {
         return Retrofit.Builder()
             .addConverterFactory(MoshiConverterFactory.create())
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .baseUrl(getMockWebServerUrl())
             .build()
-            .create(TmdbApi::class.java)
+            .create(MovieApi::class.java)
     }
 
     private fun stopMockServer() {

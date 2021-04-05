@@ -13,8 +13,18 @@ object ImageBinding {
         url?.let {
             Glide.with(context)
                 .load(Constants.baseImageBack + it)
-                .centerCrop()
                 .into(this)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("loadImage")
+    fun ImageView.setDetailImage(url: String?) {
+        url?.let {
+            Glide.with(context)
+                .load(Constants.baseImageBack + it)
+                .into(this)
+        }
+    }
+
 }
