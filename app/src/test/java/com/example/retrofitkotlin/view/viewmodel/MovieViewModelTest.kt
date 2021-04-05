@@ -2,19 +2,15 @@
 
 package com.example.retrofitkotlin.view.viewmodel
 
-import android.content.Context
-import android.net.ConnectivityManager
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.repository.MovieRepositoryImpl
 import com.example.retrofitkotlin.util.CategoryEnum
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovieList
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
+import junit.framework.Assert
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -24,47 +20,50 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class MovieViewModelTest {
 
-    //region constants
-
-    //end region constants
-
-    //region helper fields
-
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
     private val mDispatcher = Dispatchers.Unconfined
-
     private lateinit var viewModel: MovieViewModel
     private val mMovieRepo = mockk<MovieRepositoryImpl>(relaxed = true)
-    private val mApplication = mockk<MovieApplication>(relaxed = true)
-    private val manager = mockk<ConnectivityManager>(relaxed = true)
-
-    // end region helper fields
 
     @Before
     fun setup() {
-        viewModel = MovieViewModel(mMovieRepo, mApplication, mDispatcher, mDispatcher)
+        viewModel = MovieViewModel(mMovieRepo, mDispatcher, mDispatcher)
     }
 
     @Test
-    fun `movieViewModel fetchData`() = runBlocking {
+    fun `fetchMovies success`() {
 
-        coEvery { mMovieRepo.getListMovies(true, CategoryEnum.POPULAR) } returns mockMovieList()
-        every { mApplication.getSystemService(Context.CONNECTIVITY_SERVICE) } returns manager
-        every { manager.activeNetworkInfo!!.isConnectedOrConnecting } returns true
+        coEvery {
+            mMovieRepo.getListMovies(
+                true, CategoryEnum.POPULAR
+            )
+        } returns mockMovieList()
 
 
-        viewModel.fetchMovies(CategoryEnum.POPULAR)
-        //viewModel.popularMoviesLiveData.observeForever {  }
+        val dataReceived = viewModel.fetchMovies(CategoryEnum.POPULAR, true)
+        val data = mockMovieList()
 
-        //assertNotNull(sut.popularMoviesLiveData.value)
+        assertNotNull(dataReceived)
+        Assert.assertEquals(dataReceived.value?.get(0)?.id, data[0].id)
+        Assert.assertEquals(dataReceived.value?.get(0)?.title, data[0].title)
+        Assert.assertEquals(dataReceived.value?.get(0)?.overview, data[0].overview)
     }
 
-    // region helper methods
+    @Test
+    fun `getListMovies success`() {
 
-    // end region helper methods
+        coEvery {
+            mMovieRepo.getMoviePoster()
+        } returns mockMovieList()
 
-    // region helper class
+        val dataReceived = viewModel.getListMovies()
+        val data = mockMovieList()
 
-    // end region helper class
+        assertNotNull(dataReceived)
+        Assert.assertEquals(dataReceived[0].id, data[0].id)
+        Assert.assertEquals(dataReceived[0].title, data[0].title)
+        Assert.assertEquals(dataReceived[0].overview, data[0].overview)
+    }
+
 }

@@ -30,7 +30,7 @@ class MovieDetailsFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         startPostponedEnterTransition()
         binding = DetailFragmentBinding.inflate(inflater, container, false)
 

@@ -8,10 +8,13 @@ import com.example.retrofitkotlin.repository.MovieRepository
 import com.example.retrofitkotlin.repository.MovieRepositoryImpl
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-class RepositoryModule {
+@InstallIn(SingletonComponent::class)
+object RepositoryModule {
 
     @Singleton
     @Provides
