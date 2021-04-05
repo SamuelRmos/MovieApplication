@@ -6,6 +6,8 @@ import com.example.retrofitkotlin.util.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -14,7 +16,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
 
 @Module
-class ApiModule constructor(private val baseURL: String) {
+@InstallIn(SingletonComponent::class)
+object ApiModule {
 
     private val authInterceptor = Interceptor { chain ->
         val newUrl = chain.request().url
@@ -50,7 +53,7 @@ class ApiModule constructor(private val baseURL: String) {
     @Provides
     fun provideRetrofit(): MovieApi = Retrofit.Builder()
         .client(client)
-        .baseUrl(baseURL)
+        .baseUrl(Constants.baseURL)
         .addConverterFactory(MoshiConverterFactory.create())
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()

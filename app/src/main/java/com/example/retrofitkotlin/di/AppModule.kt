@@ -1,17 +1,15 @@
 package com.example.retrofitkotlin.di
 
-import com.example.retrofitkotlin.MovieApplication
 import com.example.retrofitkotlin.view.adapter.MovieAdapter
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
-class AppModule constructor(private val movieApplication: MovieApplication) {
-
-    @Singleton
-    @Provides
-    fun provideMovieApplication(): MovieApplication = movieApplication
+@InstallIn(SingletonComponent::class)
+object AppModule {
 
     @Provides
     fun provideMovieAdapter(): MovieAdapter = MovieAdapter(arrayListOf())
