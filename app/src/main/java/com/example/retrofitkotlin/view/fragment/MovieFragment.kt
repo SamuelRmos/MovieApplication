@@ -58,6 +58,7 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun getPosterHome() {
         val list = movieViewModel.getListMovies()
+
         for (position in 0..10) {
             val imageView = ImageView(context)
             val layout = FrameLayout.LayoutParams(
@@ -67,6 +68,7 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
             imageView.layoutParams = layout
             imageView.scaleType = ImageView.ScaleType.FIT_XY
+
             binding.vpPosterMostPopular.apply {
                 setInAnimation(context, android.R.anim.slide_in_left)
                 setOutAnimation(context, android.R.anim.slide_out_right)
