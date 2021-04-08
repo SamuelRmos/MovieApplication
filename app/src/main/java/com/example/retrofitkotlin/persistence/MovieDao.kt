@@ -4,17 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.retrofitkotlin.model.TmdMovie
+import com.example.retrofitkotlin.model.Movie
 
 @Dao
 interface MovieDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMovieList(movies: MutableList<TmdMovie>?)
+    fun insertMovieList(movies: MutableList<Movie>?)
 
-    @Query("SELECT * FROM TmdMovie WHERE id = :id_")
-    fun getMovie(id_: Int): TmdMovie
+    @Query("SELECT * FROM Movie WHERE id = :id_")
+    fun getMovie(id_: Int): Movie
 
-    @Query("SELECT * FROM TmdMovie")
-    fun getMovieList(): MutableList<TmdMovie>
+    @Query("SELECT * FROM Movie")
+    fun getMovieList(): MutableList<Movie>
 }

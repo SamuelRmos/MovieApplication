@@ -3,7 +3,7 @@
 package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.base.BaseTest
-import com.example.retrofitkotlin.model.TmdbMovieResponse
+import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.network.MovieApi
 import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.util.CategoryEnum
@@ -123,10 +123,10 @@ class MovieRepositoryTest : BaseTest() {
     fun `getListMovies is connected and getDataMovie id TODAY insert data in database and return data success`() =
         runBlocking {
 
-            val mockResponse = mockk<Response<TmdbMovieResponse>>()
+            val mockResponse = mockk<Response<MovieResponse>>()
 
             every { mockResponse.isSuccessful } returns true
-            every { mockResponse.body() } returns TmdbMovieResponse(listOf(mockMovie()))
+            every { mockResponse.body() } returns MovieResponse(listOf(mockMovie()))
 
             coEvery { movieApi.getTodayMovieAsync().await() } returns mockResponse
             every { movieDao.insertMovieList(any()) } returns Unit

@@ -1,9 +1,9 @@
 package com.example.retrofitkotlin.repository
 
-import com.example.retrofitkotlin.model.TmdMovie
+import com.example.retrofitkotlin.functional.Either
+import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.network.MovieApi
 import com.example.retrofitkotlin.persistence.MovieDao
-import com.example.retrofitkotlin.util.CategoryEnum
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -11,50 +11,56 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieDao: MovieDao
 ) : BaseRepository(), MovieRepository {
 
-    override suspend fun getListMovies(
+    override suspend fun getListPopularMovies(
         isConnected: Boolean,
-        id: CategoryEnum
-    ): MutableList<TmdMovie>? {
-        return when {
-            isConnected -> getDataMovie(id)
-            else -> null
-        }
-    }
-
-    override fun getMoviePoster() = movieDao.getMovieList()
-
-    private suspend fun getDataMovie(id: CategoryEnum): MutableList<TmdMovie>? {
-        val dataReceived = getMovies(id)?.results?.toMutableList()
-        if (id == CategoryEnum.TODAY) {
-            movieDao.insertMovieList(dataReceived)
-        }
-        return dataReceived
-    }
-
-    private suspend fun getMovies(id: CategoryEnum) = when (id) {
-        CategoryEnum.POPULAR -> {
+    ): Either<String, MovieResponse> {
+        return if (isConnected) {
             safeApiCall(
                 call = { movieApi.getPopularMovieAsync().await() },
                 errorMessage = "Error Fetching Popular Movies"
             )
-        }
-        CategoryEnum.RATED -> {
+
+        } else errorConnection()
+    }
+
+    override suspend fun getListRatedMovies(
+        isConnected: Boolean,
+    ): Either<String, MovieResponse> {
+        return if (isConnected) {
             safeApiCall(
                 call = { movieApi.getRatedMovieAsync().await() },
-                errorMessage = "Error Fetching Rated Movies"
+                errorMessage = "Error Fetching Popular Movies"
             )
-        }
-        CategoryEnum.TODAY -> {
+
+        } else errorConnection()
+    }
+
+    override suspend fun getListTodayMovies(
+        isConnected: Boolean,
+    ): Either<String, MovieResponse> {
+        return if (isConnected) {
             safeApiCall(
                 call = { movieApi.getTodayMovieAsync().await() },
-                errorMessage = "Error Fetching Today Movies"
+                errorMessage = "Error Fetching Popular Movies"
             )
-        }
-        CategoryEnum.CLASSIC -> {
+
+        } else errorConnection()
+    }
+
+    override suspend fun getListClassicMovies(
+        isConnected: Boolean,
+    ): Either<String, MovieResponse> {
+        return if (isConnected) {
             safeApiCall(
                 call = { movieApi.getClassicMovieAsync().await() },
-                errorMessage = "Error Fetching Classic Movies"
+                errorMessage = "Error Fetching Popular Movies"
             )
-        }
+
+        } else errorConnection()
     }
+
+    override fun getMoviePoster() = movieDao.getMovieList()
+
+    private fun errorConnection(): Either<String, MovieResponse> =
+        Either.Error("Device not connected")
 }

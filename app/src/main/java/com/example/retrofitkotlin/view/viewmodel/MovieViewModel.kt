@@ -1,26 +1,27 @@
 package com.example.retrofitkotlin.view.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.retrofitkotlin.di.IoDispatcher
 import com.example.retrofitkotlin.di.MainDispatcher
-import com.example.retrofitkotlin.model.TmdMovie
-import com.example.retrofitkotlin.repository.MovieRepository
-import com.example.retrofitkotlin.util.CategoryEnum
+import com.example.retrofitkotlin.model.MovieResponse
+import com.example.retrofitkotlin.usecase.MovieUseCase
 import com.example.retrofitkotlin.util.SingleLiveEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
 sealed class MovieViewAction {
-    open class Success(val list: MutableList<TmdMovie>) : MovieViewAction()
+    open class SuccessPopularMovie(val list: MovieResponse) : MovieViewAction()
+    open class SuccessRatedMovie(val list: MovieResponse) : MovieViewAction()
+    open class SuccessTodayMovie(val list: MovieResponse) : MovieViewAction()
+    open class SuccessClassicMovie(val list: MovieResponse) : MovieViewAction()
     open class Loading(val loading: Boolean) : MovieViewAction()
     open class Error(val message: String) : MovieViewAction()
 }
 
 @HiltViewModel
 class MovieViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
+    private val movieUseCase: MovieUseCase,
     @MainDispatcher mainDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel(mainDispatcher, ioDispatcher) {
@@ -29,30 +30,89 @@ class MovieViewModel @Inject constructor(
     val actionView: LiveData<MovieViewAction>
         get() = _actionView
 
-    fun fetchMovies(
-        id: CategoryEnum,
-        isConnected: Boolean
-    ): LiveData<MutableList<TmdMovie>> {
-
-        val popularMoviesLiveData = MutableLiveData<MutableList<TmdMovie>>()
-        if (popularMoviesLiveData.value == null) {
-
-            mUiScope.launch {
-                try {
-                    val data = mIoScope.async {
-                        return@async movieRepository.getListMovies(isConnected, id)
-                    }.await()
-
-                    try {
-                        popularMoviesLiveData.value = data
-                    } catch (e: Exception) {
-                    }
-                } catch (e: Exception) {
-                }
-            }
-        }
-        return popularMoviesLiveData
+    fun fetchMovies(isConnected: Boolean) {
+        fetchPopularMovies(isConnected)
+        fetchTodayMovies(isConnected)
+        fetchRatedMovies(isConnected)
+        fetchClassicMovies(isConnected)
     }
 
-    fun getListMovies() = movieRepository.getMoviePoster()
+    private fun fetchPopularMovies(isConnected: Boolean) {
+        _actionView.value = MovieViewAction.Loading(true)
+        mUiScope.launch {
+            executePopularMovie(isConnected)
+        }
+    }
+
+    private fun fetchRatedMovies(isConnected: Boolean) {
+        _actionView.value = MovieViewAction.Loading(true)
+        mUiScope.launch {
+            executeRatedMovie(isConnected)
+        }
+    }
+
+    private fun fetchTodayMovies(isConnected: Boolean) {
+        _actionView.value = MovieViewAction.Loading(true)
+        mUiScope.launch {
+            executeTodayMovie(isConnected)
+        }
+    }
+
+    private fun fetchClassicMovies(isConnected: Boolean) {
+        _actionView.value = MovieViewAction.Loading(true)
+        mUiScope.launch {
+            executeClassicMovie(isConnected)
+        }
+    }
+
+    private suspend fun executePopularMovie(connected: Boolean) {
+        mIoScope.async {
+            return@async movieUseCase.executePopularMovies(connected)
+        }.await().fold(::showError, ::showSuccessPopularMovie)
+    }
+
+    private suspend fun executeRatedMovie(connected: Boolean) {
+        mIoScope.async {
+            return@async movieUseCase.executeRatedMovies(connected)
+        }.await().fold(::showError, ::showSuccessRatedMovie)
+    }
+
+    private suspend fun executeTodayMovie(connected: Boolean) {
+        mIoScope.async {
+            return@async movieUseCase.executeTodayMovies(connected)
+        }.await().fold(::showError, ::showSuccessTodayMovie)
+    }
+
+    private suspend fun executeClassicMovie(connected: Boolean) {
+        mIoScope.async {
+            return@async movieUseCase.executeClassicMovies(connected)
+        }.await().fold(::showError, ::showSuccessClassicMovie)
+    }
+
+    private fun showError(failure: String) {
+        _actionView.value = MovieViewAction.Loading(false)
+        _actionView.value = MovieViewAction.Error(failure)
+    }
+
+    private fun showSuccessPopularMovie(value: MovieResponse) {
+        _actionView.value = MovieViewAction.Loading(false)
+        _actionView.value = MovieViewAction.SuccessPopularMovie(value)
+    }
+
+    private fun showSuccessTodayMovie(value: MovieResponse) {
+        _actionView.value = MovieViewAction.Loading(false)
+        _actionView.value = MovieViewAction.SuccessTodayMovie(value)
+    }
+
+    private fun showSuccessClassicMovie(value: MovieResponse) {
+        _actionView.value = MovieViewAction.Loading(false)
+        _actionView.value = MovieViewAction.SuccessClassicMovie(value)
+    }
+
+    private fun showSuccessRatedMovie(value: MovieResponse) {
+        _actionView.value = MovieViewAction.Loading(false)
+        _actionView.value = MovieViewAction.SuccessRatedMovie(value)
+    }
+
+    // fun getListMovies() = movieRepository.getMoviePoster()
 }

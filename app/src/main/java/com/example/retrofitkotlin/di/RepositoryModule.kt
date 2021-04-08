@@ -21,7 +21,6 @@ object RepositoryModule {
     fun provideDetailRepository(movieDao: MovieDao): DetailRepository =
         DetailRepositoryImpl(movieDao)
 
-    @Singleton
     @Provides
     fun provideRetroRepository(movieApi: MovieApi, movieDao: MovieDao): MovieRepository =
         MovieRepositoryImpl(movieApi, movieDao)
