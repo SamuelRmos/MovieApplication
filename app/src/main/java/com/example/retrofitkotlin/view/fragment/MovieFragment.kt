@@ -4,6 +4,7 @@ package com.example.retrofitkotlin.view.fragment
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +16,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.retrofitkotlin.binding.ImageBinding.setBackImage
 import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
 import com.example.retrofitkotlin.extensions.hide
-import com.example.retrofitkotlin.util.CategoryEnum
+import com.example.retrofitkotlin.extensions.show
+import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.view.adapter.MovieAdapter
+import com.example.retrofitkotlin.view.viewmodel.MovieViewAction
 import com.example.retrofitkotlin.view.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
+private const val TAG = "MovieFragment"
 
 @AndroidEntryPoint
 class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -56,8 +61,55 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         return binding.root
     }
 
-    private fun getPosterHome() {
-        val list = movieViewModel.getListMovies()
+    private fun subscribeUi() {
+        fetchMovies(isNetworkAvailable(context))
+
+        movieViewModel.actionView.observe(viewLifecycleOwner, { state ->
+            when (state) {
+                is MovieViewAction.SuccessPopularMovie -> {
+                    binding.rvMostPopular.adapter = mPopularAdapter
+                    mPopularAdapter.updateMovieList(state.list.results)
+                }
+
+                is MovieViewAction.SuccessRatedMovie -> {
+                    binding.rvRated.adapter = mRatedAdapter
+                    mRatedAdapter.updateMovieList(state.list.results)
+                }
+
+                is MovieViewAction.SuccessTodayMovie -> {
+                    binding.rvToday.adapter = mTodayAdapter
+                    mTodayAdapter.updateMovieList(state.list.results)
+                    getPosterHome(state.list.results)
+                }
+
+                is MovieViewAction.SuccessClassicMovie -> {
+                    binding.rvClassic.adapter = mClassicAdapter
+                    mClassicAdapter.updateMovieList(state.list.results)
+                }
+
+                is MovieViewAction.Loading -> {
+                    if (!state.loading) {
+                        binding.progressbar.hide()
+                    } else binding.progressbar.show()
+                }
+
+                is MovieViewAction.Error -> {
+                    Log.e(TAG, "Error get list movies: ${state.message}")
+                }
+            }
+        })
+    }
+
+    private fun fetchMovies(isConnected: Boolean) {
+        with(movieViewModel) {
+            fetchRatedMovies(isConnected)
+            fetchPopularMovies(isConnected)
+            fetchTodayMovies(isConnected)
+            fetchClassicMovies(isConnected)
+        }
+    }
+
+    private fun getPosterHome(list: List<Movie>) {
         for (position in 0..10) {
             val imageView = ImageView(context)
             val layout = FrameLayout.LayoutParams(
@@ -67,6 +119,7 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
             imageView.layoutParams = layout
             imageView.scaleType = ImageView.ScaleType.FIT_XY
+
             binding.vpPosterMostPopular.apply {
                 setInAnimation(context, android.R.anim.slide_in_left)
                 setOutAnimation(context, android.R.anim.slide_out_right)
@@ -75,28 +128,6 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             imageView.setBackImage(list[position].poster_path)
             binding.vpPosterMostPopular.addView(imageView)
         }
-    }
-
-    private fun subscribeUi() {
-        with(binding) {
-            rvMostPopular.adapter = mPopularAdapter
-            getListMovie(CategoryEnum.POPULAR, mPopularAdapter)
-            rvRated.adapter = mRatedAdapter
-            getListMovie(CategoryEnum.RATED, mRatedAdapter)
-            rvToday.adapter = mTodayAdapter
-            getListMovie(CategoryEnum.TODAY, mTodayAdapter)
-            rvClassic.adapter = mClassicAdapter
-            getListMovie(CategoryEnum.CLASSIC, mClassicAdapter)
-        }
-    }
-
-    private fun getListMovie(categoryId: CategoryEnum, adapter: MovieAdapter) {
-        movieViewModel.fetchMovies(categoryId, isNetworkAvailable(context))
-            .observe(viewLifecycleOwner, {
-                adapter.updateMovieList(it)
-                getPosterHome()
-                binding.progressbar.hide()
-            })
     }
 
     @Suppress("DEPRECATION")

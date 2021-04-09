@@ -8,10 +8,10 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
 import com.example.retrofitkotlin.extensions.toTransitionGroup
-import com.example.retrofitkotlin.model.TmdMovie
+import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.view.fragment.MovieFragmentDirections
 
-class MovieAdapter(list: MutableList<TmdMovie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter(list: MutableList<Movie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     private var items = list
     private lateinit var binding: ItemLayoutBinding
@@ -23,7 +23,7 @@ class MovieAdapter(list: MutableList<TmdMovie>) : RecyclerView.Adapter<MovieAdap
         return ViewHolder(binding)
     }
 
-    fun updateMovieList(movies: List<TmdMovie>) {
+    fun updateMovieList(movies: List<Movie>) {
         items.clear()
         items.addAll(movies)
         notifyDataSetChanged()
@@ -39,7 +39,7 @@ class MovieAdapter(list: MutableList<TmdMovie>) : RecyclerView.Adapter<MovieAdap
 
     override fun getItemCount(): Int = items.size
 
-    private fun createOnClickListener(movie: TmdMovie): View.OnClickListener {
+    private fun createOnClickListener(movie: Movie): View.OnClickListener {
         return View.OnClickListener {
             it.findNavController().navigate(
                 MovieFragmentDirections.actionDetailsFragment(movie),
@@ -51,7 +51,7 @@ class MovieAdapter(list: MutableList<TmdMovie>) : RecyclerView.Adapter<MovieAdap
     class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, item: TmdMovie) {
+        fun bind(listener: View.OnClickListener, item: Movie) {
             binding.apply {
                 clickListener = listener
                 movie = item

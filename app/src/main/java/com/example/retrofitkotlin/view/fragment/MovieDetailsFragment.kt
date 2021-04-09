@@ -12,7 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.retrofitkotlin.R
 import com.example.retrofitkotlin.databinding.DetailFragmentBinding
 import com.example.retrofitkotlin.extensions.hide
-import com.example.retrofitkotlin.model.TmdMovie
+import com.example.retrofitkotlin.model.Movie
 
 class MovieDetailsFragment : Fragment() {
 
@@ -47,7 +47,7 @@ class MovieDetailsFragment : Fragment() {
         bind(arg.movie)
     }
 
-    private fun bind(item: TmdMovie) {
+    private fun bind(item: Movie) {
         binding.clickListener = View.OnClickListener {
             it.findNavController().navigate(MovieDetailsFragmentDirections.actionMovieFragment())
         }

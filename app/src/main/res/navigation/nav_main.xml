@@ -26,6 +26,6 @@
             app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="movie"
-            app:argType="com.example.retrofitkotlin.model.TmdMovie" />
+            app:argType="com.example.retrofitkotlin.model.Movie" />
     </fragment>
 </navigation>

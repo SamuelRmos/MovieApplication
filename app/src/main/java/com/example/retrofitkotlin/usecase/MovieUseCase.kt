@@ -1,26 +1,23 @@
-package com.example.retrofitkotlin.repository
+package com.example.retrofitkotlin.usecase
 
 import com.example.retrofitkotlin.functional.Either
-import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.util.CategoryEnum
 
-interface MovieRepository {
-    suspend fun getListPopularMovies(
+interface MovieUseCase {
+    suspend fun executePopularMovies(
         isConnected: Boolean,
     ): Either<String, MovieResponse>
 
-    suspend fun getListRatedMovies(
+    suspend fun executeRatedMovies(
         isConnected: Boolean,
     ): Either<String, MovieResponse>
 
-    suspend fun getListTodayMovies(
+    suspend fun executeTodayMovies(
         isConnected: Boolean,
     ): Either<String, MovieResponse>
 
-    suspend fun getListClassicMovies(
+    suspend fun executeClassicMovies(
         isConnected: Boolean,
     ): Either<String, MovieResponse>
-
-    fun getMoviePoster(): MutableList<Movie>
 }
