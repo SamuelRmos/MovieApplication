@@ -5,22 +5,6 @@ import retrofit2.Response
 
 open class BaseRepository {
 
-//    suspend fun <T : Any> safeApiCall(
-//        call: suspend () -> Response<T>,
-//        errorMessage: String
-//    ): T? {
-//
-//        val result = safeApiResult(call, errorMessage)
-//        var data: T? = null
-//
-//        when (result) {
-//            is Either.Success -> data = result.data
-//            is Either.Error -> "$errorMessage & Exception - ${result.errorData}"
-//        }
-//
-//        return data
-//    }
-
     suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>, errorMessage: String):
             Either<String, T> {
         val response = call.invoke()

@@ -30,35 +30,28 @@ class MovieViewModel @Inject constructor(
     val actionView: LiveData<MovieViewAction>
         get() = _actionView
 
-    fun fetchMovies(isConnected: Boolean) {
-        fetchPopularMovies(isConnected)
-        fetchTodayMovies(isConnected)
-        fetchRatedMovies(isConnected)
-        fetchClassicMovies(isConnected)
-    }
-
-    private fun fetchPopularMovies(isConnected: Boolean) {
+    fun fetchPopularMovies(isConnected: Boolean) {
         _actionView.value = MovieViewAction.Loading(true)
         mUiScope.launch {
             executePopularMovie(isConnected)
         }
     }
 
-    private fun fetchRatedMovies(isConnected: Boolean) {
+    fun fetchRatedMovies(isConnected: Boolean) {
         _actionView.value = MovieViewAction.Loading(true)
         mUiScope.launch {
             executeRatedMovie(isConnected)
         }
     }
 
-    private fun fetchTodayMovies(isConnected: Boolean) {
+    fun fetchTodayMovies(isConnected: Boolean) {
         _actionView.value = MovieViewAction.Loading(true)
         mUiScope.launch {
             executeTodayMovie(isConnected)
         }
     }
 
-    private fun fetchClassicMovies(isConnected: Boolean) {
+    fun fetchClassicMovies(isConnected: Boolean) {
         _actionView.value = MovieViewAction.Loading(true)
         mUiScope.launch {
             executeClassicMovie(isConnected)

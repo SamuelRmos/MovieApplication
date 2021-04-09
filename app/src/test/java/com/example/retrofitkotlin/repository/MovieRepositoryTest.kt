@@ -6,14 +6,13 @@ import com.example.retrofitkotlin.base.BaseTest
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.network.MovieApi
 import com.example.retrofitkotlin.persistence.MovieDao
-import com.example.retrofitkotlin.util.CategoryEnum
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovie
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovieList
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
-import junit.framework.Assert.*
+import junit.framework.Assert.assertEquals
+import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -25,25 +24,168 @@ import java.net.HttpURLConnection
 @RunWith(JUnit4::class)
 class MovieRepositoryTest : BaseTest() {
 
-    //region constants
-
-    //end region constants
-
-    //region helper fields
-
     private lateinit var movieRepositoryImpl: MovieRepositoryImpl
     private val movieDao = mockk<MovieDao>(relaxed = true)
     private val movieApi = mockk<MovieApi>()
-
-    // end region helper fields
+    private val mockResponse = mockk<Response<MovieResponse>>()
 
     @Before
     fun setup() {
+        movieRepositoryImpl = MovieRepositoryImpl(movieApi, movieDao)
         super.setUp()
     }
 
     @Test
-    fun `movieRepoTest is connected and getListMovies retrieve data success POPULAR `() =
+    fun `Check getListPopularMovies is connected return data success`() = runBlocking {
+
+        every { mockResponse.isSuccessful } returns true
+        every { mockResponse.body() } returns MovieResponse(listOf(mockMovie()))
+
+        coEvery { movieApi.getPopularMovieAsync().await() } returns mockResponse
+
+        val dataReceived = movieRepositoryImpl.getListPopularMovies(true)
+
+        assertNotNull(dataReceived)
+        assert(dataReceived.isSuccess)
+    }
+
+    @Test
+    fun `Check getListPopularMovies is connected return data error`() = runBlocking {
+
+        every { mockResponse.isSuccessful } returns false
+        every { mockResponse.body() } returns MovieResponse(listOf(mockMovie()))
+
+        coEvery { movieApi.getPopularMovieAsync().await() } returns mockResponse
+
+        val dataReceived = movieRepositoryImpl.getListPopularMovies(true)
+
+        assertNotNull(dataReceived)
+        assert(dataReceived.isError)
+    }
+
+    @Test
+    fun `Check getListRatedMovies is connected and getListMovies retrieve data success`() =
+        runBlocking {
+
+            every { mockResponse.isSuccessful } returns true
+            every { mockResponse.body() } returns MovieResponse(listOf(mockMovie()))
+
+            coEvery { movieApi.getRatedMovieAsync().await() } returns mockResponse
+
+            val dataReceived = movieRepositoryImpl.getListRatedMovies(true)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isSuccess)
+        }
+
+    @Test
+    fun `Check getListRatedMovies is connected and retrieve data error`() =
+        runBlocking {
+
+            every { mockResponse.isSuccessful } returns false
+            coEvery { movieApi.getRatedMovieAsync().await() } returns mockResponse
+
+            val dataReceived = movieRepositoryImpl.getListRatedMovies(true)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isError)
+        }
+
+    @Test
+    fun `Check getListTodayMovies is connected and retrieve data success`() =
+        runBlocking {
+
+            every { mockResponse.isSuccessful } returns true
+            every { mockResponse.body() } returns MovieResponse(listOf(mockMovie()))
+
+            coEvery { movieApi.getTodayMovieAsync().await() } returns mockResponse
+
+            val dataReceived = movieRepositoryImpl.getListTodayMovies(true)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isSuccess)
+        }
+
+    @Test
+    fun `Check getListTodayMovies is connected and retrieve data error`() =
+        runBlocking {
+
+            every { mockResponse.isSuccessful } returns false
+            coEvery { movieApi.getTodayMovieAsync().await() } returns mockResponse
+
+            val dataReceived = movieRepositoryImpl.getListTodayMovies(true)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isError)
+        }
+
+    @Test
+    fun `Check getListClassicMovies is connected and retrieve data success`() =
+        runBlocking {
+
+            every { mockResponse.isSuccessful } returns true
+            every { mockResponse.body() } returns MovieResponse(listOf(mockMovie()))
+
+            coEvery { movieApi.getClassicMovieAsync().await() } returns mockResponse
+
+            val dataReceived = movieRepositoryImpl.getListClassicMovies(true)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isSuccess)
+        }
+
+    @Test
+    fun `Check getListClassicMovies is connected and retrieve data error`() =
+        runBlocking {
+
+            every { mockResponse.isSuccessful } returns false
+            coEvery { movieApi.getClassicMovieAsync().await() } returns mockResponse
+
+            val dataReceived = movieRepositoryImpl.getListClassicMovies(true)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isError)
+        }
+
+    @Test
+    fun `Check getListRatedMovies is not connected and retrieve data error`() =
+        runBlocking {
+            val dataReceived = movieRepositoryImpl.getListRatedMovies(false)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isError)
+        }
+
+
+    @Test
+    fun `Check getListClassicMovies is not connected and retrieve data error`() =
+        runBlocking {
+            val dataReceived = movieRepositoryImpl.getListClassicMovies(false)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isError)
+        }
+
+    @Test
+    fun `Check getListPopularMovies is not connected and retrieve data error`() =
+        runBlocking {
+            val dataReceived = movieRepositoryImpl.getListPopularMovies(false)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isError)
+        }
+
+    @Test
+    fun `Check getListTodayMovies is not connected and retrieve data error`() =
+        runBlocking {
+            val dataReceived = movieRepositoryImpl.getListTodayMovies(false)
+
+            assertNotNull(dataReceived)
+            assert(dataReceived.isError)
+        }
+
+    @Test
+    fun `movieRepoTest is connected and getListMovies retrieve data success RATED`() =
         runBlocking {
 
             mockNetworkResponseWithFileContent("movie_list", HttpURLConnection.HTTP_OK)
@@ -51,58 +193,7 @@ class MovieRepositoryTest : BaseTest() {
             every { movieDao.getMovieList() } returns mutableListOf()
             movieRepositoryImpl = MovieRepositoryImpl(createApi(), movieDao)
 
-            val dataReceived = movieRepositoryImpl.getListMovies(true, CategoryEnum.POPULAR)
-            val data = mockMovieList()
-
-            assertNotNull(dataReceived)
-            assertEquals(dataReceived!![0].id, data[0].id)
-            assertEquals(dataReceived[0].title, data[0].title)
-            assertEquals(dataReceived[0].overview, data[0].overview)
         }
-
-    @Test
-    fun `movieRepoTest is connected and getListMovies retrieve data success RATED`() = runBlocking {
-
-        mockNetworkResponseWithFileContent("movie_list", HttpURLConnection.HTTP_OK)
-
-        every { movieDao.getMovieList() } returns mutableListOf()
-        movieRepositoryImpl = MovieRepositoryImpl(createApi(), movieDao)
-
-        val dataReceived = movieRepositoryImpl.getListMovies(true, CategoryEnum.RATED)
-        val data = mockMovieList()
-
-        assertNotNull(dataReceived)
-        assertEquals(dataReceived!![0].id, data[0].id)
-        assertEquals(dataReceived[0].title, data[0].title)
-        assertEquals(dataReceived[0].overview, data[0].overview)
-    }
-
-    @Test
-    fun `movieRepoTest is connected and getListMovies retrieve data success CLASSIC`() = runBlocking {
-
-        mockNetworkResponseWithFileContent("movie_list", HttpURLConnection.HTTP_OK)
-
-        every { movieDao.getMovieList() } returns mutableListOf()
-        movieRepositoryImpl = MovieRepositoryImpl(createApi(), movieDao)
-
-        val dataReceived = movieRepositoryImpl.getListMovies(true, CategoryEnum.CLASSIC)
-        val data = mockMovieList()
-
-        assertNotNull(dataReceived)
-        assertEquals(dataReceived!![0].id, data[0].id)
-        assertEquals(dataReceived[0].title, data[0].title)
-        assertEquals(dataReceived[0].overview, data[0].overview)
-    }
-
-    @Test
-    fun `movieRepoTest not connected and getListMovies retrieve data fail`() = runBlocking {
-
-        movieRepositoryImpl = MovieRepositoryImpl(createApi(), movieDao)
-
-        val dataReceived = movieRepositoryImpl.getListMovies(false, CategoryEnum.POPULAR)
-
-        assertNull(dataReceived)
-    }
 
     @Test
     fun `getMoviePoster retrieve database success`() = runBlocking {
@@ -123,8 +214,6 @@ class MovieRepositoryTest : BaseTest() {
     fun `getListMovies is connected and getDataMovie id TODAY insert data in database and return data success`() =
         runBlocking {
 
-            val mockResponse = mockk<Response<MovieResponse>>()
-
             every { mockResponse.isSuccessful } returns true
             every { mockResponse.body() } returns MovieResponse(listOf(mockMovie()))
 
@@ -132,16 +221,5 @@ class MovieRepositoryTest : BaseTest() {
             every { movieDao.insertMovieList(any()) } returns Unit
 
             movieRepositoryImpl = MovieRepositoryImpl(movieApi, movieDao)
-
-            val dataReceived = movieRepositoryImpl.getListMovies(true, CategoryEnum.TODAY)
-            val data = mockMovieList()
-
-            assertNotNull(dataReceived)
-            verify { movieDao.insertMovieList(any()) }
-            assertEquals(dataReceived!![0].id, data[0].id)
-            assertEquals(dataReceived[0].title, data[0].title)
-            assertEquals(dataReceived[0].overview, data[0].overview)
         }
-
-
 }

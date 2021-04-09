@@ -62,7 +62,7 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun subscribeUi() {
-        movieViewModel.fetchMovies(isNetworkAvailable(context))
+        fetchMovies(isNetworkAvailable(context))
 
         movieViewModel.actionView.observe(viewLifecycleOwner, { state ->
             when (state) {
@@ -99,7 +99,16 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             }
         })
     }
-    
+
+    private fun fetchMovies(isConnected: Boolean) {
+        with(movieViewModel) {
+            fetchRatedMovies(isConnected)
+            fetchPopularMovies(isConnected)
+            fetchTodayMovies(isConnected)
+            fetchClassicMovies(isConnected)
+        }
+    }
+
     private fun getPosterHome(list: List<Movie>) {
         for (position in 0..10) {
             val imageView = ImageView(context)

@@ -23,9 +23,8 @@ class MovieRepositoryImpl @Inject constructor(
         } else errorConnection()
     }
 
-    override suspend fun getListRatedMovies(
-        isConnected: Boolean,
-    ): Either<String, MovieResponse> {
+    override suspend fun getListRatedMovies(isConnected: Boolean)
+            : Either<String, MovieResponse> {
         return if (isConnected) {
             safeApiCall(
                 call = { movieApi.getRatedMovieAsync().await() },
