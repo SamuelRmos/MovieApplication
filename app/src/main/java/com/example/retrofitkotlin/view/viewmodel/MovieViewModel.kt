@@ -16,6 +16,8 @@ sealed class MovieViewAction {
     open class SuccessTodayMovie(val list: MovieResponse) : MovieViewAction()
     open class SuccessClassicMovie(val list: MovieResponse) : MovieViewAction()
     open class Loading(val loading: Boolean) : MovieViewAction()
+    open class ShowComponent : MovieViewAction()
+    open class HideComponent : MovieViewAction()
     open class Error(val message: String) : MovieViewAction()
 }
 
@@ -55,6 +57,14 @@ class MovieViewModel @Inject constructor(
         _actionView.value = MovieViewAction.Loading(true)
         mUiScope.launch {
             executeClassicMovie(isConnected)
+        }
+    }
+
+    fun stateLoading(loading: Boolean) {
+        if (loading) {
+            _actionView.value = MovieViewAction.HideComponent()
+        } else {
+            _actionView.value = MovieViewAction.ShowComponent()
         }
     }
 

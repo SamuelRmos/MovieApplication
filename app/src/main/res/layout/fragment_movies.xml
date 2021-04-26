@@ -37,99 +37,67 @@
 
                 <TextView
                     android:id="@+id/tv_mostPopular"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto"
-                    android:padding="10dp"
+                    style="@style/TextTitle"
                     android:text="@string/most_popular"
-                    android:textColor="@color/colorText"
-                    android:textSize="25sp"
+
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/vp_PosterMostPopular" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_mostPopular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:padding="4dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    style="@style/RecyclerViewStyle"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_mostPopular"
                     tools:listitem="@layout/item_layout" />
 
                 <TextView
                     android:id="@+id/tv_rated"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto"
-                    android:padding="10dp"
+                    style="@style/TextTitle"
                     android:text="@string/top_rated"
-                    android:textColor="@color/colorText"
-                    android:textSize="25sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_mostPopular" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_rated"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:padding="4dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    style="@style/RecyclerViewStyle"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_rated"
                     tools:listitem="@layout/item_layout" />
 
                 <TextView
                     android:id="@+id/tv_today"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto"
-                    android:padding="10dp"
+                    style="@style/TextTitle"
                     android:text="@string/top_10_today"
-                    android:textColor="@color/colorText"
-                    android:textSize="25sp"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_rated" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_rated"
+                    app:layout_constraintBottom_toTopOf="@+id/rv_today"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_today"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:padding="4dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    style="@style/RecyclerViewStyle"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_today"
                     tools:listitem="@layout/item_layout" />
 
                 <TextView
                     android:id="@+id/tv_classic"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:fontFamily="@font/roboto"
-                    android:padding="10dp"
+                    style="@style/TextTitle"
                     android:text="@string/classics"
-                    android:textColor="@color/colorText"
-                    android:textSize="25sp"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_today" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_classic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:padding="4dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    style="@style/RecyclerViewStyle"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_classic"
                     tools:listitem="@layout/item_layout" />
 
                 <ProgressBar
-                    android:layout_width="300dp"
-                    android:layout_height="30dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:id="@+id/progressbar"
                     android:layout_gravity="center"
-                    android:indeterminateOnly="true"
-                    style="?android:attr/progressBarStyleHorizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

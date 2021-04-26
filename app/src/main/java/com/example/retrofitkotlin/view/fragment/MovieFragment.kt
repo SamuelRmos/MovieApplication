@@ -27,7 +27,7 @@ import javax.inject.Inject
 private const val TAG = "MovieFragment"
 
 @AndroidEntryPoint
-class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI {
 
     private val movieViewModel by viewModels<MovieViewModel>()
 
@@ -54,15 +54,56 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         binding = FragmentMoviesBinding.inflate(inflater, container, false)
         binding.refreshLayout.apply {
             setOnRefreshListener(this@MovieFragment)
-            setDistanceToTriggerSync(500)
         }
 
-        subscribeUi()
+        observeData()
         return binding.root
     }
 
-    private fun subscribeUi() {
-        fetchMovies(isNetworkAvailable(context))
+    override fun getMovies(isConnected: Boolean) {
+        with(movieViewModel) {
+            fetchRatedMovies(isConnected)
+            fetchPopularMovies(isConnected)
+            fetchTodayMovies(isConnected)
+            fetchClassicMovies(isConnected)
+        }
+    }
+
+    override fun getPosterHome(list: List<Movie>) {
+        for (position in 0..10) {
+            val imageView = ImageView(context)
+            val layout = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+
+            imageView.layoutParams = layout
+            imageView.scaleType = ImageView.ScaleType.FIT_XY
+
+            binding.vpPosterMostPopular.apply {
+                setInAnimation(context, android.R.anim.slide_in_left)
+                setOutAnimation(context, android.R.anim.slide_out_right)
+            }
+
+            imageView.setBackImage(list[position].poster_path)
+            binding.vpPosterMostPopular.addView(imageView)
+
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    override fun isNetworkAvailable(context: Context?): Boolean {
+        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        return cm.activeNetworkInfo!!.isConnectedOrConnecting
+    }
+
+    override fun onRefresh() {
+        observeData()
+        binding.refreshLayout.isRefreshing = false
+    }
+
+    override fun observeData() {
+        getMovies(isNetworkAvailable(context))
 
         movieViewModel.actionView.observe(viewLifecycleOwner, { state ->
             when (state) {
@@ -87,12 +128,9 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     mClassicAdapter.updateMovieList(state.list.results)
                 }
 
-                is MovieViewAction.Loading -> {
-                    if (!state.loading) {
-                        binding.progressbar.hide()
-                    } else binding.progressbar.show()
-                }
-
+                is MovieViewAction.Loading -> movieViewModel.stateLoading(state.loading)
+                is MovieViewAction.ShowComponent -> showComponent()
+                is MovieViewAction.HideComponent -> hideComponent()
                 is MovieViewAction.Error -> {
                     Log.e(TAG, "Error get list movies: ${state.message}")
                 }
@@ -100,44 +138,23 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         })
     }
 
-    private fun fetchMovies(isConnected: Boolean) {
-        with(movieViewModel) {
-            fetchRatedMovies(isConnected)
-            fetchPopularMovies(isConnected)
-            fetchTodayMovies(isConnected)
-            fetchClassicMovies(isConnected)
+    override fun showComponent() {
+        with(binding) {
+            progressbar.hide()
+            tvMostPopular.show()
+            tvToday.show()
+            tvRated.show()
+            tvClassic.show()
         }
     }
 
-    private fun getPosterHome(list: List<Movie>) {
-        for (position in 0..10) {
-            val imageView = ImageView(context)
-            val layout = FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-
-            imageView.layoutParams = layout
-            imageView.scaleType = ImageView.ScaleType.FIT_XY
-
-            binding.vpPosterMostPopular.apply {
-                setInAnimation(context, android.R.anim.slide_in_left)
-                setOutAnimation(context, android.R.anim.slide_out_right)
-            }
-
-            imageView.setBackImage(list[position].poster_path)
-            binding.vpPosterMostPopular.addView(imageView)
+    override fun hideComponent() {
+        with(binding) {
+            progressbar.show()
+            tvMostPopular.hide()
+            tvToday.hide()
+            tvRated.hide()
+            tvClassic.hide()
         }
-    }
-
-    @Suppress("DEPRECATION")
-    private fun isNetworkAvailable(context: Context?): Boolean {
-        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo!!.isConnectedOrConnecting
-    }
-
-    override fun onRefresh() {
-        subscribeUi()
-        binding.refreshLayout.isRefreshing = false
     }
 }
