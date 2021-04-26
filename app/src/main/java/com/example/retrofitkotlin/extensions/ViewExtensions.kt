@@ -2,6 +2,7 @@ package com.example.retrofitkotlin.extensions
 
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 
@@ -15,6 +16,14 @@ fun ProgressBar.hide() {
 
 fun ProgressBar.show() {
     visibility = View.VISIBLE
+}
+
+fun TextView.show() {
+    visibility = View.VISIBLE
+}
+
+fun TextView.hide() {
+    visibility = View.GONE
 }
 
 fun View.toTransitionGroup() = this to transitionName

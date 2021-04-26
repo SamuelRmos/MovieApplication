@@ -44,16 +44,17 @@
 
                     <ImageView
                         android:id="@+id/iv_Poster"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                        android:layout_width="310dp"
+                        android:layout_height="290dp"
+                        android:layout_marginTop="50dp"
                         android:transitionName="@{@string/transition_image(movie.id)}"
                         android:adjustViewBounds="true"
                         app:layout_constraintDimensionRatio="1:1.2"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        android:scaleType="fitXY"
-                        app:loadImage="@{movie.backdrop_path}" />
+                        app:loadImage="@{movie.backdrop_path}"
+                        android:contentDescription="@string/image_cover" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

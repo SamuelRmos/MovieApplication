@@ -4,10 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import com.example.retrofitkotlin.databinding.ItemLayoutBinding
-import com.example.retrofitkotlin.extensions.toTransitionGroup
 import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.view.fragment.MovieFragmentDirections
 
@@ -32,28 +30,26 @@ class MovieAdapter(list: MutableList<Movie>) : RecyclerView.Adapter<MovieAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val movie = items[position]
         holder.apply {
-            bind(createOnClickListener(movie), movie)
+            bind(::createOnClickListener, movie)
             itemView.tag = position
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    private fun createOnClickListener(movie: Movie): View.OnClickListener {
-        return View.OnClickListener {
+    private fun createOnClickListener(movie: Movie) =
+        View.OnClickListener {
             it.findNavController().navigate(
                 MovieFragmentDirections.actionDetailsFragment(movie),
-                FragmentNavigatorExtras(binding.ivPoster.toTransitionGroup())
             )
         }
-    }
 
     class ViewHolder(private val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(listener: View.OnClickListener, item: Movie) {
+        fun bind(listener: (Movie) -> View.OnClickListener, item: Movie) {
             binding.apply {
-                clickListener = listener
+                clickListener = listener.invoke(item)
                 movie = item
                 executePendingBindings()
             }
