@@ -1,0 +1,30 @@
+package com.example.movieapp.binding
+
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.example.movieapp.util.Constants
+
+object ImageBinding {
+
+    @JvmStatic
+    @BindingAdapter("loadPhoto")
+    fun ImageView.setBackImage(url: String?) {
+        url?.let {
+            Glide.with(context)
+                .load(Constants.baseImageBack + it)
+                .into(this)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("loadImage")
+    fun ImageView.setDetailImage(url: String?) {
+        url?.let {
+            Glide.with(context)
+                .load(Constants.baseImageBack + it)
+                .into(this)
+        }
+    }
+
+}

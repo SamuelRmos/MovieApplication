@@ -9,6 +9,14 @@
 /.idea/assetWizardSettings.xml
 .DS_Store
 /build
-/captures
+/captures/
 .externalNativeBuild
 .cxx
+
+# Android Studio
+
+.idea
+#.idea/workspace.xml - remove # and delete .idea if it better suit your needs.
+/buildSrc/build/
+.navigation
+output.json/

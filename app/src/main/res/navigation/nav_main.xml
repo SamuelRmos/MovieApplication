@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/movieFragment"
-        android:name="com.example.retrofitkotlin.view.fragment.MovieFragment"
+        android:name="com.example.movieapp.view.fragment.MovieFragment"
         android:label="MovieFragment" >
         <action
             android:id="@+id/actionDetailsFragment"
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.example.retrofitkotlin.view.fragment.MovieDetailsFragment"
+        android:name="com.example.movieapp.view.fragment.MovieDetailsFragment"
         android:label="MovieDetailsFragment" >
         <action
             android:id="@+id/actionMovieFragment"
@@ -26,6 +26,6 @@
             app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="movie"
-            app:argType="com.example.retrofitkotlin.model.Movie" />
+            app:argType="com.example.movieapp.model.Movie" />
     </fragment>
 </navigation>
