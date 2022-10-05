@@ -6,6 +6,7 @@ import com.example.retrofitkotlin.repository.DetailRepository
 import com.example.retrofitkotlin.repository.DetailRepositoryImpl
 import com.example.retrofitkotlin.repository.MovieRepository
 import com.example.retrofitkotlin.repository.MovieRepositoryImpl
+import com.example.retrofitkotlin.service.ConnectionService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +23,6 @@ object RepositoryModule {
         DetailRepositoryImpl(movieDao)
 
     @Provides
-    fun provideRetroRepository(movieApi: MovieApi, movieDao: MovieDao): MovieRepository =
-        MovieRepositoryImpl(movieApi, movieDao)
+    fun provideRetroRepository(movieApi: MovieApi, movieDao: MovieDao, connectionService: ConnectionService): MovieRepository =
+        MovieRepositoryImpl(movieApi, movieDao, connectionService)
 }

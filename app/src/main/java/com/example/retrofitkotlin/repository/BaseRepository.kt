@@ -1,15 +1,22 @@
 package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.functional.Either
+import com.example.retrofitkotlin.service.ConnectionService
 import retrofit2.Response
 
-open class BaseRepository {
+open class BaseRepository(private val connectionService: ConnectionService) {
+    suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>): Either<String, T> {
 
-    suspend fun <T : Any> safeApiCall(call: suspend () -> Response<T>, errorMessage: String):
-            Either<String, T> {
-        val response = call.invoke()
-        if (response.isSuccessful) return Either.Success(response.body()!!)
+        if (connectionService.isNetworkAvailable().not()) {
+            return Either.Error("Device not connected")
+        }
 
-        return Either.Error(errorMessage)
+        with(call.invoke()) {
+            return if (isSuccessful) {
+                Either.Success(body()!!)
+            } else {
+                Either.Error("Error fetching movies data")
+            }
+        }
     }
 }

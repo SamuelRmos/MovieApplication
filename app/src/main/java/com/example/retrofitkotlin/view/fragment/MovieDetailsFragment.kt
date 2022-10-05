@@ -8,13 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.retrofitkotlin.databinding.DetailFragmentBinding
+import com.example.retrofitkotlin.databinding.MovieDetailFragmentBinding
 import com.example.retrofitkotlin.extensions.hide
 import com.example.retrofitkotlin.model.Movie
 
 class MovieDetailsFragment : Fragment(), MovieDetailsUI {
 
-    private lateinit var binding: DetailFragmentBinding
+    private lateinit var binding: MovieDetailFragmentBinding
     private val arg: MovieDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -23,7 +23,7 @@ class MovieDetailsFragment : Fragment(), MovieDetailsUI {
         savedInstanceState: Bundle?
     ): View {
         startPostponedEnterTransition()
-        binding = DetailFragmentBinding.inflate(inflater, container, false)
+        binding = MovieDetailFragmentBinding.inflate(inflater, container, false)
 
         val movieActivity = activity as AppCompatActivity
         binding.apply {

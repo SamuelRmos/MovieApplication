@@ -1,8 +1,5 @@
-
 package com.example.retrofitkotlin.view.fragment
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.retrofitkotlin.binding.ImageBinding.setBackImage
-import com.example.retrofitkotlin.databinding.FragmentMoviesBinding
+import com.example.retrofitkotlin.databinding.MovieFragmentBinding
 import com.example.retrofitkotlin.extensions.hide
 import com.example.retrofitkotlin.extensions.show
 import com.example.retrofitkotlin.model.Movie
@@ -31,7 +28,7 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI 
 
     private val movieViewModel by viewModels<MovieViewModel>()
 
-    private lateinit var binding: FragmentMoviesBinding
+    private lateinit var binding: MovieFragmentBinding
 
     @Inject
     lateinit var mPopularAdapter: MovieAdapter
@@ -51,22 +48,13 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI 
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        binding = MovieFragmentBinding.inflate(inflater, container, false)
         binding.refreshLayout.apply {
             setOnRefreshListener(this@MovieFragment)
         }
 
         observeData()
         return binding.root
-    }
-
-    override fun getMovies(isConnected: Boolean) {
-        with(movieViewModel) {
-            fetchRatedMovies(isConnected)
-            fetchPopularMovies(isConnected)
-            fetchTodayMovies(isConnected)
-            fetchClassicMovies(isConnected)
-        }
     }
 
     override fun getPosterHome(list: List<Movie>) {
@@ -91,21 +79,15 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI 
         }
     }
 
-    @Suppress("DEPRECATION")
-    override fun isNetworkAvailable(context: Context?): Boolean {
-        val cm = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        return cm.activeNetworkInfo!!.isConnectedOrConnecting
-    }
-
     override fun onRefresh() {
         observeData()
         binding.refreshLayout.isRefreshing = false
     }
 
     override fun observeData() {
-        getMovies(isNetworkAvailable(context))
+        movieViewModel.getMoviesData()
 
-        movieViewModel.actionView.observe(viewLifecycleOwner, { state ->
+        movieViewModel.actionView.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is MovieViewAction.SuccessPopularMovie -> {
                     binding.rvMostPopular.adapter = mPopularAdapter
@@ -135,7 +117,7 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI 
                     Log.e(TAG, "Error get list movies: ${state.message}")
                 }
             }
-        })
+        }
     }
 
     override fun showComponent() {

@@ -6,21 +6,13 @@ import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.util.CategoryEnum
 
 interface MovieRepository {
-    suspend fun getListPopularMovies(
-        isConnected: Boolean,
-    ): Either<String, MovieResponse>
+    suspend fun getListPopularMovies(): Either<String, MovieResponse>
 
-    suspend fun getListRatedMovies(
-        isConnected: Boolean,
-    ): Either<String, MovieResponse>
+    suspend fun getListRatedMovies(): Either<String, MovieResponse>
 
-    suspend fun getListTodayMovies(
-        isConnected: Boolean,
-    ): Either<String, MovieResponse>
+    suspend fun getListTodayMovies(): Either<String, MovieResponse>
 
-    suspend fun getListClassicMovies(
-        isConnected: Boolean,
-    ): Either<String, MovieResponse>
+    suspend fun getListClassicMovies(): Either<String, MovieResponse>
 
     fun getMoviePoster(): MutableList<Movie>
 }

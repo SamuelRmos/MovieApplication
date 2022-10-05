@@ -5,17 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.retrofitkotlin.databinding.ItemLayoutBinding
+import com.example.retrofitkotlin.databinding.ListItemLayoutBinding
 import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.view.fragment.MovieFragmentDirections
 
 class MovieAdapter(list: MutableList<Movie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
     private var items = list
-    private lateinit var binding: ItemLayoutBinding
+    private lateinit var binding: ListItemLayoutBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ItemLayoutBinding.inflate(
+        binding = ListItemLayoutBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
         return ViewHolder(binding)
@@ -44,7 +44,7 @@ class MovieAdapter(list: MutableList<Movie>) : RecyclerView.Adapter<MovieAdapter
             )
         }
 
-    class ViewHolder(private val binding: ItemLayoutBinding) :
+    class ViewHolder(private val binding: ListItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(listener: (Movie) -> View.OnClickListener, item: Movie) {

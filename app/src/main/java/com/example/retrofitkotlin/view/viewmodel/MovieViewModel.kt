@@ -6,8 +6,11 @@ import com.example.retrofitkotlin.di.MainDispatcher
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.usecase.MovieUseCase
 import com.example.retrofitkotlin.util.SingleLiveEvent
+import com.example.retrofitkotlin.view.viewmodel.MovieViewAction.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 sealed class MovieViewAction {
@@ -32,90 +35,88 @@ class MovieViewModel @Inject constructor(
     val actionView: LiveData<MovieViewAction>
         get() = _actionView
 
-    fun fetchPopularMovies(isConnected: Boolean) {
-        _actionView.value = MovieViewAction.Loading(true)
+    fun getMoviesData() {
+        fetchRatedMovies()
+        fetchPopularMovies()
+        fetchTodayMovies()
+        fetchClassicMovies()
+    }
+
+    private fun fetchPopularMovies() {
+        _actionView.value = Loading(true)
+        mUiScope.launch { executePopularMovie() }
+    }
+
+    private fun fetchRatedMovies() {
+        _actionView.value = Loading(true)
+        mUiScope.launch { executeRatedMovie() }
+    }
+
+    private fun fetchTodayMovies() {
+        _actionView.value = Loading(true)
         mUiScope.launch {
-            executePopularMovie(isConnected)
+            executeTodayMovie()
         }
     }
 
-    fun fetchRatedMovies(isConnected: Boolean) {
-        _actionView.value = MovieViewAction.Loading(true)
+    private fun fetchClassicMovies() {
+        _actionView.value = Loading(true)
         mUiScope.launch {
-            executeRatedMovie(isConnected)
-        }
-    }
-
-    fun fetchTodayMovies(isConnected: Boolean) {
-        _actionView.value = MovieViewAction.Loading(true)
-        mUiScope.launch {
-            executeTodayMovie(isConnected)
-        }
-    }
-
-    fun fetchClassicMovies(isConnected: Boolean) {
-        _actionView.value = MovieViewAction.Loading(true)
-        mUiScope.launch {
-            executeClassicMovie(isConnected)
+            executeClassicMovie()
         }
     }
 
     fun stateLoading(loading: Boolean) {
-        if (loading) {
-            _actionView.value = MovieViewAction.HideComponent()
-        } else {
-            _actionView.value = MovieViewAction.ShowComponent()
-        }
+        if (loading) _actionView.value = HideComponent() else _actionView.value = ShowComponent()
     }
 
-    private suspend fun executePopularMovie(connected: Boolean) {
+    private suspend fun executePopularMovie() {
         mIoScope.async {
-            return@async movieUseCase.executePopularMovies(connected)
+            return@async movieUseCase.executePopularMovies()
         }.await().fold(::showError, ::showSuccessPopularMovie)
     }
 
-    private suspend fun executeRatedMovie(connected: Boolean) {
+    private suspend fun executeRatedMovie() {
         mIoScope.async {
-            return@async movieUseCase.executeRatedMovies(connected)
+            return@async movieUseCase.executeRatedMovies()
         }.await().fold(::showError, ::showSuccessRatedMovie)
     }
 
-    private suspend fun executeTodayMovie(connected: Boolean) {
+    private suspend fun executeTodayMovie() {
         mIoScope.async {
-            return@async movieUseCase.executeTodayMovies(connected)
+            return@async movieUseCase.executeTodayMovies()
         }.await().fold(::showError, ::showSuccessTodayMovie)
     }
 
-    private suspend fun executeClassicMovie(connected: Boolean) {
+    private suspend fun executeClassicMovie() {
         mIoScope.async {
-            return@async movieUseCase.executeClassicMovies(connected)
+            return@async movieUseCase.executeClassicMovies()
         }.await().fold(::showError, ::showSuccessClassicMovie)
     }
 
     private fun showError(failure: String) {
-        _actionView.value = MovieViewAction.Loading(false)
-        _actionView.value = MovieViewAction.Error(failure)
+        _actionView.value = Loading(false)
+        _actionView.value = Error(failure)
     }
 
     private fun showSuccessPopularMovie(value: MovieResponse) {
-        _actionView.value = MovieViewAction.Loading(false)
-        _actionView.value = MovieViewAction.SuccessPopularMovie(value)
+        _actionView.value = Loading(false)
+        _actionView.value = SuccessPopularMovie(value)
     }
 
     private fun showSuccessTodayMovie(value: MovieResponse) {
-        _actionView.value = MovieViewAction.Loading(false)
-        _actionView.value = MovieViewAction.SuccessTodayMovie(value)
+        _actionView.value = Loading(false)
+        _actionView.value = SuccessTodayMovie(value)
     }
 
     private fun showSuccessClassicMovie(value: MovieResponse) {
-        _actionView.value = MovieViewAction.Loading(false)
-        _actionView.value = MovieViewAction.SuccessClassicMovie(value)
+        _actionView.value = Loading(false)
+        _actionView.value = SuccessClassicMovie(value)
     }
 
     private fun showSuccessRatedMovie(value: MovieResponse) {
-        _actionView.value = MovieViewAction.Loading(false)
-        _actionView.value = MovieViewAction.SuccessRatedMovie(value)
+        _actionView.value = Loading(false)
+        _actionView.value = SuccessRatedMovie(value)
     }
 
-    // fun getListMovies() = movieRepository.getMoviePoster()
 }

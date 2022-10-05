@@ -1,12 +1,15 @@
 package com.example.retrofitkotlin.di
 
+import android.content.Context
 import com.example.retrofitkotlin.BuildConfig
 import com.example.retrofitkotlin.network.MovieApi
+import com.example.retrofitkotlin.service.ConnectionService
 import com.example.retrofitkotlin.util.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -58,5 +61,11 @@ object ApiModule {
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
         .create(MovieApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideConnectionService(@ApplicationContext context: Context): ConnectionService {
+        return ConnectionService(context)
+    }
 
 }
