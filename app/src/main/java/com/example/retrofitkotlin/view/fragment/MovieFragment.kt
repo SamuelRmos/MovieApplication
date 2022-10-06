@@ -1,7 +1,6 @@
 package com.example.retrofitkotlin.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +18,8 @@ import com.example.retrofitkotlin.view.adapter.MovieAdapter
 import com.example.retrofitkotlin.view.viewmodel.MovieViewAction
 import com.example.retrofitkotlin.view.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 import javax.inject.Inject
-
-private const val TAG = "MovieFragment"
 
 @AndroidEntryPoint
 class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI {
@@ -113,9 +111,7 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI 
                 is MovieViewAction.Loading -> movieViewModel.stateLoading(state.loading)
                 is MovieViewAction.ShowComponent -> showComponent()
                 is MovieViewAction.HideComponent -> hideComponent()
-                is MovieViewAction.Error -> {
-                    Log.e(TAG, "Error get list movies: ${state.message}")
-                }
+                is MovieViewAction.Error -> Timber.e(state.message)
             }
         }
     }
