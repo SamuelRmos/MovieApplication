@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.functional
+package com.example.commons.functional
 
 /**
  * Represents a value of one of two possible types (a disjoint union).

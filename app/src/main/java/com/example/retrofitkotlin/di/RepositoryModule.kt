@@ -6,7 +6,7 @@ import com.example.retrofitkotlin.repository.DetailRepository
 import com.example.retrofitkotlin.repository.DetailRepositoryImpl
 import com.example.retrofitkotlin.repository.MovieRepository
 import com.example.retrofitkotlin.repository.MovieRepositoryImpl
-import com.example.retrofitkotlin.service.ConnectionService
+import com.example.commons.service.ConnectionService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

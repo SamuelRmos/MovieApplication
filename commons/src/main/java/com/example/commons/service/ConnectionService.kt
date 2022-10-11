@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.service
+package com.example.commons.service
 
 import android.content.Context
 import android.content.Context.CONNECTIVITY_SERVICE

@@ -1,10 +1,10 @@
 package com.example.retrofitkotlin.repository
 
-import com.example.retrofitkotlin.functional.Either
+import com.example.commons.functional.Either
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.network.MovieApi
 import com.example.retrofitkotlin.persistence.MovieDao
-import com.example.retrofitkotlin.service.ConnectionService
+import com.example.commons.service.ConnectionService
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(

@@ -1,7 +1,7 @@
-package com.example.retrofitkotlin.converters
+package com.example.commons.converters
 
 import androidx.room.TypeConverter
-import com.example.retrofitkotlin.util.CategoryEnum
+import com.example.commons.util.CategoryEnum
 
 class Converters {
     @TypeConverter

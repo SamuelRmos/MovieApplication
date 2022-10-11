@@ -1,0 +1,10 @@
+ext.versions = [
+        roomVersion         : '2.2.5',
+        timberVersion       : '5.0.1'
+]
+
+ext.libraries = [
+        roomRuntime         : "androidx.room:room-runtime:$versions.roomVersion",
+        roomCompiler        : "androidx.room:room-compiler:$versions.roomVersion",
+        timber              : "com.jakewharton.timber:timber:$versions.timberVersion"
+]

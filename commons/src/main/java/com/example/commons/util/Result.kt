@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.network
+package com.example.commons.util
 
 import java.lang.Exception
 

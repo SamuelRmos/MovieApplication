@@ -1,10 +1,9 @@
 package com.example.retrofitkotlin.di
 
 import android.content.Context
+import com.example.commons.service.ConnectionService
 import com.example.retrofitkotlin.BuildConfig
 import com.example.retrofitkotlin.network.MovieApi
-import com.example.retrofitkotlin.service.ConnectionService
-import com.example.retrofitkotlin.util.Constants
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides

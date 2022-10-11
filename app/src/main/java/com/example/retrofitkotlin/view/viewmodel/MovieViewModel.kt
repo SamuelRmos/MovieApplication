@@ -5,7 +5,7 @@ import com.example.retrofitkotlin.di.IoDispatcher
 import com.example.retrofitkotlin.di.MainDispatcher
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.usecase.MovieUseCase
-import com.example.retrofitkotlin.util.SingleLiveEvent
+import com.example.commons.util.SingleLiveEvent
 import com.example.retrofitkotlin.view.viewmodel.MovieViewAction.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

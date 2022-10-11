@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin.repository
 
-import com.example.retrofitkotlin.functional.Either
-import com.example.retrofitkotlin.service.ConnectionService
+import com.example.commons.functional.Either
+import com.example.commons.service.ConnectionService
 import retrofit2.Response
 
 open class BaseRepository(private val connectionService: ConnectionService) {

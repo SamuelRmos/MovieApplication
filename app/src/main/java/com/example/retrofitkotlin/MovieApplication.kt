@@ -1,7 +1,7 @@
 package com.example.retrofitkotlin
 
 import android.app.Application
-import com.example.retrofitkotlin.log.MovieLog.initLogging
+import com.example.commons.log.MovieLog.initLogging
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

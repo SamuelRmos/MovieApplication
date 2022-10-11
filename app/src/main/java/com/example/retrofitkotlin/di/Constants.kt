@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.util
+package com.example.retrofitkotlin.di
 
 import com.example.retrofitkotlin.BuildConfig
 

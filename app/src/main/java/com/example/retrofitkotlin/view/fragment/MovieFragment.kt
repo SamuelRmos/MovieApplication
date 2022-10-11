@@ -9,10 +9,10 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.commons.extensions.hide
+import com.example.commons.extensions.show
 import com.example.retrofitkotlin.binding.ImageBinding.setBackImage
 import com.example.retrofitkotlin.databinding.MovieFragmentBinding
-import com.example.retrofitkotlin.extensions.hide
-import com.example.retrofitkotlin.extensions.show
 import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.view.adapter.MovieAdapter
 import com.example.retrofitkotlin.view.viewmodel.MovieViewAction

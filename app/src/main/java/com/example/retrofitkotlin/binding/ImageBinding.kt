@@ -3,7 +3,7 @@ package com.example.retrofitkotlin.binding
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.example.retrofitkotlin.util.Constants
+import com.example.retrofitkotlin.di.Constants
 
 object ImageBinding {
 

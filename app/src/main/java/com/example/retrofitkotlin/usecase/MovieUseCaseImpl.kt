@@ -1,9 +1,8 @@
 package com.example.retrofitkotlin.usecase
 
-import com.example.retrofitkotlin.functional.Either
+import com.example.commons.functional.Either
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.repository.MovieRepository
-import com.example.retrofitkotlin.util.CategoryEnum
 import javax.inject.Inject
 
 class MovieUseCaseImpl @Inject constructor(private val movieRepository: MovieRepository) :

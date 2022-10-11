@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.retrofitkotlin.databinding.MovieDetailFragmentBinding
-import com.example.retrofitkotlin.extensions.hide
+import com.example.commons.extensions.hide
 import com.example.retrofitkotlin.model.Movie
 
 class MovieDetailsFragment : Fragment(), MovieDetailsUI {

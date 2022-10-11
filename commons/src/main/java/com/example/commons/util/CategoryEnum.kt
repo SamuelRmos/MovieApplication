@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.util
+package com.example.commons.util
 
 enum class CategoryEnum(private val id: Int) {
     POPULAR(1),

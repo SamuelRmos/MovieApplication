@@ -1,6 +1,6 @@
-package com.example.retrofitkotlin.log
+package com.example.commons.log
 
-import com.example.retrofitkotlin.BuildConfig
+import com.example.commons.BuildConfig
 import timber.log.Timber
 import timber.log.Timber.DebugTree
 
