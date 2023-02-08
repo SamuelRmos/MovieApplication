@@ -23,6 +23,9 @@ object RepositoryModule {
         DetailRepositoryImpl(movieDao)
 
     @Provides
-    fun provideRetroRepository(movieApi: MovieApi, movieDao: MovieDao, connectionService: ConnectionService): MovieRepository =
-        MovieRepositoryImpl(movieApi, movieDao, connectionService)
+    fun provideRetroRepository(
+        movieApi: MovieApi,
+        movieDao: MovieDao,
+        connectionService: ConnectionService
+    ): MovieRepository = MovieRepositoryImpl(movieApi, movieDao, connectionService)
 }
