@@ -6,15 +6,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
-import com.example.retrofitkotlin.binding.ImageBinding.artworkUrl
+import com.example.retrofitkotlin.model.Constants.artworkUrl
 import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.model.SampleMovieData
 import com.example.retrofitkotlin.model.placeholderImage
@@ -40,14 +40,7 @@ fun MovieCard(
 
 @Composable
 fun MovieCardContent(modifier: Modifier = Modifier, movie: Movie) {
-    Box(modifier.height(120.dp)) {
-        MovieTitle(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 5.dp),
-            title = movie.title
-        )
-        Spacer(Modifier.height(10.dp))
+    Box(modifier.height(180.dp)) {
         CoilImage(
             imageModel = { artworkUrl(movie.poster_path) },
             previewPlaceholder = placeholderImage(movie.id),
@@ -55,14 +48,11 @@ fun MovieCardContent(modifier: Modifier = Modifier, movie: Movie) {
                 imageState.drawable?.let {
                     Image(
                         bitmap = it.toBitmap().asImageBitmap(),
-                        contentDescription = movie.title
+                        contentDescription = movie.title,
+                        contentScale = ContentScale.FillBounds
                     )
                 }
-            },
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(bottom = 8.dp)
-                .size(80.dp)
+            }
         )
     }
 }

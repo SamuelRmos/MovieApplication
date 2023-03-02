@@ -41,7 +41,6 @@ dependencies {
     kapt(libraries.roomCompiler)
 
     implementation libraries.core
-    implementation libraries.appcompat
     implementation libraries.timber
 
     testImplementation libraries.junit

@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.view.viewmodel
+package com.example.retrofitkotlin.viewmodel
 
 import androidx.lifecycle.ViewModel
 import coil.ImageLoader

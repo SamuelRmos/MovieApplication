@@ -4,6 +4,7 @@ package com.example.retrofitkotlin.view.viewmodel
 
 import com.example.retrofitkotlin.repository.DetailRepositoryImpl
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovie
+import com.example.retrofitkotlin.viewmodel.MovieDetailViewModel
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.Assert.assertEquals

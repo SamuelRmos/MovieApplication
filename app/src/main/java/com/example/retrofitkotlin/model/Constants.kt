@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.di
+package com.example.retrofitkotlin.model
 
 import com.example.retrofitkotlin.BuildConfig
 
@@ -7,4 +7,6 @@ object Constants {
     var baseURL = "https://api.themoviedb.org/3/"
     var baseUrlImage = "https://image.tmdb.org/t/p/w500"
     var baseImageBack = "https://image.tmdb.org/t/p/original"
+
+    fun artworkUrl(image: String): String = baseImageBack + image
 }

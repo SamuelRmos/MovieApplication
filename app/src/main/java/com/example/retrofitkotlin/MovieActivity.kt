@@ -1,4 +1,4 @@
-package com.example.retrofitkotlin.view.activity
+package com.example.retrofitkotlin
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -6,9 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.view.WindowCompat
-import com.example.retrofitkotlin.MovieApp
 import com.example.retrofitkotlin.theme.MovieTheme
-import com.example.retrofitkotlin.view.viewmodel.RootViewModel
+import com.example.retrofitkotlin.viewmodel.RootViewModel
 import com.skydoves.landscapist.coil.LocalCoilImageLoader
 import dagger.hilt.android.AndroidEntryPoint
 

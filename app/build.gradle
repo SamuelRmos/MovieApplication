@@ -64,10 +64,6 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-
-    viewBinding.enabled = true
-    //noinspection DataBindingWithoutKapt
-    dataBinding.enabled true
 }
 
 dependencies {
@@ -99,34 +95,16 @@ dependencies {
 
     implementation libraries.whatIf
 
-    //LiveData
-    implementation libraries.liveData.extensions
-    implementation libraries.liveData.liveDataKtx
-
-    // Dagger
-    kapt(libraries.dagger.compiler)
-    kapt(libraries.dagger.processor)
-    implementation libraries.dagger.dagger2
-    implementation libraries.dagger.daggerAndroid
-    implementation libraries.dagger.support
-
-    kapt(libraries.glide.compilerGlibe)
-    implementation libraries.glide.libGlide
-
     // Hilt
     implementation libraries.hilt.hiltAndroid
     kapt(libraries.hilt.compilerHilt)
     implementation libraries.hilt.hitlCompose
-    // kapt libraries.hilt.compilerHiltAndroidx
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation libraries.kotlin
-    implementation libraries.appcompat
     implementation libraries.core
-    implementation libraries.constraitLayout
     implementation libraries.multidex
 
-    implementation libraries.navigation.fragment
     implementation libraries.navigation.ui
     implementation libraries.navigation.dynamics
     implementation libraries.legacySupport

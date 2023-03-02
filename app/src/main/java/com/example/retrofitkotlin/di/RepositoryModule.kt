@@ -19,8 +19,9 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideDetailRepository(movieDao: MovieDao): DetailRepository =
-        DetailRepositoryImpl(movieDao)
+    fun provideDetailRepository(movieDao: MovieDao): DetailRepository {
+        return DetailRepositoryImpl(movieDao)
+    }
 
     @Provides
     fun provideRetroRepository(

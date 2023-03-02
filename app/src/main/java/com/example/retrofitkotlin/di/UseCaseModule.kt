@@ -14,6 +14,7 @@ import javax.inject.Singleton
 object UseCaseModule {
 
     @Provides
-    fun providesUseCase(movieRepository: MovieRepository): MovieUseCase =
-        MovieUseCaseImpl(movieRepository)
+    fun providesUseCase(movieRepository: MovieRepository): MovieUseCase {
+        return MovieUseCaseImpl(movieRepository)
+    }
 }

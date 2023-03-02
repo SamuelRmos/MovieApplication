@@ -6,8 +6,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.example.retrofitkotlin.functional.Either
 import com.example.retrofitkotlin.model.MovieResponse
-import com.example.retrofitkotlin.repository.MovieRepositoryImpl
 import com.example.retrofitkotlin.usecase.MovieUseCase
+import com.example.retrofitkotlin.viewmodel.MovieViewModel
 import com.nhaarman.mockitokotlin2.atLeast
 import com.nhaarman.mockitokotlin2.verify
 import io.mockk.coEvery
