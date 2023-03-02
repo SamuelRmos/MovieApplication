@@ -12,8 +12,8 @@ ext.versions = [
         liveDataVersion          : '2.2.0',
         daggerVersion            : '2.23.2',
         glideVersion             : '4.11.0',
-        hiltVersion              : '2.33-beta',
-        hiltAndroidXVersion      : '1.0.0-alpha03',
+        hiltVersion              : '2.44.2',
+        hiltComposeNavigation      : '1.0.0',
         kotlinVersion            : '1.3.72',
         appcompatVersion         : '1.1.0',
         androidXCoreVersion      : '1.3.0',
@@ -33,7 +33,13 @@ ext.versions = [
         legacySupportVersion     : '1.0.0',
         jakartaVersion           : '2.3.3',
         javaxVersion             : '1.3.2',
-        buildToolsVersion        : '29.0.3'
+        buildToolsVersion        : '29.0.3',
+        activityCompose          : '1.6.1',
+        navigationCompose        : '2.5.3',
+        composeBom               : '2023.01.00',
+        materialCompose          : '1.3.1',
+        composeVersion           : '1.3.3',
+        landscapist              : "2.1.0"
 ]
 
 ext.libraries = [
@@ -54,7 +60,7 @@ ext.libraries = [
         ],
         coroutines     : [
                 kotlinAndroid : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.kotlinCoroutineVersion",
-                CoroutinesCore: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutineVersion"
+                coroutinesCore: "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.kotlinCoroutineVersion"
         ],
         materialDesign : "com.google.android.material:material:$versions.materialDesignVersion",
         whatIf         : "com.github.skydoves:whatif:$versions.whatIfVersion",
@@ -73,11 +79,10 @@ ext.libraries = [
                 libGlide     : "com.github.bumptech.glide:glide:$versions.glideVersion",
                 compilerGlibe: "com.github.bumptech.glide:compiler:$versions.glideVersion"
         ],
-        hilt           : [
-                hiltAndroid         : "com.google.dagger:hilt-android:$versions.hiltVersion",
-                compilerHilt        : "com.google.dagger:hilt-android-compiler:$versions.hiltVersion",
-                viewModelHilt       : "androidx.hilt:hilt-lifecycle-viewmodel:$versions.hiltAndroidXVersion",
-                compilerHiltAndroidx: "androidx.hilt:hilt-compiler:$versions.hiltAndroidXVersion"
+        hilt: [
+                hiltAndroid : "com.google.dagger:hilt-android:$versions.hiltVersion",
+                compilerHilt: "com.google.dagger:hilt-android-compiler:$versions.hiltVersion",
+                hitlCompose : "androidx.hilt:hilt-navigation-compose:$versions.hiltComposeNavigation"
         ],
         kotlin         : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$versions.kotlinVersion",
         appcompat      : "androidx.appcompat:appcompat:$versions.appcompatVersion",
@@ -107,5 +112,18 @@ ext.libraries = [
                 bind   : "jakarta.xml.bind:jakarta.xml.bind-api:$versions.jakartaVersion",
                 runtime: "org.glassfish.jaxb:jaxb-runtime:$versions.jakartaVersion"
         ],
-        javax          : "javax.annotation:javax.annotation-api:$versions.javaxVersion"
+        javax          : "javax.annotation:javax.annotation-api:$versions.javaxVersion",
+        compose        : [
+                activityCompose        : "androidx.activity:activity-compose:$versions.activityCompose",
+                navigationCompose      : "androidx.navigation:navigation-compose:$versions.navigationCompose",
+                androidxComposeBom     : "androidx.compose:compose-bom:$versions.composeBom",
+                androidxComposeMaterial: "androidx.compose.material:material:$versions.materialCompose",
+                composeUi              : "androidx.compose.ui:ui:$versions.composeVersion",
+                composeJunit           : "androidx.compose.ui:ui-test-junit4:$versions.composeVersion",
+                composeTest            : "androidx.compose.ui:ui-test-manifest:$versions.composeVersion",
+                composeTooling         : "androidx.compose.ui:ui-tooling:$versions.composeVersion",
+                composePreview         : "androidx.compose.ui:ui-tooling-preview:$versions.composeVersion",
+                composeUtil            : "androidx.compose.ui:ui-util:$versions.composeVersion"
+        ],
+        landscapistCoil: "com.github.skydoves:landscapist-coil:$versions.landscapist"
 ]

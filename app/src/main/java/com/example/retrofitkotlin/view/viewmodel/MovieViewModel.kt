@@ -1,122 +1,93 @@
 package com.example.retrofitkotlin.view.viewmodel
 
-import androidx.lifecycle.LiveData
-import com.example.retrofitkotlin.di.IoDispatcher
-import com.example.retrofitkotlin.di.MainDispatcher
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.retrofitkotlin.model.Movie
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.usecase.MovieUseCase
-import com.example.commons.util.SingleLiveEvent
-import com.example.retrofitkotlin.view.viewmodel.MovieViewAction.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-sealed class MovieViewAction {
-    open class SuccessPopularMovie(val list: MovieResponse) : MovieViewAction()
-    open class SuccessRatedMovie(val list: MovieResponse) : MovieViewAction()
-    open class SuccessTodayMovie(val list: MovieResponse) : MovieViewAction()
-    open class SuccessClassicMovie(val list: MovieResponse) : MovieViewAction()
-    open class Loading(val loading: Boolean) : MovieViewAction()
-    open class ShowComponent : MovieViewAction()
-    open class HideComponent : MovieViewAction()
-    open class Error(val message: String) : MovieViewAction()
-}
+data class MovieUiState(
+    val movie: List<Movie> = listOf(),
+    val loading: Boolean = false
+)
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(
-    private val movieUseCase: MovieUseCase,
-    @MainDispatcher mainDispatcher: CoroutineDispatcher,
-    @IoDispatcher ioDispatcher: CoroutineDispatcher
-) : BaseViewModel(mainDispatcher, ioDispatcher) {
+class MovieViewModel @Inject constructor(private val movieUseCase: MovieUseCase) : ViewModel() {
 
-    private val _actionView by lazy { SingleLiveEvent<MovieViewAction>() }
-    val actionView: LiveData<MovieViewAction>
-        get() = _actionView
+    var uiState by mutableStateOf(MovieUiState(loading = true))
+        private set
 
-    fun getMoviesData() {
+    init {
+        getMoviesData()
+    }
+
+    private fun getMoviesData() {
         fetchRatedMovies()
-        fetchPopularMovies()
-        fetchTodayMovies()
-        fetchClassicMovies()
+        // fetchPopularMovies()
+        //fetchTodayMovies()
+        //fetchClassicMovies()
     }
 
     private fun fetchPopularMovies() {
-        _actionView.value = Loading(true)
-        mUiScope.launch { executePopularMovie() }
+        // _actionView.value = Loading(true)
+        //  mUiScope.launch { executePopularMovie() }
     }
 
     private fun fetchRatedMovies() {
-        _actionView.value = Loading(true)
-        mUiScope.launch { executeRatedMovie() }
+        viewModelScope.launch { executeRatedMovie() }
     }
 
     private fun fetchTodayMovies() {
-        _actionView.value = Loading(true)
-        mUiScope.launch {
-            executeTodayMovie()
-        }
+        //_actionView.value = Loading(true)
+        // mUiScope.launch {
+        //      executeTodayMovie()
+        // }
     }
 
     private fun fetchClassicMovies() {
-        _actionView.value = Loading(true)
-        mUiScope.launch {
-            executeClassicMovie()
-        }
-    }
-
-    fun stateLoading(loading: Boolean) {
-        if (loading) _actionView.value = HideComponent() else _actionView.value = ShowComponent()
+        // _actionView.value = Loading(true)
+        //  mUiScope.launch {
+        //      executeClassicMovie()
+        //   }
     }
 
     private suspend fun executePopularMovie() {
-        mIoScope.async {
+        viewModelScope.async {
             return@async movieUseCase.executePopularMovies()
-        }.await().fold(::showError, ::showSuccessPopularMovie)
+        }.await().fold(::showError, ::updateUiState)
     }
 
     private suspend fun executeRatedMovie() {
-        mIoScope.async {
+        viewModelScope.async {
             return@async movieUseCase.executeRatedMovies()
-        }.await().fold(::showError, ::showSuccessRatedMovie)
+        }.await().fold(::showError, ::updateUiState)
     }
 
     private suspend fun executeTodayMovie() {
-        mIoScope.async {
-            return@async movieUseCase.executeTodayMovies()
-        }.await().fold(::showError, ::showSuccessTodayMovie)
+        //   mIoScope.async {
+        //        return@async movieUseCase.executeTodayMovies()
+        //    }.await().fold(::showError, ::updateUiState)
     }
 
     private suspend fun executeClassicMovie() {
-        mIoScope.async {
-            return@async movieUseCase.executeClassicMovies()
-        }.await().fold(::showError, ::showSuccessClassicMovie)
+        //    mIoScope.async {
+        //        return@async movieUseCase.executeClassicMovies()
+        //    }.await().fold(::showError, ::updateUiState)
     }
 
     private fun showError(failure: String) {
-        _actionView.value = Loading(false)
-        _actionView.value = Error(failure)
+        //  _actionView.value = Loading(false)
+        //  _actionView.value = Error(failure)
     }
 
-    private fun showSuccessPopularMovie(value: MovieResponse) {
-        _actionView.value = Loading(false)
-        _actionView.value = SuccessPopularMovie(value)
+    private fun updateUiState(value: MovieResponse) {
+        uiState = uiState.copy(loading = false, movie = value.results)
     }
-
-    private fun showSuccessTodayMovie(value: MovieResponse) {
-        _actionView.value = Loading(false)
-        _actionView.value = SuccessTodayMovie(value)
-    }
-
-    private fun showSuccessClassicMovie(value: MovieResponse) {
-        _actionView.value = Loading(false)
-        _actionView.value = SuccessClassicMovie(value)
-    }
-
-    private fun showSuccessRatedMovie(value: MovieResponse) {
-        _actionView.value = Loading(false)
-        _actionView.value = SuccessRatedMovie(value)
-    }
-
 }

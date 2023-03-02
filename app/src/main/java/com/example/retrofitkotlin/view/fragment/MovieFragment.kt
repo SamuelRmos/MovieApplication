@@ -14,12 +14,8 @@ import com.example.commons.extensions.show
 import com.example.retrofitkotlin.binding.ImageBinding.setBackImage
 import com.example.retrofitkotlin.databinding.MovieFragmentBinding
 import com.example.retrofitkotlin.model.Movie
-import com.example.retrofitkotlin.view.adapter.MovieAdapter
-import com.example.retrofitkotlin.view.viewmodel.MovieViewAction
 import com.example.retrofitkotlin.view.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI {
@@ -28,17 +24,17 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI 
 
     private lateinit var binding: MovieFragmentBinding
 
-    @Inject
-    lateinit var mPopularAdapter: MovieAdapter
-
-    @Inject
-    lateinit var mRatedAdapter: MovieAdapter
-
-    @Inject
-    lateinit var mTodayAdapter: MovieAdapter
-
-    @Inject
-    lateinit var mClassicAdapter: MovieAdapter
+//    @Inject
+//    lateinit var mPopularAdapter: MovieAdapter
+//
+//    @Inject
+//    lateinit var mRatedAdapter: MovieAdapter
+//
+//    @Inject
+//    lateinit var mTodayAdapter: MovieAdapter
+//
+//    @Inject
+//    lateinit var mClassicAdapter: MovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,37 +79,37 @@ class MovieFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, MovieUI 
     }
 
     override fun observeData() {
-        movieViewModel.getMoviesData()
-
-        movieViewModel.actionView.observe(viewLifecycleOwner) { state ->
-            when (state) {
-                is MovieViewAction.SuccessPopularMovie -> {
-                    binding.rvMostPopular.adapter = mPopularAdapter
-                    mPopularAdapter.updateMovieList(state.list.results)
-                }
-
-                is MovieViewAction.SuccessRatedMovie -> {
-                    binding.rvRated.adapter = mRatedAdapter
-                    mRatedAdapter.updateMovieList(state.list.results)
-                }
-
-                is MovieViewAction.SuccessTodayMovie -> {
-                    binding.rvToday.adapter = mTodayAdapter
-                    mTodayAdapter.updateMovieList(state.list.results)
-                    getPosterHome(state.list.results)
-                }
-
-                is MovieViewAction.SuccessClassicMovie -> {
-                    binding.rvClassic.adapter = mClassicAdapter
-                    mClassicAdapter.updateMovieList(state.list.results)
-                }
-
-                is MovieViewAction.Loading -> movieViewModel.stateLoading(state.loading)
-                is MovieViewAction.ShowComponent -> showComponent()
-                is MovieViewAction.HideComponent -> hideComponent()
-                is MovieViewAction.Error -> Timber.e(state.message)
-            }
-        }
+ //       movieViewModel.getMoviesData()
+//
+//        movieViewModel.actionView.observe(viewLifecycleOwner) { state ->
+//            when (state) {
+////                is MovieViewAction.SuccessPopularMovie -> {
+////                    binding.rvMostPopular.adapter = mPopularAdapter
+////                    mPopularAdapter.updateMovieList(state.list.results)
+////                }
+////
+////                is MovieViewAction.SuccessRatedMovie -> {
+////                    binding.rvRated.adapter = mRatedAdapter
+////                    mRatedAdapter.updateMovieList(state.list.results)
+////                }
+////
+////                is MovieViewAction.SuccessTodayMovie -> {
+////                    binding.rvToday.adapter = mTodayAdapter
+////                    mTodayAdapter.updateMovieList(state.list.results)
+////                    getPosterHome(state.list.results)
+////                }
+////
+////                is MovieViewAction.SuccessClassicMovie -> {
+////                    binding.rvClassic.adapter = mClassicAdapter
+////                    mClassicAdapter.updateMovieList(state.list.results)
+////                }
+//
+//                is MovieViewAction.Loading -> movieViewModel.stateLoading(state.loading)
+//                is MovieViewAction.ShowComponent -> showComponent()
+//                is MovieViewAction.HideComponent -> hideComponent()
+//                is MovieViewAction.Error -> Timber.e(state.message)
+//            }
+//        }
     }
 
     override fun showComponent() {

@@ -4,6 +4,7 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.example.retrofitkotlin.di.Constants
+import com.example.retrofitkotlin.di.Constants.baseImageBack
 
 object ImageBinding {
 
@@ -12,7 +13,7 @@ object ImageBinding {
     fun ImageView.setBackImage(url: String?) {
         url?.let {
             Glide.with(context)
-                .load(Constants.baseImageBack + it)
+                .load(baseImageBack + it)
                 .into(this)
         }
     }
@@ -22,9 +23,10 @@ object ImageBinding {
     fun ImageView.setDetailImage(url: String?) {
         url?.let {
             Glide.with(context)
-                .load(Constants.baseImageBack + it)
+                .load(baseImageBack + it)
                 .into(this)
         }
     }
 
+    fun artworkUrl(image: String): String = baseImageBack + image
 }

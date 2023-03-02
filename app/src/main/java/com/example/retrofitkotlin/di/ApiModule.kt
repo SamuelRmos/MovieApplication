@@ -1,6 +1,7 @@
 package com.example.retrofitkotlin.di
 
 import android.content.Context
+import coil.ImageLoader
 import com.example.commons.service.ConnectionService
 import com.example.retrofitkotlin.BuildConfig
 import com.example.retrofitkotlin.network.MovieApi
@@ -66,5 +67,12 @@ object ApiModule {
     fun provideConnectionService(@ApplicationContext context: Context): ConnectionService {
         return ConnectionService(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideImageLoader(@ApplicationContext context: Context): ImageLoader = ImageLoader
+        .Builder(context)
+        .build()
+
 
 }
