@@ -1,6 +1,6 @@
 package com.example.retrofitkotlin.usecase
 
-import com.example.retrofitkotlin.functional.Either
+import com.example.commons.functional.Either
 import com.example.retrofitkotlin.model.MovieResponse
 import com.example.retrofitkotlin.repository.MovieRepositoryImpl
 import io.mockk.coEvery
@@ -9,10 +9,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
-@RunWith(JUnit4::class)
 class MovieUseCaseImplTest {
 
     private val movieRepository = mockk<MovieRepositoryImpl>(relaxed = true)
@@ -29,11 +26,11 @@ class MovieUseCaseImplTest {
 
         val responseOk = Either.Success(response)
 
-        coEvery { movieRepository.getListPopularMovies(true) } returns responseOk
+        coEvery { movieRepository.getListPopularMovies() } returns responseOk
 
-        useCase.executePopularMovies(true)
+        useCase.executePopularMovies()
 
-        coVerify { movieRepository.getListPopularMovies(true) }
+        coVerify { movieRepository.getListPopularMovies() }
     }
 
     @Test
@@ -41,11 +38,11 @@ class MovieUseCaseImplTest {
 
         val responseOk = Either.Success(response)
 
-        coEvery { movieRepository.getListRatedMovies(true) } returns responseOk
+        coEvery { movieRepository.getListRatedMovies() } returns responseOk
 
-        useCase.executeRatedMovies(true)
+        useCase.executeRatedMovies()
 
-        coVerify { movieRepository.getListRatedMovies(true) }
+        coVerify { movieRepository.getListRatedMovies() }
     }
 
     @Test
@@ -53,11 +50,11 @@ class MovieUseCaseImplTest {
 
         val responseOk = Either.Success(response)
 
-        coEvery { movieRepository.getListTodayMovies(true) } returns responseOk
+        coEvery { movieRepository.getListTodayMovies() } returns responseOk
 
-        useCase.executeTodayMovies(true)
+        useCase.executeTodayMovies()
 
-        coVerify { movieRepository.getListTodayMovies(true) }
+        coVerify { movieRepository.getListTodayMovies() }
     }
 
     @Test
@@ -65,10 +62,10 @@ class MovieUseCaseImplTest {
 
         val responseOk = Either.Success(response)
 
-        coEvery { movieRepository.getListClassicMovies(true) } returns responseOk
+        coEvery { movieRepository.getListClassicMovies() } returns responseOk
 
-        useCase.executeClassicMovies(true)
+        useCase.executeClassicMovies()
 
-        coVerify { movieRepository.getListClassicMovies(true) }
+        coVerify { movieRepository.getListClassicMovies() }
     }
 }

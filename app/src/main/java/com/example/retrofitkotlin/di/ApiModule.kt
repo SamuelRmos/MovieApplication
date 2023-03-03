@@ -1,8 +1,11 @@
 package com.example.retrofitkotlin.di
 
 import android.content.Context
+import coil.ImageLoader
 import com.example.commons.service.ConnectionService
+import com.example.retrofitkotlin.model.Constants
 import com.example.retrofitkotlin.BuildConfig
+import com.example.retrofitkotlin.model.Constants.tmdbApiKey
 import com.example.retrofitkotlin.network.MovieApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
@@ -24,7 +27,7 @@ object ApiModule {
     private val authInterceptor = Interceptor { chain ->
         val newUrl = chain.request().url
             .newBuilder()
-            .addQueryParameter("api_key", Constants.tmdbApiKey)
+            .addQueryParameter("api_key", tmdbApiKey)
             .build()
         val newRequest = chain.request()
             .newBuilder()
@@ -66,5 +69,12 @@ object ApiModule {
     fun provideConnectionService(@ApplicationContext context: Context): ConnectionService {
         return ConnectionService(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideImageLoader(@ApplicationContext context: Context): ImageLoader = ImageLoader
+        .Builder(context)
+        .build()
+
 
 }

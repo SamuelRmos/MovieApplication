@@ -2,16 +2,16 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
-    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.kapt'
 }
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
     buildToolsVersion versions.buildToolsVersion
     def javaVersion = JavaVersion.VERSION_1_8
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion 28
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
     }
@@ -37,15 +37,10 @@ android {
 
 dependencies {
 
-    implementation(libraries.roomRuntime) {
-        exclude group: 'org.antlr', module: 'antlr4-runtime'
-    }
-    kapt(libraries.roomCompiler) {
-        exclude group: 'org.antlr', module: 'antlr4-runtime'
-    }
+    implementation(libraries.roomRuntime)
+    kapt(libraries.roomCompiler)
 
     implementation libraries.core
-    implementation libraries.appcompat
     implementation libraries.timber
 
     testImplementation libraries.junit
