@@ -2,7 +2,7 @@ package com.example.retrofitkotlin
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.retrofitkotlin.movie.MoviesScreen
+import com.example.retrofitkotlin.movie.MoviesScreenCarousel
 import com.example.retrofitkotlin.viewmodel.MovieViewModel
 
 @Composable
@@ -12,9 +12,10 @@ fun MovieApp() {
 
 @Composable
 fun MovieScreenRoute(viewModel: MovieViewModel) {
-    MoviesScreen(
+    MoviesScreenCarousel(
         loading = viewModel.uiState.loading,
-        movies = viewModel.uiState.movie
+        movies = viewModel.uiState.movie,
+        carouselTitle = "Most Popular Movie"
     )
 }
 

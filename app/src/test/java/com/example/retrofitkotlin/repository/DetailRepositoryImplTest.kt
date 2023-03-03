@@ -1,56 +1,36 @@
-@file:Suppress("DEPRECATION")
-
 package com.example.retrofitkotlin.repository
 
 import com.example.retrofitkotlin.persistence.MovieDao
 import com.example.retrofitkotlin.utils.MockTestUtil.mockMovie
 import io.mockk.every
 import io.mockk.mockk
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertNotNull
+import io.mockk.verify
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
-@RunWith(JUnit4::class)
 class DetailRepositoryImplTest {
-    //region constants
-
-    //end region constants
-
-    //region helper fields
-
     private lateinit var sut: DetailRepositoryImpl
     private val movieDao = mockk<MovieDao>()
 
-    private val mId = 419704
-    private val mTitle = "Ad Astra"
-    private val mOverview = "The near future, a time when both hope and hardships drive humanity to look to the stars and beyond. While a mysterious phenomenon menaces to destroy life on planet Earth, astronaut Roy McBride undertakes a mission across the immensity of space and its many perils to uncover the truth about a lost expedition that decades before boldly faced emptiness and silence in search of the unknown."
-
-    // end region helper fields
     @Before
     fun setup() {
+        sut = DetailRepositoryImpl(movieDao)
     }
 
     @Test
-    fun `detailRepo dataFromDb retrieveData`() {
+    fun `getMovieById return data from database when Id passed is salved`() {
+        val movie = mockMovie()
+        val id = 419704
+        every { movieDao.getMovie(id) } returns movie
 
-        every { movieDao.getMovie(419704) } returns mockMovie()
+        val dataReceived = sut.getMovieById(id)
 
-        sut = DetailRepositoryImpl(movieDao)
-        val dataReceived = sut.getMovieById(419704)
-
+        verify { movieDao.getMovie(id) }
         assertNotNull(dataReceived)
-        assertEquals(dataReceived.id, mId)
-        assertEquals(dataReceived.title, mTitle)
-        assertEquals(dataReceived.overview, mOverview)
+        assertEquals(movie.id, dataReceived.id)
+        assertEquals(movie.title, dataReceived.title)
+        assertEquals(movie.overview, dataReceived.overview)
     }
-    // region helper methods
-
-    // end region helper methods
-
-    // region helper class
-
-    // end region helper class
 }

@@ -40,7 +40,7 @@ fun MovieCard(
 
 @Composable
 fun MovieCardContent(modifier: Modifier = Modifier, movie: Movie) {
-    Box(modifier.height(180.dp)) {
+    Box(modifier.height(280.dp).width(200.dp)) {
         CoilImage(
             imageModel = { artworkUrl(movie.poster_path) },
             previewPlaceholder = placeholderImage(movie.id),
@@ -72,10 +72,10 @@ fun MovieTitle(title: String?, modifier: Modifier = Modifier) {
 @Composable
 private fun MovieCardPreview() {
     MovieTheme {
-        Surface (color = colorBackground) {
-            Column(
-                Modifier.width(200.dp),
-                verticalArrangement = Arrangement.spacedBy(5.dp)
+        Surface(color = colorBackground) {
+            Row(
+                Modifier.width(200.dp).fillMaxHeight(),
+                horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 MovieCard(
                     modifier = Modifier.fillMaxWidth(),
