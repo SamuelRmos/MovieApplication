@@ -1,14 +1,10 @@
 ## :movie_camera:  Movie Application
-
-Application builded using: </br> 
+ 
+Libraries and components used in this application: </br> 
 - Kotlin;</br>  
+- JetPack Compose; </br>  
 - Retrofit2; </br>  
 - Dependency Injection (Hilt); </br>
-- Glide;</br> 
-- RecyclerView;</br> 
-- Databinding;</br> 
-- Viewbinding;</br> 
-- Kotlin Coroutine; </br> 
 - Navigation Component;</br> 
 - Espresso;</br>
 - Mockk.</br>
@@ -23,4 +19,14 @@ Then insert the API key on file local.properties with the name apiKey="KEY",
 
 <p align="center">
 <img src="https://media.giphy.com/media/XdJWJnHjOoHUJJhyq6/giphy.gif" />
-<//p>
+</p>
+
+## Follow Me
+
+ <a href = "https://twitter.com/SamuelRamos_MG">
+     <img src = "https://img.shields.io/twitter/url?label=follow&style=social&url=https%3A%2F%2Ftwitter.com%2FSamuelRamos_MG" />
+  </a> 
+
+<a href = "https://www.linkedin.com/in/samuelramos-sjr/">
+     <img src = "https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&url=https%3A%2F%2Flinkedin.com%2Fsamuelramos-sjr" />
+  </a>
