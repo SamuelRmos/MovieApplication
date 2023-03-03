@@ -24,7 +24,7 @@ Then insert the API key on file local.properties with the name apiKey="KEY",
 ## Follow Me
 
  <a href = "https://twitter.com/SamuelRamos_MG">
-     <img src = "https://img.shields.io/twitter/url?label=follow&style=social&url=https%3A%2F%2Ftwitter.com%2FSamuelRamos_MG" />
+     <img src = "https://img.shields.io/badge/Twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white&url=https%3A%2F%2Ftwitter.com%2FSamuelRamos_MG" />
   </a> 
 
 <a href = "https://www.linkedin.com/in/samuelramos-sjr/">
