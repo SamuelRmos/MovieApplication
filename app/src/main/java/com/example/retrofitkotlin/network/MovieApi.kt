@@ -16,6 +16,6 @@ interface MovieApi {
     @GET("trending/movie/day")
     fun getTodayMovieAsync(): Deferred<Response<MovieResponse>>
 
-    @GET("discover/movie?language=en-US&page=1&sort_by=popularity.desc&release_date.gte=1940-01-01&release_date.lte=2015-12-31")
+    @GET("discover/movie?language=en-US&page=1&sort_by=popularity.desc&release_date.gte=1940-01-01&release_date.lte=1998-12-31")
     fun getClassicMovieAsync(): Deferred<Response<MovieResponse>>
 }
