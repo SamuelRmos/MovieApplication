@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor(
+class TodayMoviesViewModel @Inject constructor(
     private val movieUseCase: MovieUseCase
 ) : BaseViewModel() {
 
@@ -17,7 +17,7 @@ class MovieViewModel @Inject constructor(
 
     private fun fetchMovies() {
         viewModelScope.launch {
-            executeCall(movieUseCase.executeRatedMovies())
+            executeCall(movieUseCase.executeTodayMovies())
         }
     }
 }
