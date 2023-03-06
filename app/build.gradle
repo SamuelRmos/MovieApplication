@@ -22,7 +22,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.retrofitkotlin"
+        applicationId "com.example.movie"
         minSdkVersion 28
         targetSdkVersion 33
         versionCode 1
