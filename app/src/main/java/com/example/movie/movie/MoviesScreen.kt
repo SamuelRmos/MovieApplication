@@ -45,23 +45,23 @@ fun MoviesScreen(
         ) {
             MoviesScreenCarousel(
                 loading = ratedViewModel.uiState.loading,
-                movies = ratedViewModel.uiState.movie,
+                movies = ratedViewModel.uiState.moviesList,
                 carouselTitle = "Rated Movies",
                 modifier = Modifier.padding(top = 30.dp)
             )
             MoviesScreenCarousel(
                 loading = todayViewModel.uiState.loading,
-                movies = todayViewModel.uiState.movie,
+                movies = todayViewModel.uiState.moviesList,
                 carouselTitle = "Today Movies"
             )
             MoviesScreenCarousel(
                 loading = popularMoviesViewModel.uiState.loading,
-                movies = popularMoviesViewModel.uiState.movie,
+                movies = popularMoviesViewModel.uiState.moviesList,
                 carouselTitle = "Popular Movies"
             )
             MoviesScreenCarousel(
                 loading = classicMoviesViewModel.uiState.loading,
-                movies = classicMoviesViewModel.uiState.movie,
+                movies = classicMoviesViewModel.uiState.moviesList,
                 carouselTitle = "Classic Movies",
             )
         }

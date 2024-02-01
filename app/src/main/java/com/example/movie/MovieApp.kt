@@ -13,4 +13,3 @@ fun MovieApp() {
         classicMoviesViewModel = hiltViewModel()
     )
 }
-

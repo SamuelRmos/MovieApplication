@@ -6,7 +6,6 @@ import com.example.movie.repository.DetailRepository
 import com.example.movie.repository.DetailRepositoryImpl
 import com.example.movie.repository.MovieRepository
 import com.example.movie.repository.MovieRepositoryImpl
-import com.example.commons.service.ConnectionService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +25,6 @@ object RepositoryModule {
     @Provides
     fun provideRetroRepository(
         movieApi: MovieApi,
-        movieDao: MovieDao,
-        connectionService: ConnectionService
-    ): MovieRepository = MovieRepositoryImpl(movieApi, movieDao, connectionService)
+        movieDao: MovieDao
+    ): MovieRepository = MovieRepositoryImpl(movieApi, movieDao)
 }

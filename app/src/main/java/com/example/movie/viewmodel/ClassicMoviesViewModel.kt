@@ -1,5 +1,6 @@
 package com.example.movie.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.viewModelScope
 import com.example.movie.usecase.MovieUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +16,8 @@ class ClassicMoviesViewModel @Inject constructor(
         fetchMovies()
     }
 
-    private fun fetchMovies() {
+    @VisibleForTesting
+    internal fun fetchMovies() {
         viewModelScope.launch {
             executeCall(movieUseCase.executeClassicMovies())
         }
