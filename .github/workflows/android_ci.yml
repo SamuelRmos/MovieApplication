@@ -7,17 +7,23 @@ on:
       - develop
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps: 
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4.1.0
+      with:
+          java-version: 1.8
+          
   test_job:
     name: Test
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4.1.1
-
-      - name: Restore Cache
-        uses: actions/cache@v2
+      - name: Cache
+        uses: actions/cache@v4.0.0
         with:
           path: |
             ~/.gradle/caches
@@ -25,11 +31,6 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-            
-      - name: Setup Java JDK
-        uses: actions/setup-java@v4.1.0
-        with:
-          java-version: 1.8
 
       - name: Run Debug Tests
         run: ./gradlew testDebugUnitTest --continue
@@ -46,30 +47,6 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Install Ruby
-        uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '2.6'
-
-      - uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Run Debug ktlint
         run: ./gradlew ktlintDebugCheck --continue
 
@@ -85,13 +62,12 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Restore Cache
-        uses: actions/cache@v2
-        with:
+    - name: Cache
+      uses: actions/cache@v4.0.0
+      with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
@@ -99,13 +75,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Run Debug Lint
-        run: ./gradlew lintDebug
+    - name: Run Debug Lint
+      run: ./gradlew lintDebug
 
-      - name: Upload Lint Reports
-        if: ${{ always() }}
-        uses: actions/upload-artifact@v2
-        with:
+    - name: Upload Lint Reports
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v2
+      with:
           name: lint-report
           path: '**/build/reports/lint-results-*'
 
@@ -115,12 +91,12 @@ jobs:
     continue-on-error: true
     steps:
 
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v4.1.1
 
-      - name: Restore Cache
-        uses: actions/cache@v2
-        with:
+    - name: Cache
+      uses: actions/cache@v4.0.0
+      with:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
@@ -128,11 +104,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Assemble Debug
-        run: ./gradlew assembleDebug
+    - name: Assemble Debug
+      run: ./gradlew assembleDebug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
-        with:
+    - name: Upload APK
+      uses: actions/upload-artifact@v2
+      with:
           name: apk
           path: app/build/outputs/apk/debug/**.apk
