@@ -67,6 +67,9 @@ android {
         android = true
         ignoreFailures = false
     }
+    lintOptions {
+        baseline file("lint-baseline.xml")
+    }
 }
 
 dependencies {
