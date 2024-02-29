@@ -1,5 +1,7 @@
 ## :movie_camera:  Movie Application
- 
+
+[![Android CI](https://github.com/SamuelRmos/MovieApplication/actions/workflows/android_ci.yml/badge.svg)](https://github.com/SamuelRmos/MovieApplication/actions/workflows/android_ci.yml) 
+
 Libraries and components used in this application: </br> 
 - Kotlin;</br>  
 - JetPack Compose; </br>  

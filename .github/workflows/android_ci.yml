@@ -31,7 +31,8 @@ jobs:
 #          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
 #          restore-keys: |
 #            ${{ runner.os }}-gradle-
-
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
       - name: Run Debug Tests
         run: ./gradlew testDebugUnitTest --continue
 
@@ -47,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
       - name: Run Debug ktlint
         run: ./gradlew ktlintDebugCheck --continue
 
