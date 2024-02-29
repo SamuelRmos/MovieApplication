@@ -4,12 +4,12 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
     id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.kapt'
+    id 'kotlin-kapt'
     id 'org.jlleitschuh.gradle.ktlint'
 }
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
     buildToolsVersion versions.buildToolsVersion
     def javaVersion = JavaVersion.VERSION_1_8
 
@@ -25,7 +25,7 @@ android {
     defaultConfig {
         applicationId "com.example.movie"
         minSdkVersion 28
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -65,6 +65,7 @@ android {
     lintOptions {
         baseline file("lint-baseline.xml")
     }
+    namespace 'com.example.movie'
 }
 
 dependencies {
@@ -122,11 +123,6 @@ dependencies {
     implementation libraries.compose.composeTooling
     implementation libraries.compose.composePreview
     implementation libraries.compose.composeUtil
-
-    // JAX-B dependencies for JDK 9+
-    annotationProcessor libraries.jakarta.bind
-    kapt(libraries.jakarta.runtime)
-    kapt(libraries.javax)
 
     testImplementation libraries.junit
     androidTestImplementation libraries.junitTest

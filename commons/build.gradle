@@ -2,18 +2,16 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
-    id 'org.jetbrains.kotlin.kapt'
+    id 'kotlin-kapt'
 }
 android {
-    compileSdkVersion 33
+    compileSdk 34
     buildToolsVersion versions.buildToolsVersion
     def javaVersion = JavaVersion.VERSION_1_8
 
     defaultConfig {
         minSdkVersion 28
-        targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 34
     }
 
     buildTypes {
@@ -33,10 +31,10 @@ android {
     kotlinOptions {
         jvmTarget = javaVersion.toString()
     }
+    namespace 'com.example.commons'
 }
 
 dependencies {
-
     implementation(libraries.roomRuntime)
     kapt(libraries.roomCompiler)
 
