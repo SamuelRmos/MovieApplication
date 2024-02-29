@@ -33,10 +33,7 @@ android {
     }
 
     buildTypes {
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def tmdbApiKey = properties.getProperty("apiKey", "")
-
+        def tmdbApiKey = System.getenv("API_KEY")
         debug {
             buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
             resValue 'string', "api_key", tmdbApiKey
