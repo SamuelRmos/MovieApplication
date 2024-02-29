@@ -32,6 +32,9 @@ android {
         jvmTarget = javaVersion.toString()
     }
     namespace 'com.example.commons'
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {
