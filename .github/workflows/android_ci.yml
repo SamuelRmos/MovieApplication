@@ -35,7 +35,7 @@ jobs:
         uses: actions/checkout@v4.1.1
       - name: Run Debug Tests
         env:
-          API_KEY: ${{ secrets.API_KEY }}
+          API_KEY: ${{ vars.API_KEY }}
         run: ./gradlew testDebugUnitTest --continue
 
       - name: Upload Test Reports
@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v4.1.1
       - name: Run Debug ktlint
         env:
-          API_KEY: ${{ secrets.API_KEY }}
+          API_KEY: ${{ vars.API_KEY }}
         run: ./gradlew ktlintDebugCheck --continue
 
       - name: Upload ktlint Reports
@@ -84,7 +84,7 @@ jobs:
 
     - name: Run Debug Lint
       env:
-        API_KEY: ${{ secrets.API_KEY }}
+        API_KEY: ${{ vars.API_KEY }}
       run: ./gradlew lintDebug
 
     - name: Upload Lint Reports
@@ -115,7 +115,7 @@ jobs:
 
     - name: Assemble Debug
       env:
-        API_KEY: ${{ secrets.API_KEY }}
+        API_KEY: ${{ vars.API_KEY }}
       run: ./gradlew assembleDebug
 
     - name: Upload APK
