@@ -16,7 +16,8 @@ jobs:
       uses: actions/setup-java@v3
       with:
           java-version: 17
-          
+          distribution: 'adopt'
+
   test_job:
     name: Test
     runs-on: ubuntu-latest
