@@ -63,7 +63,7 @@ android {
         }
     }
     ktlint {
-        version = "0.38.2"
+        version = "1.2.0"
         android = true
         ignoreFailures = false
     }
