@@ -62,11 +62,6 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
-    ktlint {
-        version = "1.2.0"
-        android = true
-        ignoreFailures = false
-    }
     lintOptions {
         baseline file("lint-baseline.xml")
     }
