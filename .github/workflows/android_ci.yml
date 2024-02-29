@@ -23,6 +23,11 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
       - name: Cache
         uses: actions/cache@v2
         with:
@@ -53,6 +58,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
+      - name: Setup Java JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'adopt'
       - name: Run Debug ktlint
         env:
           API_KEY: ${{ vars.API_KEY }}
@@ -72,6 +82,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4.1.1
+    - name: Setup Java JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: 'adopt'
     - name: Cache
       uses: actions/cache@v4.0.0
       with:
@@ -102,6 +117,11 @@ jobs:
 
     - name: Checkout
       uses: actions/checkout@v4.1.1
+    - name: Setup Java JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+        distribution: 'adopt'
     - name: Cache
       uses: actions/cache@v4.0.0
       with:
