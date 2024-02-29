@@ -22,18 +22,18 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-      - name: Cache
-        uses: actions/cache@v4.0.0
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+#      - name: Cache
+#        uses: actions/cache@v2
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
 
       - name: Run Debug Tests
-        run: ./gradlew testDebugUnitTest --continue
+        run: ./gradlew testDebugUnitTest
 
       - name: Upload Test Reports
         if: ${{ always() }}
@@ -65,15 +65,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4.1.1
 
-    - name: Cache
-      uses: actions/cache@v4.0.0
-      with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+#    - name: Cache
+#      uses: actions/cache@v4.0.0
+#      with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
 
     - name: Run Debug Lint
       run: ./gradlew lintDebug
@@ -94,15 +94,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4.1.1
 
-    - name: Cache
-      uses: actions/cache@v4.0.0
-      with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+#    - name: Cache
+#      uses: actions/cache@v4.0.0
+#      with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
 
     - name: Assemble Debug
       run: ./gradlew assembleDebug
