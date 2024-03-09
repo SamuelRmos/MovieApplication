@@ -12,6 +12,4 @@ interface MovieRepository {
     suspend fun getListTodayMovies(): Either<String, MovieResponse>
 
     suspend fun getListClassicMovies(): Either<String, MovieResponse>
-
-    fun getMoviePoster(): MutableList<Movie>
 }

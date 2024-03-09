@@ -7,8 +7,7 @@ import com.example.movie.persistence.MovieDao
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val movieApi: MovieApi,
-    private val movieDao: MovieDao
+    private val movieApi: MovieApi
 ) : BaseRepository(), MovieRepository {
 
     override suspend fun getListPopularMovies(): Either<String, MovieResponse> {
@@ -27,5 +26,4 @@ class MovieRepositoryImpl @Inject constructor(
         return safeApiCall { movieApi.getClassicMovieAsync().await() }
     }
 
-    override fun getMoviePoster() = movieDao.getMovieList()
 }

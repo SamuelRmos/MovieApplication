@@ -1,14 +1,13 @@
 package com.example.movie.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val DarkColorPalette = lightColors(
+private val DarkColorPalette = lightColorScheme(
     primary = colorPrimary,
-    primaryVariant = colorPrimary,
     onPrimary = colorPrimary,
     secondary = Color.White,
     onSecondary = colorPrimary,
@@ -29,7 +28,7 @@ fun MovieTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colors,
         typography = Typography,
         shapes = Shapes
     ) {

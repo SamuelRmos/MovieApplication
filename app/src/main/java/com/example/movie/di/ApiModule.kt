@@ -3,11 +3,13 @@ package com.example.movie.di
 import android.content.Context
 import coil.ImageLoader
 import com.example.commons.service.ConnectionService
-import com.example.movie.model.Constants
 import com.example.movie.BuildConfig
+import com.example.movie.model.Constants
 import com.example.movie.model.Constants.tmdbApiKey
 import com.example.movie.network.MovieApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,10 +58,16 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(): MovieApi = Retrofit.Builder()
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(moshi: Moshi): MovieApi = Retrofit.Builder()
         .client(client)
         .baseUrl(Constants.baseURL)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
         .create(MovieApi::class.java)

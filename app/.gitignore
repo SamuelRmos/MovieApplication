@@ -1,1 +1,10 @@
 /build
+.gradle
+/local.properties
+/.idea/compiler.xml
+/.idea/misc.xml
+/.idea/gradle.xml
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx

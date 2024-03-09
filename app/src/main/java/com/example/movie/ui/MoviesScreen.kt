@@ -1,16 +1,32 @@
-package com.example.movie.movie
+package com.example.movie.ui
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -18,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
 import com.example.movie.model.Movie
 import com.example.movie.model.SampleMovieData
 import com.example.movie.theme.MovieTheme
@@ -27,6 +44,7 @@ import com.example.movie.viewmodel.ClassicMoviesViewModel
 import com.example.movie.viewmodel.MovieViewModel
 import com.example.movie.viewmodel.PopularMoviesViewModel
 import com.example.movie.viewmodel.TodayMoviesViewModel
+import timber.log.Timber
 
 @Composable
 fun MoviesScreen(
@@ -35,10 +53,15 @@ fun MoviesScreen(
     popularMoviesViewModel: PopularMoviesViewModel,
     classicMoviesViewModel: ClassicMoviesViewModel
 ) {
-    Surface(color = colorBackground) {
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = { CustomToolbarScreen(navController = navController, title = "CineBook") },
+        containerColor = colorBackground
+    ) { innerPadding ->
+
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
                 .padding(bottom = 50.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -46,27 +69,27 @@ fun MoviesScreen(
             MoviesScreenCarousel(
                 loading = ratedViewModel.uiState.loading,
                 movies = ratedViewModel.uiState.moviesList,
-                carouselTitle = "Rated Movies",
-                modifier = Modifier.padding(top = 30.dp)
+                carouselTitle = "Most Watched"
             )
             MoviesScreenCarousel(
                 loading = todayViewModel.uiState.loading,
                 movies = todayViewModel.uiState.moviesList,
-                carouselTitle = "Today Movies"
+                carouselTitle = "Indications of Today"
             )
             MoviesScreenCarousel(
                 loading = popularMoviesViewModel.uiState.loading,
                 movies = popularMoviesViewModel.uiState.moviesList,
-                carouselTitle = "Popular Movies"
+                carouselTitle = "Populars"
             )
             MoviesScreenCarousel(
                 loading = classicMoviesViewModel.uiState.loading,
                 movies = classicMoviesViewModel.uiState.moviesList,
-                carouselTitle = "Classic Movies",
+                carouselTitle = "Classics",
             )
         }
     }
 }
+
 @Composable
 fun MoviesScreenCarousel(
     modifier: Modifier = Modifier,
@@ -83,7 +106,7 @@ fun MoviesScreenCarousel(
             Text(
                 modifier = modifier.padding(start = 20.dp),
                 text = carouselTitle,
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.titleLarge,
                 color = colorText
             )
             MovieList(
@@ -103,7 +126,6 @@ fun MovieList(
     movie: List<Movie>
 ) {
     val loaded = remember { MutableTransitionState(!loading) }
-
     LazyHorizontalGrid(
         modifier = modifier.height(220.dp),
         rows = GridCells.Fixed(1),
@@ -130,7 +152,9 @@ fun MovieList(
                         animationSpec = tween(400, idx / 2 * 150)
                     ), exit = ExitTransition.None
                 ) {
-                    MovieCard(movie = m)
+                    MovieCard(movie = m, onMovieClick = { movie ->
+                        Timber.d("Movie Title: ${movie.title}")
+                    })
                 }
             }
         }

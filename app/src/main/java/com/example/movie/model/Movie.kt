@@ -1,19 +1,18 @@
 package com.example.movie.model
 
-import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import kotlinx.parcelize.Parcelize
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@Parcelize
-@Entity
+@JsonClass(generateAdapter = true)
 data class Movie(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val title: String,
     val overview: String,
-    val poster_path: String,
-    val backdrop_path: String?
-) : Parcelable
+    @Json(name = "poster_path")
+    val posterImage: String,
+    @Json(name = "backdrop_path")
+    val backDropImage: String
+)
 
 data class MovieResponse(
     val results: List<Movie>

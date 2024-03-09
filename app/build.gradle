@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
@@ -13,7 +15,7 @@ android {
     buildToolsVersion versions.buildToolsVersion
     def javaVersion = JavaVersion.VERSION_1_8
 
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    tasks.withType(KotlinCompile).configureEach {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
 
@@ -23,7 +25,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.movie"
+        applicationId "com.samuelrmos.cinebook"
         minSdkVersion 28
         targetSdkVersion 34
         versionCode 1
@@ -36,12 +38,10 @@ android {
         def tmdbApiKey = System.getenv("API_KEY")
         debug {
             buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
-            resValue 'string', "api_key", tmdbApiKey
         }
 
         release {
             buildConfigField 'String', "TMDB_API_KEY", tmdbApiKey
-            resValue 'string', "api_key", tmdbApiKey
 
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
@@ -67,76 +67,77 @@ android {
         baseline file("lint-baseline.xml")
     }
     namespace 'com.example.movie'
-}
 
-dependencies {
-    implementation project(path: ':commons')
 
-    implementation libraries.roomRuntime
-    kapt(libraries.roomCompiler)
-    implementation libraries.timber
+    dependencies {
+        implementation project(path: ':commons')
 
-    //Moshi
-    implementation libraries.moshi
-    kapt libraries.moshiCodegen
+        implementation libraries.roomRuntime
+        kapt(libraries.roomCompiler)
+        implementation libraries.timber
 
-    //Retrofit2
-    implementation libraries.retrofit.retrofit2
-    implementation libraries.retrofit.retrofitConverter
-    implementation libraries.retrofit.retrofitCoroutines
+        //Moshi
+        implementation libraries.moshi
+        kapt(libraries.moshiCodegen)
 
-    //Okhttp3
-    implementation libraries.okhttp.okhttp3
-    implementation libraries.okhttp.okhttpInterceptor
+        //Retrofit2
+        implementation libraries.retrofit.retrofit2
+        implementation libraries.retrofit.retrofitConverter
+        implementation libraries.retrofit.retrofitCoroutines
 
-    //Kotlin Coroutines
-    implementation libraries.coroutines.kotlinAndroid
-    implementation libraries.coroutines.coroutinesCore
+        //Okhttp3
+        implementation libraries.okhttp.okhttp3
+        implementation libraries.okhttp.okhttpInterceptor
 
-    //Material Design
-    implementation libraries.materialDesign
+        //Kotlin Coroutines
+        implementation libraries.coroutines.kotlinAndroid
+        implementation libraries.coroutines.coroutinesCore
 
-    implementation libraries.whatIf
+        //Material Design
+        implementation libraries.materialDesign
 
-    // Hilt
-    implementation libraries.hilt.hiltAndroid
-    kapt(libraries.hilt.compilerHilt)
-    implementation libraries.hilt.hitlCompose
+        implementation libraries.whatIf
 
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation libraries.kotlin
-    implementation libraries.core
-    implementation libraries.multidex
+        // Hilt
+        implementation libraries.hilt.hiltAndroid
+        kapt(libraries.hilt.compilerHilt)
+        implementation libraries.hilt.hitlCompose
 
-    implementation libraries.navigation.ui
-    implementation libraries.navigation.dynamics
-    implementation libraries.legacySupport
-    implementation libraries.landscapistCoil
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation libraries.kotlin
+        implementation libraries.core
+        implementation libraries.multidex
 
-    // Compose
-    implementation libraries.compose.activityCompose
-    implementation libraries.compose.navigationCompose
-    implementation libraries.compose.androidxComposeBom
-    implementation libraries.compose.androidxComposeMaterial
-    implementation libraries.compose.composeUi
-    implementation libraries.compose.composeJunit
-    implementation libraries.compose.composeTest
-    implementation libraries.compose.composeTooling
-    implementation libraries.compose.composePreview
-    implementation libraries.compose.composeUtil
+        implementation libraries.navigation.ui
+        implementation libraries.navigation.dynamics
+        implementation libraries.legacySupport
+        implementation libraries.landscapistCoil
 
-    testImplementation libraries.junit
-    androidTestImplementation libraries.junitTest
-    androidTestImplementation libraries.espressoCore
+        // Compose
+        implementation libraries.compose.activityCompose
+        implementation libraries.compose.navigationCompose
+        implementation libraries.compose.androidxComposeBom
+        implementation libraries.compose.androidxComposeMaterial
+        implementation libraries.compose.composeUi
+        implementation libraries.compose.composeJunit
+        implementation libraries.compose.composeTest
+        implementation libraries.compose.composeTooling
+        implementation libraries.compose.composePreview
+        implementation libraries.compose.composeUtil
 
-    androidTestImplementation libraries.archCore
-    androidTestImplementation libraries.testRules
-    androidTestImplementation libraries.testEspresso
-    androidTestImplementation libraries.mockWeb.mockWebServer
+        testImplementation libraries.junit
+        androidTestImplementation libraries.junitTest
+        androidTestImplementation libraries.espressoCore
 
-    testImplementation libraries.mockk
-    testImplementation libraries.mockWeb.okhttp3
-    testImplementation libraries.coreTesting
-    testImplementation libraries.archCore
-    testImplementation libraries.mockitoKotlin
+        androidTestImplementation libraries.archCore
+        androidTestImplementation libraries.testRules
+        androidTestImplementation libraries.testEspresso
+        androidTestImplementation libraries.mockWeb.mockWebServer
+
+        testImplementation libraries.mockk
+        testImplementation libraries.mockWeb.okhttp3
+        testImplementation libraries.coreTesting
+        testImplementation libraries.archCore
+        testImplementation libraries.mockitoKotlin
+    }
 }

@@ -1,10 +1,11 @@
-package com.example.movie.movie
+package com.example.movie.ui
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
@@ -27,10 +28,11 @@ import com.skydoves.landscapist.coil.CoilImage
 @Composable
 fun MovieCard(
     modifier: Modifier = Modifier,
-    movie: Movie
+    movie: Movie,
+    onMovieClick: (Movie) -> Unit
 ) {
     Surface(
-        modifier = modifier,
+        modifier = modifier.clickable { onMovieClick(movie) },
         color = colorPrimary,
         shape = RoundedCornerShape(10.dp)
     ) {
@@ -40,9 +42,12 @@ fun MovieCard(
 
 @Composable
 fun MovieCardContent(modifier: Modifier = Modifier, movie: Movie) {
-    Box(modifier.height(280.dp).width(200.dp)) {
+    Box(
+        modifier
+            .height(280.dp)
+            .width(200.dp)) {
         CoilImage(
-            imageModel = { artworkUrl(movie.poster_path) },
+            imageModel = { artworkUrl(movie.posterImage) },
             previewPlaceholder = placeholderImage(movie.id),
             success = { imageState ->
                 imageState.drawable?.let {
@@ -74,21 +79,23 @@ private fun MovieCardPreview() {
     MovieTheme {
         Surface(color = colorBackground) {
             Row(
-                Modifier.width(200.dp).fillMaxHeight(),
+                Modifier
+                    .width(200.dp)
+                    .fillMaxHeight(),
                 horizontalArrangement = Arrangement.spacedBy(5.dp)
             ) {
                 MovieCard(
                     modifier = Modifier.fillMaxWidth(),
                     movie = SampleMovieData[0]
-                )
+                ) {}
                 MovieCard(
                     modifier = Modifier.fillMaxWidth(),
                     movie = SampleMovieData[1]
-                )
+                ) {}
                 MovieCard(
                     modifier = Modifier.fillMaxWidth(),
                     movie = SampleMovieData[2]
-                )
+                ) {}
             }
         }
     }

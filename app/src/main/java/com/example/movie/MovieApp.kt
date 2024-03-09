@@ -2,7 +2,7 @@ package com.example.movie
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.movie.movie.MoviesScreen
+import com.example.movie.ui.MoviesScreen
 
 @Composable
 fun MovieApp() {
