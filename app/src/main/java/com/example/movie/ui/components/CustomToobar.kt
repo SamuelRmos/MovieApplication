@@ -1,6 +1,7 @@
-package com.example.movie.ui
+package com.example.movie.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -20,13 +21,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.movie.theme.colorBackground
 import com.example.movie.theme.colorPrimary
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomToolbarScreen(navController: NavHostController, title: String, isBack: Boolean = false) {
+fun CustomToolbarScreen(
+    navController: NavHostController,
+    title: String,
+    backgroundColor: Color,
+    isBack: Boolean = false,
+    windowsInsets: WindowInsets = TopAppBarDefaults.windowInsets
+) {
     val scaffoldState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     var isDrawerOpen = remember {
@@ -34,7 +40,7 @@ fun CustomToolbarScreen(navController: NavHostController, title: String, isBack:
     }
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorBackground,
+            containerColor = backgroundColor,
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
         title = {
@@ -48,7 +54,11 @@ fun CustomToolbarScreen(navController: NavHostController, title: String, isBack:
         navigationIcon = {
             if (isBack) {
                 IconButton(onClick = { navController.navigateUp() }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, "backIcon")
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowBack,
+                        "backIcon",
+                        tint = Color.White
+                    )
                 }
             } else {
                 IconButton(onClick = {
@@ -59,6 +69,7 @@ fun CustomToolbarScreen(navController: NavHostController, title: String, isBack:
                    // Icon(Icons.Filled.Menu, "backIcon", tint = Color.White)
                 }
             }
-        }
+        },
+        windowInsets = windowsInsets
     )
 }

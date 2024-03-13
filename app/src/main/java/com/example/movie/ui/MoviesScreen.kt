@@ -34,31 +34,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.movie.model.Movie
 import com.example.movie.model.SampleMovieData
+import com.example.movie.navigation.Screens.MovieDetails
+import com.example.movie.navigation.navigate
 import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorBackground
 import com.example.movie.theme.colorText
+import com.example.movie.ui.components.CustomToolbarScreen
 import com.example.movie.viewmodel.ClassicMoviesViewModel
 import com.example.movie.viewmodel.MovieViewModel
 import com.example.movie.viewmodel.PopularMoviesViewModel
 import com.example.movie.viewmodel.TodayMoviesViewModel
-import timber.log.Timber
 
 @Composable
-fun MoviesScreen(
-    ratedViewModel: MovieViewModel,
-    todayViewModel: TodayMoviesViewModel,
-    popularMoviesViewModel: PopularMoviesViewModel,
-    classicMoviesViewModel: ClassicMoviesViewModel
-) {
-    val navController = rememberNavController()
+fun MoviesScreen(navController: NavHostController) {
+    val ratedViewModel: MovieViewModel = hiltViewModel()
+    val todayViewModel: TodayMoviesViewModel = hiltViewModel()
+    val popularMoviesViewModel: PopularMoviesViewModel = hiltViewModel()
+    val classicMoviesViewModel: ClassicMoviesViewModel = hiltViewModel()
+
     Scaffold(
-        topBar = { CustomToolbarScreen(navController = navController, title = "CineBook") },
+        topBar = {
+            CustomToolbarScreen(
+                navController = navController,
+                title = "CineBook",
+                colorBackground
+            )
+        },
         containerColor = colorBackground
     ) { innerPadding ->
-
         Column(
             modifier = Modifier
                 .padding(innerPadding)
@@ -69,22 +77,26 @@ fun MoviesScreen(
             MoviesScreenCarousel(
                 loading = ratedViewModel.uiState.loading,
                 movies = ratedViewModel.uiState.moviesList,
-                carouselTitle = "Most Watched"
+                carouselTitle = "Most Watched",
+                navController = navController
             )
             MoviesScreenCarousel(
                 loading = todayViewModel.uiState.loading,
                 movies = todayViewModel.uiState.moviesList,
-                carouselTitle = "Indications of Today"
+                carouselTitle = "Indications of Today",
+                navController = navController
             )
             MoviesScreenCarousel(
                 loading = popularMoviesViewModel.uiState.loading,
                 movies = popularMoviesViewModel.uiState.moviesList,
-                carouselTitle = "Populars"
+                carouselTitle = "Populars",
+                navController = navController
             )
             MoviesScreenCarousel(
                 loading = classicMoviesViewModel.uiState.loading,
                 movies = classicMoviesViewModel.uiState.moviesList,
                 carouselTitle = "Classics",
+                navController = navController
             )
         }
     }
@@ -95,7 +107,8 @@ fun MoviesScreenCarousel(
     modifier: Modifier = Modifier,
     loading: Boolean,
     movies: List<Movie>,
-    carouselTitle: String
+    carouselTitle: String,
+    navController: NavHostController
 ) {
     val listState = rememberLazyGridState()
 
@@ -112,7 +125,8 @@ fun MoviesScreenCarousel(
             MovieList(
                 listState = listState,
                 loading = loading,
-                movie = movies
+                movie = movies,
+                navController = navController
             )
         }
     }
@@ -123,7 +137,8 @@ fun MovieList(
     modifier: Modifier = Modifier,
     listState: LazyGridState,
     loading: Boolean = false,
-    movie: List<Movie>
+    movie: List<Movie>,
+    navController: NavHostController
 ) {
     val loaded = remember { MutableTransitionState(!loading) }
     LazyHorizontalGrid(
@@ -152,9 +167,14 @@ fun MovieList(
                         animationSpec = tween(400, idx / 2 * 150)
                     ), exit = ExitTransition.None
                 ) {
-                    MovieCard(movie = m, onMovieClick = { movie ->
-                        Timber.d("Movie Title: ${movie.title}")
-                    })
+                    MovieCard(
+                        movie = m,
+                        onMovieClick = { movie ->
+                            navController.navigate(
+                                route = MovieDetails.route,
+                                Pair("movie_detail", movie)
+                            )
+                        })
                 }
             }
         }
@@ -164,6 +184,7 @@ fun MovieList(
 @Preview
 @Composable
 private fun MoviesScreenPreview() {
+    val navController = rememberNavController()
     MovieTheme {
         Surface(color = colorBackground) {
             Column(
@@ -173,12 +194,14 @@ private fun MoviesScreenPreview() {
                 MoviesScreenCarousel(
                     loading = false,
                     movies = SampleMovieData,
-                    carouselTitle = "Most Popular Movie"
+                    carouselTitle = "Most Popular Movie",
+                    navController = navController
                 )
                 MoviesScreenCarousel(
                     loading = false,
                     movies = SampleMovieData,
-                    carouselTitle = "Rated Movie"
+                    carouselTitle = "Rated Movie",
+                    navController = navController
                 )
             }
         }

@@ -1,15 +1,10 @@
 package com.example.movie
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.movie.ui.MoviesScreen
+import androidx.navigation.compose.rememberNavController
+import com.example.movie.navigation.NavGraph
 
 @Composable
 fun MovieApp() {
-    MoviesScreen(
-        ratedViewModel = hiltViewModel(),
-        todayViewModel = hiltViewModel(),
-        popularMoviesViewModel = hiltViewModel(),
-        classicMoviesViewModel = hiltViewModel()
-    )
+    NavGraph(navController = rememberNavController())
 }
