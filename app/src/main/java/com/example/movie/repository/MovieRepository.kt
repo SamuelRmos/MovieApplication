@@ -1,15 +1,14 @@
 package com.example.movie.repository
 
-import com.example.commons.functional.Either
-import com.example.movie.model.Movie
-import com.example.movie.model.MovieResponse
+import com.example.movie.ui.RequestState
+import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
-    suspend fun getListPopularMovies(): Either<String, MovieResponse>
+    suspend fun getListPopularMovies(): Flow<RequestState>
 
-    suspend fun getListRatedMovies(): Either<String, MovieResponse>
+    suspend fun getListRatedMovies(): Flow<RequestState>
 
-    suspend fun getListTodayMovies(): Either<String, MovieResponse>
+    suspend fun getListTodayMovies(): Flow<RequestState>
 
-    suspend fun getListClassicMovies(): Either<String, MovieResponse>
+    suspend fun getListClassicMovies(): Flow<RequestState>
 }

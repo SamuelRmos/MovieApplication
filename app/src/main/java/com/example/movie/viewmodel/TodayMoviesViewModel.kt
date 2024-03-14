@@ -1,14 +1,14 @@
 package com.example.movie.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.example.movie.usecase.MovieUseCase
+import com.example.movie.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class TodayMoviesViewModel @Inject constructor(
-    private val movieUseCase: MovieUseCase
+    private val movieRepository: MovieRepository
 ) : BaseViewModel() {
 
     init {
@@ -17,7 +17,7 @@ class TodayMoviesViewModel @Inject constructor(
 
     private fun fetchMovies() {
         viewModelScope.launch {
-            executeCall(movieUseCase.executeTodayMovies())
+            executeCall(movieRepository.getListTodayMovies())
         }
     }
 }

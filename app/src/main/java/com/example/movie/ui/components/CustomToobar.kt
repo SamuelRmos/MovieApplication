@@ -20,14 +20,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorPrimary
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomToolbarScreen(
-    navController: NavHostController,
+    actions: Actions,
     title: String,
     backgroundColor: Color,
     isBack: Boolean = false,
@@ -53,7 +53,7 @@ fun CustomToolbarScreen(
         modifier = Modifier.background(colorPrimary),
         navigationIcon = {
             if (isBack) {
-                IconButton(onClick = { navController.navigateUp() }) {
+                IconButton(onClick = { actions.navigateUp() }) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
                         "backIcon",

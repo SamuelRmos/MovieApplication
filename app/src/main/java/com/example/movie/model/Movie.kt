@@ -14,7 +14,7 @@ data class Movie(
     @Json(name = "poster_path")
     val posterImage: String,
     @Json(name = "backdrop_path")
-    val backDropImage: String,
+    val backDropImage: String?,
     @Json(name = "release_date")
     val releaseDate: String
 ): Parcelable

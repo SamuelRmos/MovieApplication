@@ -10,13 +10,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -25,23 +23,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
-import com.example.movie.model.Movie
-import com.example.movie.model.SampleMovieData
-import com.example.movie.navigation.Screens.MovieDetails
-import com.example.movie.navigation.navigate
-import com.example.movie.theme.MovieTheme
+import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorBackground
 import com.example.movie.theme.colorText
 import com.example.movie.ui.components.CustomToolbarScreen
@@ -51,7 +41,7 @@ import com.example.movie.viewmodel.PopularMoviesViewModel
 import com.example.movie.viewmodel.TodayMoviesViewModel
 
 @Composable
-fun MoviesScreen(navController: NavHostController) {
+fun MoviesScreen(actions: Actions) {
     val ratedViewModel: MovieViewModel = hiltViewModel()
     val todayViewModel: TodayMoviesViewModel = hiltViewModel()
     val popularMoviesViewModel: PopularMoviesViewModel = hiltViewModel()
@@ -60,7 +50,7 @@ fun MoviesScreen(navController: NavHostController) {
     Scaffold(
         topBar = {
             CustomToolbarScreen(
-                navController = navController,
+                actions = actions,
                 title = "CineBook",
                 colorBackground
             )
@@ -70,33 +60,28 @@ fun MoviesScreen(navController: NavHostController) {
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .verticalScroll(rememberScrollState())
-                .padding(bottom = 50.dp),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             MoviesScreenCarousel(
-                loading = ratedViewModel.uiState.loading,
-                movies = ratedViewModel.uiState.moviesList,
+                requestState = ratedViewModel.requestState.value,
                 carouselTitle = "Most Watched",
-                navController = navController
+                actions = actions
             )
             MoviesScreenCarousel(
-                loading = todayViewModel.uiState.loading,
-                movies = todayViewModel.uiState.moviesList,
+                requestState = todayViewModel.requestState.value,
                 carouselTitle = "Indications of Today",
-                navController = navController
+                actions = actions
             )
             MoviesScreenCarousel(
-                loading = popularMoviesViewModel.uiState.loading,
-                movies = popularMoviesViewModel.uiState.moviesList,
+                requestState = popularMoviesViewModel.requestState.value,
                 carouselTitle = "Populars",
-                navController = navController
+                actions = actions
             )
             MoviesScreenCarousel(
-                loading = classicMoviesViewModel.uiState.loading,
-                movies = classicMoviesViewModel.uiState.moviesList,
+                requestState = classicMoviesViewModel.requestState.value,
                 carouselTitle = "Classics",
-                navController = navController
+                actions = actions
             )
         }
     }
@@ -105,29 +90,21 @@ fun MoviesScreen(navController: NavHostController) {
 @Composable
 fun MoviesScreenCarousel(
     modifier: Modifier = Modifier,
-    loading: Boolean,
-    movies: List<Movie>,
+    requestState: RequestState,
     carouselTitle: String,
-    navController: NavHostController
+    actions: Actions
 ) {
-    val listState = rememberLazyGridState()
-
     Box(modifier.height(280.dp)) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                modifier = modifier.padding(start = 20.dp),
+                modifier = modifier.padding(start = 10.dp),
                 text = carouselTitle,
                 style = MaterialTheme.typography.titleLarge,
                 color = colorText
             )
-            MovieList(
-                listState = listState,
-                loading = loading,
-                movie = movies,
-                navController = navController
-            )
+            MovieList(requestState = requestState, actions = actions)
         }
     }
 }
@@ -135,20 +112,19 @@ fun MoviesScreenCarousel(
 @Composable
 fun MovieList(
     modifier: Modifier = Modifier,
-    listState: LazyGridState,
-    loading: Boolean = false,
-    movie: List<Movie>,
-    navController: NavHostController
+    requestState: RequestState,
+    actions: Actions
 ) {
-    val loaded = remember { MutableTransitionState(!loading) }
+    val listState = rememberLazyGridState()
+    val loaded = remember { MutableTransitionState(requestState.isLoading()) }
     LazyHorizontalGrid(
         modifier = modifier.height(220.dp),
         rows = GridCells.Fixed(1),
         state = listState,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(start = 20.dp)
+        contentPadding = PaddingValues(start = 10.dp, end = 10.dp)
     ) {
-        if (loading) {
+        if (requestState.isLoading()) {
             item(span = { GridItemSpan(1) }) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     CircularProgressIndicator(
@@ -158,10 +134,10 @@ fun MovieList(
             }
         } else {
             loaded.targetState = true
-
-            itemsIndexed(movie) { idx, m ->
+            itemsIndexed(requestState.getMovieList()) { idx, m ->
                 AnimatedVisibility(
-                    visibleState = loaded, enter = slideInHorizontally(
+                    visibleState = loaded,
+                    enter = slideInHorizontally(
                         animationSpec = tween(500, idx / 2 * 120)
                     ) + fadeIn(
                         animationSpec = tween(400, idx / 2 * 150)
@@ -169,40 +145,9 @@ fun MovieList(
                 ) {
                     MovieCard(
                         movie = m,
-                        onMovieClick = { movie ->
-                            navController.navigate(
-                                route = MovieDetails.route,
-                                Pair("movie_detail", movie)
-                            )
-                        })
+                        onMovieClick = { actions.goToMovieDetail(it) }
+                    )
                 }
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-private fun MoviesScreenPreview() {
-    val navController = rememberNavController()
-    MovieTheme {
-        Surface(color = colorBackground) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.spacedBy(5.dp)
-            ) {
-                MoviesScreenCarousel(
-                    loading = false,
-                    movies = SampleMovieData,
-                    carouselTitle = "Most Popular Movie",
-                    navController = navController
-                )
-                MoviesScreenCarousel(
-                    loading = false,
-                    movies = SampleMovieData,
-                    carouselTitle = "Rated Movie",
-                    navController = navController
-                )
             }
         }
     }

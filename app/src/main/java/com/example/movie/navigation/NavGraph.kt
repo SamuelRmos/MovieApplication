@@ -16,14 +16,14 @@ import com.example.movie.ui.MovieDetailsScreen
 import com.example.movie.ui.MoviesScreen
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(navController: NavHostController, actions: Actions) {
     NavHost(navController = navController, startDestination = MoviesScreen.route) {
         composable(route = MoviesScreen.route) {
-            MoviesScreen(navController)
+            MoviesScreen(actions)
         }
         composable(route = MovieDetails.route) {
             val movie = it.requiredArg<Movie>("movie_detail")
-            MovieDetailsScreen(movie = movie, navController = navController)
+            MovieDetailsScreen(movie, actions)
         }
     }
 }
