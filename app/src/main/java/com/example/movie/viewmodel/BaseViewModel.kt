@@ -5,13 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie.ui.RequestState
-import com.example.movie.ui.RequestState.Idle
+import com.example.movie.ui.RequestState.Loading
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
-    private var _requestState: MutableState<RequestState> = mutableStateOf(Idle)
+    private var _requestState: MutableState<RequestState> = mutableStateOf(Loading)
     val requestState = _requestState
 
     suspend fun executeCall(call: Flow<RequestState>) {

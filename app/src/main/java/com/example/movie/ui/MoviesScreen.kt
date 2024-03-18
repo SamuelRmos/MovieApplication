@@ -6,15 +6,16 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -25,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,12 +43,13 @@ import com.example.movie.viewmodel.PopularMoviesViewModel
 import com.example.movie.viewmodel.TodayMoviesViewModel
 
 @Composable
-fun MoviesScreen(actions: Actions) {
-    val ratedViewModel: MovieViewModel = hiltViewModel()
-    val todayViewModel: TodayMoviesViewModel = hiltViewModel()
-    val popularMoviesViewModel: PopularMoviesViewModel = hiltViewModel()
-    val classicMoviesViewModel: ClassicMoviesViewModel = hiltViewModel()
-
+fun MoviesScreen(
+    actions: Actions,
+    ratedViewModel: MovieViewModel = hiltViewModel(),
+    todayViewModel: TodayMoviesViewModel = hiltViewModel(),
+    popularMoviesViewModel: PopularMoviesViewModel = hiltViewModel(),
+    classicMoviesViewModel: ClassicMoviesViewModel = hiltViewModel()
+) {
     Scaffold(
         topBar = {
             CustomToolbarScreen(
@@ -57,33 +60,66 @@ fun MoviesScreen(actions: Actions) {
         },
         containerColor = colorBackground
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .padding(innerPadding)
-                .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-            MoviesScreenCarousel(
-                requestState = ratedViewModel.requestState.value,
-                carouselTitle = "Most Watched",
-                actions = actions
-            )
-            MoviesScreenCarousel(
-                requestState = todayViewModel.requestState.value,
-                carouselTitle = "Indications of Today",
-                actions = actions
-            )
-            MoviesScreenCarousel(
-                requestState = popularMoviesViewModel.requestState.value,
-                carouselTitle = "Populars",
-                actions = actions
-            )
-            MoviesScreenCarousel(
-                requestState = classicMoviesViewModel.requestState.value,
-                carouselTitle = "Classics",
-                actions = actions
+        val requestState by classicMoviesViewModel.requestState
+        if (requestState.isLoading()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = colorBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    color = Color.White, modifier = Modifier.size(48.dp)
+                )
+            }
+        } else {
+            CarouselList(
+                innerPadding,
+                ratedViewModel,
+                actions,
+                todayViewModel,
+                popularMoviesViewModel,
+                classicMoviesViewModel
             )
         }
+    }
+}
+
+@Composable
+private fun CarouselList(
+    innerPadding: PaddingValues,
+    ratedViewModel: MovieViewModel,
+    actions: Actions,
+    todayViewModel: TodayMoviesViewModel,
+    popularMoviesViewModel: PopularMoviesViewModel,
+    classicMoviesViewModel: ClassicMoviesViewModel
+) {
+    Column(
+        modifier = Modifier
+            .padding(innerPadding)
+            .verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        MoviesScreenCarousel(
+            requestState = ratedViewModel.requestState.value,
+            carouselTitle = "Most Watched",
+            actions = actions
+        )
+        MoviesScreenCarousel(
+            requestState = todayViewModel.requestState.value,
+            carouselTitle = "Indications of Today",
+            actions = actions
+        )
+        MoviesScreenCarousel(
+            requestState = popularMoviesViewModel.requestState.value,
+            carouselTitle = "Populars",
+            actions = actions
+        )
+        MoviesScreenCarousel(
+            requestState = classicMoviesViewModel.requestState.value,
+            carouselTitle = "Classics",
+            actions = actions
+        )
     }
 }
 
@@ -124,15 +160,7 @@ fun MovieList(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(start = 10.dp, end = 10.dp)
     ) {
-        if (requestState.isLoading()) {
-            item(span = { GridItemSpan(1) }) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    CircularProgressIndicator(
-                        color = Color.Black, modifier = Modifier.size(48.dp)
-                    )
-                }
-            }
-        } else {
+        if (requestState.isSuccess()) {
             loaded.targetState = true
             itemsIndexed(requestState.getMovieList()) { idx, m ->
                 AnimatedVisibility(
