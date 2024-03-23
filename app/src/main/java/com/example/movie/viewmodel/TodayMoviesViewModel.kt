@@ -16,8 +16,8 @@ class TodayMoviesViewModel @Inject constructor(
     }
 
     private fun fetchMovies() {
-        viewModelScope.launch {
-            executeCall(movieRepository.getListTodayMovies())
+        executeCall {
+            movieRepository.getListTodayMovies()
         }
     }
 }

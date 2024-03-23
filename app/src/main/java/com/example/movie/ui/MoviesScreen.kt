@@ -1,5 +1,6 @@
 package com.example.movie.ui
 
+import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.MutableTransitionState
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -26,11 +28,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.movie.navigation.Actions
@@ -50,6 +55,13 @@ fun MoviesScreen(
     popularMoviesViewModel: PopularMoviesViewModel = hiltViewModel(),
     classicMoviesViewModel: ClassicMoviesViewModel = hiltViewModel()
 ) {
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = Color.Black.toArgb()
+        }
+    }
     Scaffold(
         topBar = {
             CustomToolbarScreen(
@@ -130,7 +142,7 @@ fun MoviesScreenCarousel(
     carouselTitle: String,
     actions: Actions
 ) {
-    Box(modifier.height(280.dp)) {
+    Box(modifier.height(220.dp).padding(bottom = 12.dp)) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -154,7 +166,7 @@ fun MovieList(
     val listState = rememberLazyGridState()
     val loaded = remember { MutableTransitionState(requestState.isLoading()) }
     LazyHorizontalGrid(
-        modifier = modifier.height(220.dp),
+        modifier = modifier.height(185.dp),
         rows = GridCells.Fixed(1),
         state = listState,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -172,6 +184,7 @@ fun MovieList(
                     ), exit = ExitTransition.None
                 ) {
                     MovieCard(
+                        modifier = modifier.width(150.dp),
                         movie = m,
                         onMovieClick = { actions.goToMovieDetail(it) }
                     )

@@ -1,7 +1,9 @@
 package com.example.movie.repository
 
-import com.example.movie.model.Movie
+import com.example.commons.functional.Either
+import com.example.movie.model.MovieCredits
+import kotlinx.coroutines.flow.Flow
 
 interface DetailRepository {
-    fun getMovieById(id: Int): Movie
+    suspend fun getMovieCredits(id: Int): Flow<Either<String, MovieCredits>>
 }

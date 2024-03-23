@@ -17,8 +17,8 @@ class ClassicMoviesViewModel @Inject constructor(
 
     @VisibleForTesting
     internal fun fetchMovies() {
-        viewModelScope.launch {
-            executeCall(movieRepository.getListClassicMovies())
+        executeCall {
+            movieRepository.getListClassicMovies()
         }
     }
 }

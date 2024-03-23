@@ -16,8 +16,8 @@ class PopularMoviesViewModel @Inject constructor(
     }
 
     private fun fetchMovies() {
-        viewModelScope.launch {
-            executeCall(movieRepository.getListPopularMovies())
+        executeCall {
+            movieRepository.getListPopularMovies()
         }
     }
 }

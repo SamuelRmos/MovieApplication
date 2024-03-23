@@ -2,7 +2,7 @@ package com.example.movie.model
 
 import com.example.movie.R
 
-val SampleMovieData = listOf(
+val sampleMovieData = listOf(
     Movie(
         id = 1,
         title = "Ad Astra",

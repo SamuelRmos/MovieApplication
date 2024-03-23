@@ -20,10 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
-import com.example.movie.model.Constants.artworkUrl
+import com.example.movie.model.Constants.artworkImagePoster
 import com.example.movie.model.Movie
-import com.example.movie.model.SampleMovieData
 import com.example.movie.model.placeholderImage
+import com.example.movie.model.sampleMovieData
 import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorBackground
 import com.example.movie.theme.colorPrimary
@@ -40,18 +40,18 @@ fun MovieCard(
         modifier = modifier.clickable { onMovieClick(movie) },
         color = colorPrimary
     ) {
-        MovieCardContent(movie = movie)
+        MovieCardContent(modifier, movie = movie)
     }
 }
 
 @Composable
 fun MovieCardContent(modifier: Modifier = Modifier, movie: Movie) {
     Box(
-        modifier
-            .height(200.dp)
-            .width(180.dp)) {
+        modifier = modifier
+    ) {
         CoilImage(
-            imageModel = { artworkUrl(movie.posterImage) },
+            modifier = modifier,
+            imageModel = { artworkImagePoster(movie.posterImage) },
             previewPlaceholder = placeholderImage(movie.id),
             success = { imageState ->
                 imageState.drawable?.let {
@@ -90,15 +90,15 @@ private fun MovieCardPreview() {
             ) {
                 MovieCard(
                     modifier = Modifier.fillMaxWidth(),
-                    movie = SampleMovieData[0]
+                    movie = sampleMovieData[0]
                 ) {}
                 MovieCard(
                     modifier = Modifier.fillMaxWidth(),
-                    movie = SampleMovieData[1]
+                    movie = sampleMovieData[1]
                 ) {}
                 MovieCard(
                     modifier = Modifier.fillMaxWidth(),
-                    movie = SampleMovieData[2]
+                    movie = sampleMovieData[2]
                 ) {}
             }
         }

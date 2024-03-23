@@ -12,7 +12,7 @@ import androidx.navigation.compose.composable
 import com.example.movie.model.Movie
 import com.example.movie.navigation.Screens.MovieDetails
 import com.example.movie.navigation.Screens.MoviesScreen
-import com.example.movie.ui.MovieDetailsScreen
+import com.example.movie.ui.details.MovieDetailsScreen
 import com.example.movie.ui.MoviesScreen
 
 @Composable
