@@ -71,16 +71,7 @@ fun MovieDetailsScreen(
     val requestState: DetailRequestState by viewModel.requestState
     when(requestState) {
         is Loading -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = colorBackground),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    color = Color.White, modifier = Modifier.size(48.dp)
-                )
-            }
+            Loading()
         }
         is Success -> {
             Column(
@@ -120,6 +111,20 @@ fun MovieDetailsScreen(
         is Error -> {
 
         }
+    }
+}
+
+@Composable
+private fun Loading() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = colorBackground),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            color = Color.White, modifier = Modifier.size(48.dp)
+        )
     }
 }
 
