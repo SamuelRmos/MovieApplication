@@ -1,9 +1,7 @@
 package com.example.movie.navigation
 
-import android.os.Bundle
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
-import androidx.core.os.BundleCompat
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -12,8 +10,8 @@ import androidx.navigation.compose.composable
 import com.example.movie.model.Movie
 import com.example.movie.navigation.Screens.MovieDetails
 import com.example.movie.navigation.Screens.MoviesScreen
-import com.example.movie.ui.details.MovieDetailsScreen
 import com.example.movie.ui.MoviesScreen
+import com.example.movie.ui.details.MovieDetailsScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, actions: Actions) {
@@ -39,8 +37,5 @@ fun NavController.navigate(route: String, vararg args: Pair<String, Parcelable>)
 
 inline fun <reified T : Parcelable> NavBackStackEntry.requiredArg(key: String): T =
     requireNotNull(arguments) { "arguments bundle is null" }.run {
-        requireNotNull(getParcel(key)) { "argument for $key is null" }
+        requireNotNull(getParcelable(key, T::class.java)) { "argument for $key is null" }
     }
-
-inline fun <reified T: Parcelable> Bundle.getParcel(key: String): T? =
-    BundleCompat.getParcelable(this, key, T::class.java)

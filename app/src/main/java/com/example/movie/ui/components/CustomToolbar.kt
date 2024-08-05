@@ -3,7 +3,7 @@ package com.example.movie.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -14,8 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,11 +33,8 @@ fun CustomToolbarScreen(
 ) {
     val scaffoldState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var isDrawerOpen = remember {
-        mutableStateOf(false)
-    }
     CenterAlignedTopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
             containerColor = backgroundColor,
             titleContentColor = MaterialTheme.colorScheme.primary,
         ),
@@ -55,7 +50,7 @@ fun CustomToolbarScreen(
             if (isBack) {
                 IconButton(onClick = { actions.navigateUp() }) {
                     Icon(
-                        Icons.AutoMirrored.Filled.ArrowBack,
+                        Icons.Filled.ArrowBack,
                         "backIcon",
                         tint = Color.White
                     )

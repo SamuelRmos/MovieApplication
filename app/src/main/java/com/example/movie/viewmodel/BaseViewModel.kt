@@ -11,13 +11,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 open class BaseViewModel : ViewModel() {
-    private var _requestState: MutableState<RequestState> = mutableStateOf(Loading)
-    val requestState = _requestState
+    var requestState: MutableState<RequestState> = mutableStateOf(Loading)
+        private set
 
     fun executeCall(call: suspend () -> Flow<RequestState>) {
         viewModelScope.launch(IO) {
             call().collect {
-                _requestState.value = it
+                requestState.value = it
             }
         }
     }

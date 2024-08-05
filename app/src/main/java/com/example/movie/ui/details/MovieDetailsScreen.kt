@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,9 +42,10 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.movie.model.Constants
+import com.example.movie.model.Constants.artworkUrl
 import com.example.movie.model.Movie
-import com.example.movie.model.sampleMovieData
 import com.example.movie.model.placeholderImage
+import com.example.movie.model.sampleMovieData
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorBackground
@@ -142,12 +143,12 @@ private fun BackdropView(
             movie.id,
             movie.title,
             ContentScale.Crop,
-            Constants.artworkUrl(movie.backDropImage ?: "")
+            artworkUrl(movie.backDropImage ?: "")
         )
         Box(modifier = Modifier.padding(top = 30.dp)) {
             IconButton(onClick = { actions.navigateUp() }) {
                 Icon(
-                    Icons.AutoMirrored.Filled.ArrowBack,
+                    Icons.Filled.ArrowBack,
                     "backIcon",
                     tint = Color.White
                 )
