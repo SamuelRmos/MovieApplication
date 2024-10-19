@@ -1,0 +1,1026 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="5" by="lint Hedgehog | 2023.1.1 Patch 2">
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details.">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details.">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate can only be accessed from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomOpenHelper can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomOpenHelper can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomOpenHelper can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="30"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate.createAllTables can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="32"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate.dropAllTables can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="39"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate.onCreate can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="49"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate.onOpen can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="58"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate.onPreMigrate can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="69"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.dropFtsSyncTriggers can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="70"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate.onPostMigrate can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="74"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Delegate.onValidateSchema can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="78"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="80"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="80"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo.CREATED_FROM_ENTITY can only be accessed from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="80"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="81"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="81"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo.CREATED_FROM_ENTITY can only be accessed from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="81"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="82"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="82"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo.CREATED_FROM_ENTITY can only be accessed from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="82"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo.CREATED_FROM_ENTITY can only be accessed from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="84"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="Column can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="84"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo.CREATED_FROM_ENTITY can only be accessed from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="84"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="87"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo.read can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="88"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="TableInfo.equals can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="89"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="ValidationResult can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="90"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="ValidationResult can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="90"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="ValidationResult can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="94"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="ValidationResult can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="94"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomOpenHelper can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="96"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomOpenHelper can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="96"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="InvalidationTracker can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="109"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomDatabase.assertNotMainThread can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/AppDataBase_Impl.java"
+            line="114"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="EntityInsertionAdapter can only be accessed from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="25"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="EntityInsertionAdapter can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="25"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="SharedSQLiteStatement.createQuery can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="27"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="EntityInsertionAdapter.bind can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="32"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomDatabase.assertNotSuspendingTransaction can only be called from within the same library group (referenced groupId=`androidx.room` from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="60"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="EntityInsertionAdapter.insert can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="63"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomSQLiteQuery.acquire can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="73"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomSQLiteQuery.bindLong can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="75"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomDatabase.assertNotSuspendingTransaction can only be called from within the same library group (referenced groupId=`androidx.room` from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="76"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="77"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="77"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="77"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="77"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="79"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="79"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="79"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="80"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="80"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="80"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="81"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="81"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="81"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="82"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="82"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="82"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="83"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomSQLiteQuery.release can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="103"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomSQLiteQuery.acquire can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="110"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomDatabase.assertNotSuspendingTransaction can only be called from within the same library group (referenced groupId=`androidx.room` from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="111"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="112"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="112"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="112"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="DBUtil.query can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="112"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="114"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="114"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="114"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="115"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="115"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="115"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="116"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="116"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="116"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="117"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="117"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="117"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="118"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="118"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="CursorUtil.getColumnIndexOrThrow can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="118"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="RoomSQLiteQuery.release can only be called from within the same library group prefix (referenced groupId=`androidx.room` with prefix androidx from groupId=`Movies`)">
+        <location
+            file="build/generated/source/kapt/debug/com/example/movie/persistence/MovieDao_Impl.java"
+            line="138"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v24`) is unnecessary; `minSdkVersion` is 28. Merge all the resources in this folder into `drawable`.">
+        <location
+            file="src/main/res/drawable-v24"/>
+    </issue>
+
+    <issue
+        id="ObsoleteSdkInt"
+        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 28. Merge all the resources in this folder into `mipmap-anydpi`.">
+        <location
+            file="src/main/res/mipmap-anydpi-v26"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.integer.slide` appears to be unused">
+        <location
+            file="src/main/res/values/anim.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_gradient_bottom` appears to be unused">
+        <location
+            file="src/main/res/drawable/bg_gradient_bottom.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.api_key` appears to be unused">
+        <location
+            file="build.gradle"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.colorText` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="6"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.background1` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.background2` appears to be unused">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.margin_normal` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="3"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.integer.anim_duration_long` appears to be unused">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_arrow_back` appears to be unused">
+        <location
+            file="src/main/res/drawable/ic_arrow_back.xml"
+            line="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.navigation.nav_main` appears to be unused">
+        <location
+            file="src/main/res/navigation/nav_main.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.pulp_fiction` appears to be unused">
+        <location
+            file="src/main/res/drawable/pulp_fiction.jpg"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.anim.slide_in_left` appears to be unused">
+        <location
+            file="src/main/res/anim/slide_in_left.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.anim.slide_in_right` appears to be unused">
+        <location
+            file="src/main/res/anim/slide_in_right.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.anim.slide_out_left` appears to be unused">
+        <location
+            file="src/main/res/anim/slide_out_left.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.anim.slide_out_right` appears to be unused">
+        <location
+            file="src/main/res/anim/slide_out_right.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.title` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="3"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.release` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="4"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.bein` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.poster_movie_most_popular` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="7"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.most_popular` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="8"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.top_rated` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="9"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.top_10_today` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="10"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.classics` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.image_cover` appears to be unused">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.CollapsedExpandedTitleText` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="11"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.TextStyle` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="15"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.TextTitle` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="23"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.RecyclerViewStyle` appears to be unused">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="33"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.transition_image` appears to be unused">
+        <location
+            file="src/main/res/values/transition.xml"
+            line="3"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive roundIcon is missing a monochrome tag">
+        <location
+            file="src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"
+            line="2"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/movie001.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/movie001.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/movie002.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/movie002.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/movie003.webp` in densityless folder">
+        <location
+            file="src/main/res/drawable/movie003.webp"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/pulp_fiction.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/pulp_fiction.jpg"/>
+    </issue>
+
+</issues>

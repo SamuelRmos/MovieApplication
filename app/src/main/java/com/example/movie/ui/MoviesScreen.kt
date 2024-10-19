@@ -2,11 +2,7 @@ package com.example.movie.ui
 
 import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,10 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,9 +24,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,10 +41,12 @@ import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorBackground
 import com.example.movie.theme.colorText
 import com.example.movie.ui.components.CustomToolbarScreen
+import com.example.movie.viewmodel.BaseViewModel
 import com.example.movie.viewmodel.ClassicMoviesViewModel
 import com.example.movie.viewmodel.MovieViewModel
 import com.example.movie.viewmodel.PopularMoviesViewModel
 import com.example.movie.viewmodel.TodayMoviesViewModel
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,23 +115,43 @@ private fun CarouselList(
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         MoviesScreenCarousel(
-            requestState = ratedViewModel.requestState.value,
+            viewModel = ratedViewModel,
             carouselTitle = "Most Watched",
+            loadMore = {
+                var page = 1
+                page++
+                ratedViewModel.fetchMovies(page)
+            },
             actions = actions
         )
         MoviesScreenCarousel(
-            requestState = todayViewModel.requestState.value,
+            viewModel = todayViewModel,
             carouselTitle = "Indications of Today",
+            loadMore = {
+                var page = 1
+                page++
+                todayViewModel.fetchMovies(page)
+            },
             actions = actions
         )
         MoviesScreenCarousel(
-            requestState = popularMoviesViewModel.requestState.value,
+            viewModel = popularMoviesViewModel,
+            loadMore = {
+                var page = 1
+                page++
+                popularMoviesViewModel.fetchMovies(page)
+            },
             carouselTitle = "Populars",
             actions = actions
         )
         MoviesScreenCarousel(
-            requestState = classicMoviesViewModel.requestState.value,
+            viewModel = classicMoviesViewModel,
             carouselTitle = "Classics",
+            loadMore = {
+                var page = 1
+                page++
+                classicMoviesViewModel.fetchMovies(page)
+            },
             actions = actions
         )
     }
@@ -140,11 +160,16 @@ private fun CarouselList(
 @Composable
 fun MoviesScreenCarousel(
     modifier: Modifier = Modifier,
-    requestState: RequestState,
+    viewModel: BaseViewModel,
     carouselTitle: String,
-    actions: Actions
+    actions: Actions,
+    loadMore: () -> Unit,
 ) {
-    Box(modifier.height(220.dp).padding(bottom = 12.dp)) {
+    Box(
+        modifier
+            .height(220.dp)
+            .padding(bottom = 12.dp)
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -154,7 +179,7 @@ fun MoviesScreenCarousel(
                 style = MaterialTheme.typography.titleLarge,
                 color = colorText
             )
-            MovieList(requestState = requestState, actions = actions)
+            MovieList(viewModel = viewModel, loadMore = loadMore, actions = actions)
         }
     }
 }
@@ -162,14 +187,32 @@ fun MoviesScreenCarousel(
 @Composable
 fun MovieList(
     modifier: Modifier = Modifier,
-    requestState: RequestState,
-    actions: Actions
+    viewModel: BaseViewModel,
+    loadMore: () -> Unit,
+    actions: Actions,
+    buffer: Int = 2
 ) {
-    val listState = rememberLazyGridState()
+    val listState = rememberLazyListState()
+    val requestState by viewModel.requestState
     val loaded = remember { MutableTransitionState(requestState.isLoading()) }
-    LazyHorizontalGrid(
+    val load = remember {
+        derivedStateOf {
+            val layoutInfo = listState.layoutInfo
+            val totalItems = layoutInfo.totalItemsCount
+            val lastVisibleItemIndex =
+                (layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0) + 1
+            lastVisibleItemIndex < (totalItems - buffer)
+        }
+    }
+    LaunchedEffect(load) {
+        snapshotFlow { load.value }
+            .distinctUntilChanged()
+            .collect {
+                loadMore()
+            }
+    }
+    LazyRow(
         modifier = modifier.height(185.dp),
-        rows = GridCells.Fixed(1),
         state = listState,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         contentPadding = PaddingValues(start = 10.dp, end = 10.dp)
@@ -178,12 +221,7 @@ fun MovieList(
             loaded.targetState = true
             itemsIndexed(requestState.getMovieList()) { idx, m ->
                 AnimatedVisibility(
-                    visibleState = loaded,
-                    enter = slideInHorizontally(
-                        animationSpec = tween(500, idx / 2 * 120)
-                    ) + fadeIn(
-                        animationSpec = tween(400, idx / 2 * 150)
-                    ), exit = ExitTransition.None
+                    visibleState = loaded
                 ) {
                     MovieCard(
                         modifier = modifier.width(150.dp),

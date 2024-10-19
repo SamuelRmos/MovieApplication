@@ -10,12 +10,12 @@ class MovieViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     init {
-        fetchMovies()
+        fetchMovies(1)
     }
 
-    private fun fetchMovies() {
+    fun fetchMovies(page: Int) {
         executeCall {
-            movieRepository.getListRatedMovies()
+            movieRepository.getListRatedMovies(page)
         }
     }
 }

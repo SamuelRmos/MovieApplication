@@ -51,7 +51,6 @@ object ApiModule {
                 .build()
         } else {
             OkHttpClient().newBuilder()
-                .addInterceptor(loggingInterceptor)
                 .addInterceptor(authInterceptor)
                 .build()
         }
@@ -83,6 +82,4 @@ object ApiModule {
     fun provideImageLoader(@ApplicationContext context: Context): ImageLoader = ImageLoader
         .Builder(context)
         .build()
-
-
 }

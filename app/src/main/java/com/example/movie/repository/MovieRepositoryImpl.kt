@@ -8,15 +8,15 @@ import javax.inject.Inject
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi
 ) : BaseRepository(), MovieRepository {
-    override suspend fun getListPopularMovies(): Flow<RequestState> =
-        safeApiCall { movieApi.getPopularMovieAsync() }
+    override suspend fun getListPopularMovies(page: Int): Flow<RequestState> =
+        safeApiCall { movieApi.getPopularMovieAsync(page) }
 
-    override suspend fun getListRatedMovies(): Flow<RequestState> =
-        safeApiCall { movieApi.getRatedMovieAsync() }
+    override suspend fun getListRatedMovies(page: Int): Flow<RequestState> =
+        safeApiCall { movieApi.getRatedMovieAsync(page) }
 
-    override suspend fun getListTodayMovies(): Flow<RequestState> =
-        safeApiCall { movieApi.getTodayMovieAsync() }
+    override suspend fun getListTodayMovies(page: Int): Flow<RequestState> =
+        safeApiCall { movieApi.getTodayMovieAsync(page) }
 
-    override suspend fun getListClassicMovies(): Flow<RequestState> =
-        safeApiCall { movieApi.getClassicMovieAsync() }
+    override suspend fun getListClassicMovies(page: Int): Flow<RequestState> =
+        safeApiCall { movieApi.getClassicMovieAsync(page) }
 }
