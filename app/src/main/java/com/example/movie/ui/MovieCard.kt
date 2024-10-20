@@ -51,7 +51,7 @@ fun MovieCardContent(modifier: Modifier = Modifier, movie: Movie) {
     ) {
         CoilImage(
             modifier = modifier,
-            imageModel = { artworkImagePoster(movie.posterImage) },
+            imageModel = { artworkImagePoster(movie.posterImage!!) },
             previewPlaceholder = placeholderImage(movie.id),
             success = { imageState ->
                 imageState.drawable?.let {

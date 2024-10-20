@@ -12,7 +12,7 @@ data class Movie(
     val title: String,
     val overview: String,
     @Json(name = "poster_path")
-    val posterImage: String,
+    val posterImage: String?,
     @Json(name = "backdrop_path")
     val backDropImage: String?,
     @Json(name = "release_date")

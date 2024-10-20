@@ -25,6 +25,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -49,11 +50,10 @@ import com.example.movie.model.sampleMovieData
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorBackground
-import com.example.movie.ui.details.DetailRequestState.Error
-import com.example.movie.ui.details.DetailRequestState.Loading
-import com.example.movie.ui.details.DetailRequestState.Success
 import com.example.movie.viewmodel.MovieDetailViewModel
 import com.skydoves.landscapist.coil.CoilImage
+
+private const val EMPTY_STRING = ""
 
 @Composable
 fun MovieDetailsScreen(
@@ -69,48 +69,43 @@ fun MovieDetailsScreen(
         }
     }
     viewModel.getMovieCredits(movie.id)
-    val requestState: DetailRequestState by viewModel.requestState
-    when(requestState) {
-        is Loading -> {
-            Loading()
-        }
-        is Success -> {
-            Column(
-                modifier = Modifier
-                    .padding()
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .background(colorBackground),
-                verticalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                BackdropView(movie, actions)
-                Row {
-                    MovieInformation(movie, requestState.getDirectorName())
-                    Spacer(modifier = Modifier.weight(1f))
-                    Box(
-                        modifier = Modifier
-                            .height(150.dp)
-                            .width(130.dp)
-                            .padding(end = 10.dp)
-                    ) {
-                        ImageView(
-                            idImage = movie.id,
-                            description = movie.title,
-                            ContentScale.Inside,
-                            Constants.artworkDetailImagePoster(movie.posterImage)
-                        )
-                    }
-                }
-                Text(
-                    modifier = Modifier.padding(start = 10.dp, end = 10.dp),
-                    text = movie.overview,
-                    color = Color.White,
-                    fontSize = 15.sp
-                )
-            }
-        }
-        is Error -> {
+    val requestState by viewModel.stateDetails.collectAsState()
 
+    if (requestState.isLoading) {
+        Loading()
+    } else {
+        Column(
+            modifier = Modifier
+                .padding()
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .background(colorBackground),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+        ) {
+            BackdropView(movie, actions)
+            Row {
+                MovieInformation(movie, requestState.director)
+                Spacer(modifier = Modifier.weight(1f))
+                Box(
+                    modifier = Modifier
+                        .height(150.dp)
+                        .width(130.dp)
+                        .padding(end = 10.dp)
+                ) {
+                    ImageView(
+                        idImage = movie.id,
+                        description = movie.title,
+                        ContentScale.Inside,
+                        Constants.artworkDetailImagePoster(movie.posterImage ?: EMPTY_STRING)
+                    )
+                }
+            }
+            Text(
+                modifier = Modifier.padding(start = 10.dp, end = 10.dp),
+                text = movie.overview,
+                color = Color.White,
+                fontSize = 15.sp
+            )
         }
     }
 }

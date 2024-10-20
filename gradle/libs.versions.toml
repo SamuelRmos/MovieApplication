@@ -21,7 +21,7 @@ testCoreVersion = '1.2.0'
 lifecycleRuntimeKtx = "2.6.1"
 activityCompose = '1.6.1'
 navigationCompose = '2.5.3'
-composeBom = '2023.01.00'
+composeBom = '2024.10.00'
 landscapist = "2.1.0"
 roomVersion = "2.6.1"
 
@@ -40,6 +40,7 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-material = { group = "androidx.compose.material", name = "material" }
 compose-util = { group = "androidx.compose.ui", name = "ui-util" }
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }

@@ -22,15 +22,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PopularMoviesViewModel @Inject constructor(
-    private val movieRepository: MovieRepository
-) : ViewModel() {
+class RatedMovieViewModel @Inject constructor(private val movieRepository: MovieRepository) :
+    ViewModel() {
 
-    private val _statePopularMovie = MutableStateFlow(MovieState())
-    val statePopularMovie = _statePopularMovie.asStateFlow()
+    private val _stateRatedMovie = MutableStateFlow(MovieState())
+    val stateRatedMovie = _stateRatedMovie.asStateFlow()
 
-    private val _paginationPopularState = MutableStateFlow(PaginationState())
-    val paginationPopularState = _paginationPopularState.asStateFlow()
+    private val _paginationRatedState = MutableStateFlow(PaginationState())
+    val paginationRatedState = _paginationRatedState.asStateFlow()
 
     private val _isRefresh = MutableStateFlow(false)
     val isRefresh: StateFlow<Boolean> = _isRefresh
@@ -40,9 +39,9 @@ class PopularMoviesViewModel @Inject constructor(
     }
 
     @VisibleForTesting
-   internal fun fetchMovies(page: Int = 1) {
+    internal fun fetchMovies(page: Int = 1) {
         viewModelScope.launch(IO) {
-            movieRepository.getListPopularMovies(page)
+            movieRepository.getListRatedMovies(page)
                 .distinctUntilChanged()
                 .collectLatest { result ->
                     when (result) {
@@ -55,29 +54,14 @@ class PopularMoviesViewModel @Inject constructor(
     }
 
     @VisibleForTesting
-    internal fun onRequestLoading() {
-        if (_statePopularMovie.value.movies.isEmpty()) {
-            _statePopularMovie.update {
-                it.copy(isLoading = true)
-            }
-        }
-
-        if (_statePopularMovie.value.movies.isNotEmpty()) {
-            _paginationPopularState.update {
-                it.copy(isLoading = true)
-            }
-        }
-    }
-
-    @VisibleForTesting
     internal fun onRequestSuccess(data: List<Movie>) {
-        val movies = _statePopularMovie.value.movies + data
-        _statePopularMovie.update {
+        val movies = _stateRatedMovie.value.movies + data
+        _stateRatedMovie.update {
             it.copy(movies = movies, isLoading = false)
         }
 
-        val listSize = _statePopularMovie.value.movies.size
-        _paginationPopularState.update {
+        val listSize = _stateRatedMovie.value.movies.size
+        _paginationRatedState.update {
             it.copy(
                 skip = it.skip + 1,
                 endReached = data.isEmpty() || listSize >= MOVIES_LIMIT,
@@ -87,25 +71,40 @@ class PopularMoviesViewModel @Inject constructor(
     }
 
     @VisibleForTesting
+    internal fun onRequestLoading() {
+        if (_stateRatedMovie.value.movies.isEmpty()) {
+            _stateRatedMovie.update {
+                it.copy(isLoading = true)
+            }
+        }
+
+        if (_stateRatedMovie.value.movies.isNotEmpty()) {
+            _paginationRatedState.update {
+                it.copy(isLoading = true)
+            }
+        }
+    }
+
+    @VisibleForTesting
     internal fun onRequestError(message: String?) {
-        _statePopularMovie.update {
+        _stateRatedMovie.update {
             it.copy(error = message ?: "Unexpected Error", isLoading = false)
         }
     }
 
     fun getMoviesPaginated() {
-        if (_statePopularMovie.value.movies.isEmpty()) return
+        if (_stateRatedMovie.value.movies.isEmpty()) return
 
-        if (_paginationPopularState.value.endReached) return
+        if (_paginationRatedState.value.endReached) return
 
-        fetchMovies(_paginationPopularState.value.skip)
+        fetchMovies(_paginationRatedState.value.skip)
     }
 
     fun refresh() {
         viewModelScope.launch(IO) {
             updateRefreshState(true)
-            _paginationPopularState.update { it.copy(skip = 0) }
-            _statePopularMovie.update { it.copy(movies = _statePopularMovie.value.movies) }
+            _paginationRatedState.update { it.copy(skip = 0) }
+            _stateRatedMovie.update { it.copy(movies = _stateRatedMovie.value.movies) }
             fetchMovies()
             updateRefreshState(false)
         }
