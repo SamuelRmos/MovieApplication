@@ -4,8 +4,8 @@ import android.content.Context
 import coil.ImageLoader
 import com.example.commons.service.ConnectionService
 import com.example.movie.BuildConfig
-import com.example.movie.model.Constants
-import com.example.movie.model.Constants.tmdbApiKey
+import com.example.movie.model.Constants.API_KEY
+import com.example.movie.model.Constants.BASE_URL
 import com.example.movie.network.MovieApi
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
@@ -18,6 +18,7 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -29,7 +30,7 @@ object ApiModule {
     private val authInterceptor = Interceptor { chain ->
         val newUrl = chain.request().url
             .newBuilder()
-            .addQueryParameter("api_key", tmdbApiKey)
+            .addQueryParameter("api_key", API_KEY)
             .build()
         val newRequest = chain.request()
             .newBuilder()
@@ -40,7 +41,7 @@ object ApiModule {
 
     private val loggingInterceptor =
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = BODY
         }
 
     private val client =
@@ -51,7 +52,6 @@ object ApiModule {
                 .build()
         } else {
             OkHttpClient().newBuilder()
-                .addInterceptor(loggingInterceptor)
                 .addInterceptor(authInterceptor)
                 .build()
         }
@@ -66,7 +66,7 @@ object ApiModule {
     @Provides
     fun provideRetrofit(moshi: Moshi): MovieApi = Retrofit.Builder()
         .client(client)
-        .baseUrl(Constants.baseURL)
+        .baseUrl(BASE_URL)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
@@ -83,6 +83,4 @@ object ApiModule {
     fun provideImageLoader(@ApplicationContext context: Context): ImageLoader = ImageLoader
         .Builder(context)
         .build()
-
-
 }

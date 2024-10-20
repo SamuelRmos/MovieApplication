@@ -14,20 +14,25 @@ import timber.log.Timber
 private const val ERROR_MESSAGE = "Error while fetching movies data"
 
 open class BaseRepository {
-    suspend fun safeApiCall(
-        call: suspend () -> Response<MovieResponse>
-    ): Flow<RequestState> = flow {
-        try {
-            call().run {
-                emit(Loading)
-                delay(1000)
-                body()?.let {
-                    if (isSuccessful) emit(Success(it.results)) else emit(Error(ERROR_MESSAGE))
-                } ?: emit(Error("Error response body is null"))
+    suspend fun safeApiCall(call: suspend () -> Response<MovieResponse>): Flow<RequestState> =
+        flow {
+            try {
+                call().run {
+                    emit(Loading)
+                    delay(1000)
+                    body()?.let {
+                        if (isSuccessful) {
+                            emit(Success(it.results))
+                        } else {
+                            emit(Error(ERROR_MESSAGE))
+                        }
+                    } ?: run {
+                        emit(Error("Error response body is null"))
+                    }
+                }
+            } catch (exception: Exception) {
+                Timber.e(exception, exception.message)
+                emit(Error(ERROR_MESSAGE))
             }
-        } catch (exception: Exception) {
-            Timber.e(exception, exception.message)
-            emit(Error(ERROR_MESSAGE))
         }
-    }
 }
