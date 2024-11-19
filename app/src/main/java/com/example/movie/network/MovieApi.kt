@@ -2,6 +2,7 @@ package com.example.movie.network
 
 import com.example.movie.model.MovieCredits
 import com.example.movie.model.MovieResponse
+import com.example.movie.model.VideosList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,4 +24,7 @@ interface MovieApi {
 
     @GET("movie/{id}/credits")
     suspend fun getCreditsMovie(@Path("id") id: Int): Response<MovieCredits>
+
+    @GET("movie/{id}/videos?language=en-US")
+    suspend fun getVideosMovie(@Path("id") id: Int): Response<VideosList>
 }

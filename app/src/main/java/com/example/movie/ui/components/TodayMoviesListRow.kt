@@ -84,13 +84,7 @@ fun TodayMovieList(
         refreshing = isRefreshing,
         onRefresh = viewModel::refresh
     )
-
-    LaunchedEffect(lazyListState.isScrollInProgress) {
-        if (lazyListState.isScrollInProgress) {
-            focusManger.clearFocus()
-        }
-    }
-
+    
     Box(
         modifier = Modifier
             .fillMaxWidth()

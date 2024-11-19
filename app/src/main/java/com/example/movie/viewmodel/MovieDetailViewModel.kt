@@ -4,7 +4,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movie.model.MovieCredits
+import com.example.movie.model.VideosList
 import com.example.movie.repository.DetailRepository
+import com.example.movie.ui.details.DetailRequestState
 import com.example.movie.ui.details.DetailRequestState.Error
 import com.example.movie.ui.details.DetailRequestState.Loading
 import com.example.movie.ui.details.DetailRequestState.Success
@@ -33,12 +35,27 @@ class MovieDetailViewModel @Inject constructor(private val detailRepository: Det
             detailRepository.getMovieCredits(id)
                 .distinctUntilChanged()
                 .collectLatest { result ->
-                    when (result) {
-                        is Success -> onSuccess(result.credits)
-                        is Error ->  onRequestError(result.message)
-                        is Loading -> onRequestLoading()
-                    }
+                    checkResult(result)
                 }
+
+            detailRepository.getMovieVideo(id)
+                .distinctUntilChanged()
+                .collectLatest {
+                    checkResult(it)
+                }
+        }
+    }
+
+    private fun checkResult(result: DetailRequestState) {
+        when (result) {
+            is Success -> result.credits?.let {
+                onSuccess(it)
+            } ?: run {
+                onSuccessVideo(result.videos!!)
+            }
+
+            is Error -> onRequestError(result.message)
+            is Loading -> onRequestLoading()
         }
     }
 
@@ -55,6 +72,16 @@ class MovieDetailViewModel @Inject constructor(private val detailRepository: Det
         _stateDetails.update {
             it.copy(
                 director = crew?.name ?: EMPTY_STRING,
+                isLoading = false
+            )
+        }
+    }
+
+    private fun onSuccessVideo(videosList: VideosList) {
+        val video = videosList.results.firstOrNull { it.type == "Trailer" }
+        _stateDetails.update {
+            it.copy(
+                key = video?.key ?: EMPTY_STRING,
                 isLoading = false
             )
         }

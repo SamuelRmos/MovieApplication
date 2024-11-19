@@ -5,4 +5,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface DetailRepository {
     suspend fun getMovieCredits(id: Int): Flow<DetailRequestState>
+    suspend fun getMovieVideo(id: Int): Flow<DetailRequestState>
 }

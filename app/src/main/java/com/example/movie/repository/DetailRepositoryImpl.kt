@@ -22,6 +22,25 @@ class DetailRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
         movieApi.getCreditsMovie(id)
     }
 
+    override suspend fun getMovieVideo(id: Int): Flow<DetailRequestState> = flow {
+        try {
+            emit(Loading)
+            delay(1000)
+            movieApi.getVideosMovie(id).run {
+                body()?.let {
+                    if (isSuccessful) {
+                        emit(Success(videos = it))
+                    } else {
+                        emit(Error(ERROR_MESSAGE))
+                    }
+                } ?: emit(Error(ERROR_MESSAGE))
+            }
+        } catch (exception: Exception) {
+            Timber.e(exception, exception.message)
+            emit(Error(ERROR_MESSAGE))
+        }
+    }
+
     @VisibleForTesting
     internal suspend fun safeApiCall(
         call: suspend () -> Response<MovieCredits>
@@ -32,7 +51,7 @@ class DetailRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
             call().run {
                 body()?.let {
                     if (isSuccessful) {
-                        emit(Success(it))
+                        emit(Success(credits = it))
                     } else {
                         emit(Error(ERROR_MESSAGE))
                     }

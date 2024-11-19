@@ -2,8 +2,8 @@ package com.example.movie.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.Icons.AutoMirrored.Filled
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -50,7 +50,7 @@ fun CustomToolbarScreen(
             if (isBack) {
                 IconButton(onClick = { actions.navigateUp() }) {
                     Icon(
-                        Icons.Filled.ArrowBack,
+                        Filled.ArrowBack,
                         "backIcon",
                         tint = Color.White
                     )

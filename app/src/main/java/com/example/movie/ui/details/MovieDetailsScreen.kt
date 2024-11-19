@@ -1,8 +1,13 @@
 package com.example.movie.ui.details
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,8 +21,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.Icons.AutoMirrored.Filled
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -34,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -84,7 +90,7 @@ fun MovieDetailsScreen(
         ) {
             BackdropView(movie, actions)
             Row {
-                MovieInformation(movie, requestState.director)
+                MovieInformation(movie, requestState.director, requestState.key)
                 Spacer(modifier = Modifier.weight(1f))
                 Box(
                     modifier = Modifier
@@ -141,9 +147,9 @@ private fun BackdropView(
             artworkUrl(movie.backDropImage ?: "")
         )
         Box(modifier = Modifier.padding(top = 30.dp)) {
-            IconButton(onClick = { actions.navigateUp() }) {
+            IconButton(onClick = { actions.goToMovies() }) {
                 Icon(
-                    Icons.Filled.ArrowBack,
+                    Filled.ArrowBack,
                     "backIcon",
                     tint = Color.White
                 )
@@ -153,7 +159,8 @@ private fun BackdropView(
 }
 
 @Composable
-private fun MovieInformation(movie: Movie, directorName: String) {
+private fun MovieInformation(movie: Movie, directorName: String, videoKey: String) {
+    val context = LocalContext.current
     Column(modifier = Modifier.width(200.dp)) {
         Text(
             modifier = Modifier.padding(start = 10.dp, bottom = 10.dp, end = 10.dp),
@@ -174,12 +181,33 @@ private fun MovieInformation(movie: Movie, directorName: String) {
             color = Color.White,
             fontSize = 13.sp
         )
-        Text(
-            modifier = Modifier.padding(start = 10.dp),
-            text = movie.releaseDate.dropLast(6),
-            color = Color.White,
-            fontSize = 13.sp
-        )
+        Row {
+            Text(
+                modifier = Modifier.padding(start = 10.dp),
+                text = movie.releaseDate.dropLast(6),
+                color = Color.White,
+                fontSize = 13.sp
+            )
+            Text(
+                modifier = Modifier.padding(start = 100.dp).clickable {
+                    openYoutubeLink(videoKey, context)
+                },
+                text = "Trailer",
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+fun openYoutubeLink(youtubeID: String, context: Context) {
+    val intentApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$youtubeID"))
+    val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=$youtubeID"))
+    try {
+        context.startActivity(intentApp)
+    } catch (ex: ActivityNotFoundException) {
+        context.startActivity(intentBrowser)
     }
 }
 
@@ -218,7 +246,7 @@ private fun MovieDetailScreenPreview() {
                 modifier = Modifier.fillMaxSize(),
             ) {
                 MovieDetailsScreen(
-                    movie = sampleMovieData[0],
+                    movie = sampleMovieData[1],
                     actions = actions
                 )
             }
