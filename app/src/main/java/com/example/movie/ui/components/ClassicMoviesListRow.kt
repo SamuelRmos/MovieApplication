@@ -1,7 +1,5 @@
 package com.example.movie.ui.components
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -24,14 +21,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorText
 import com.example.movie.ui.MovieCard
@@ -74,20 +71,18 @@ fun ClassicMovieList(
     actions: Actions
 ) {
     val lazyListState = rememberLazyListState()
-    val requestState by viewModel.stateClassicMovie.collectAsState()
-    val paginationState by viewModel.paginationClassicState.collectAsState()
-    val isRefreshing by viewModel.isRefresh.collectAsState()
+    val movies = viewModel.movies.collectAsLazyPagingItems()
 
-    val focusManger = LocalFocusManager.current
-    val loaded = remember { MutableTransitionState(requestState.isLoading) }
+    val focusManager = LocalFocusManager.current
+    val isRefreshing = movies.loadState.refresh is LoadState.Loading && movies.itemCount > 0
     val pullRefreshState = rememberPullRefreshState(
         refreshing = isRefreshing,
-        onRefresh = viewModel::refresh
+        onRefresh = { movies.refresh() }
     )
 
     LaunchedEffect(lazyListState.isScrollInProgress) {
         if (lazyListState.isScrollInProgress) {
-            focusManger.clearFocus()
+            focusManager.clearFocus()
         }
     }
 
@@ -96,50 +91,48 @@ fun ClassicMovieList(
             .fillMaxWidth()
             .pullRefresh(pullRefreshState)
     ) {
-        LazyRow(
-            modifier = modifier.height(185.dp),
-            state = lazyListState,
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            contentPadding = PaddingValues(start = 10.dp, end = 10.dp)
-        ) {
-            if (requestState.isLoading.not()) {
-                loaded.targetState = true
-                itemsIndexed(requestState.movies) { _, movie ->
-                    movie.posterImage?.let {
-                        AnimatedVisibility(
-                            visibleState = loaded
-                        ) {
-                            MovieCard(
-                                modifier = modifier.width(150.dp),
-                                movie = movie,
-                                onMovieClick = { actions.goToMovieDetail(it) }
-                            )
-                        }
+        if (movies.loadState.refresh is LoadState.Loading && movies.itemCount == 0) {
+            MovieRowShimmer(modifier = modifier)
+        } else {
+            LazyRow(
+                modifier = modifier.height(185.dp),
+                state = lazyListState,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(start = 10.dp, end = 10.dp)
+            ) {
+                items(
+                    count = movies.itemCount,
+                    key = movies.itemKey { it.id }
+                ) { index ->
+                    val movie = movies[index]
+                    if (movie?.posterImage != null) {
+                        MovieCard(
+                            modifier = modifier.width(150.dp),
+                            movie = movie,
+                            onMovieClick = { actions.goToMovieDetail(it) }
+                        )
                     }
                 }
-            }
-            item {
-                if (paginationState.isLoading) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        CircularProgressIndicator(color = White, modifier = Modifier.size(48.dp))
+
+                if (movies.loadState.append is LoadState.Loading) {
+                    item {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            CircularProgressIndicator(color = White, modifier = Modifier.size(48.dp))
+                        }
                     }
                 }
             }
         }
 
         PullRefreshIndicator(
-            refreshing = requestState.isLoading,
+            refreshing = isRefreshing,
             state = pullRefreshState,
             modifier = Modifier.align(Alignment.TopCenter)
         )
-
-        InfiniteListHandler(lazyListState = lazyListState) {
-            viewModel.getMoviesPaginated()
-        }
     }
 }
