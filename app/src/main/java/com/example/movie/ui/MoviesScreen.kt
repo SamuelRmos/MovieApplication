@@ -1,30 +1,20 @@
 package com.example.movie.ui
 
 import android.app.Activity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
@@ -37,13 +27,11 @@ import com.example.movie.ui.components.EmbeddedSearchBar
 import com.example.movie.ui.components.PopularMovieListRow
 import com.example.movie.ui.components.RatedMovieListRow
 import com.example.movie.ui.components.TodayMovieListRow
-import com.example.movie.ui.components.TopAppBarSurface
 import com.example.movie.viewmodel.ClassicMoviesViewModel
 import com.example.movie.viewmodel.PopularMoviesViewModel
 import com.example.movie.viewmodel.RatedMovieViewModel
 import com.example.movie.viewmodel.TodayMoviesViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MoviesScreen(actions: Actions, todayViewModel: TodayMoviesViewModel = hiltViewModel()) {
     val view = LocalView.current
@@ -54,35 +42,22 @@ fun MoviesScreen(actions: Actions, todayViewModel: TodayMoviesViewModel = hiltVi
         }
     }
     val isSearchActive by rememberSaveable { mutableStateOf(false) }
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val requestState by todayViewModel.stateTodayMovie.collectAsState()
-    if (requestState.isLoading) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = colorBackground),
-            contentAlignment = Alignment.Center
-        ) {
-            CircularProgressIndicator(color = White, modifier = Modifier.size(48.dp))
-        }
-    } else {
-        Scaffold(
-            topBar = {
-                Column {
-                    CustomToolbarScreen(actions = actions, title = "CineBook", colorBackground)
-                    EmbeddedSearchBar(
-                        onQueryChange = {},
-                        isSearchActive = isSearchActive,
-                        onActiveChanged = {}
-                    ) {
+    Scaffold(
+        topBar = {
+            Column {
+                CustomToolbarScreen(actions = actions, title = "CineBook", colorBackground)
+                EmbeddedSearchBar(
+                    onQueryChange = {},
+                    isSearchActive = isSearchActive,
+                    onActiveChanged = {}
+                ) {
 
-                    }
                 }
-            },
-            containerColor = colorBackground
-        ) { innerPadding ->
-            CarouselList(innerPadding, actions, todayViewModel)
-        }
+            }
+        },
+        containerColor = colorBackground
+    ) { innerPadding ->
+        CarouselList(innerPadding, actions, todayViewModel)
     }
 }
 

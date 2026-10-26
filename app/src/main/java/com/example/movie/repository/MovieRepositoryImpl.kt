@@ -6,24 +6,45 @@ import androidx.paging.PagingData
 import com.example.movie.data.paging.MoviePagingSource
 import com.example.movie.model.Movie
 import com.example.movie.network.MovieApi
-import com.example.movie.ui.RequestState
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val movieApi: MovieApi
 ) : BaseRepository(), MovieRepository {
-    override suspend fun getListPopularMovies(page: Int): Flow<RequestState> =
-        safeApiCall { movieApi.getPopularMovieAsync(page) }
 
-    override suspend fun getListRatedMovies(page: Int): Flow<RequestState> =
-        safeApiCall { movieApi.getRatedMovieAsync(page) }
+    override fun getListPopularMovies(): Flow<PagingData<Movie>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                MoviePagingSource { page -> movieApi.getPopularMovieAsync(page) }
+            }
+        ).flow
 
-    override suspend fun getListTodayMovies(page: Int): Flow<RequestState> =
-        safeApiCall { movieApi.getTodayMovieAsync(page) }
+    override fun getListRatedMovies(): Flow<PagingData<Movie>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                MoviePagingSource { page -> movieApi.getRatedMovieAsync(page) }
+            }
+        ).flow
 
-    override suspend fun getListClassicMovies(page: Int): Flow<RequestState> =
-        safeApiCall { movieApi.getClassicMovieAsync(page) }
+    override fun getListTodayMovies(): Flow<PagingData<Movie>> =
+        Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                MoviePagingSource { page -> movieApi.getTodayMovieAsync(page) }
+            }
+        ).flow
 
     override fun getClassicMoviesPaging(): Flow<PagingData<Movie>> = Pager(
         config = PagingConfig(

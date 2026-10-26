@@ -27,8 +27,8 @@ import androidx.compose.ui.unit.dp
 fun Modifier.shimmerEffect(): Modifier = composed {
     val transition = rememberInfiniteTransition(label = "ShimmerTransition")
     val translateAnim by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 1000f,
+        initialValue = -300f,
+        targetValue = 600f,
         animationSpec = infiniteRepeatable(
             animation = tween(durationMillis = 1200, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
@@ -36,14 +36,14 @@ fun Modifier.shimmerEffect(): Modifier = composed {
         label = "ShimmerTranslate"
     )
     val shimmerColors = listOf(
-        Color.DarkGray.copy(alpha = 0.5f),
-        Color.LightGray.copy(alpha = 0.2f),
-        Color.DarkGray.copy(alpha = 0.5f),
+        Color(0xFF2C2C2C),
+        Color(0xFF555555),
+        Color(0xFF2C2C2C),
     )
     val brush = Brush.linearGradient(
         colors = shimmerColors,
-        start = Offset.Zero,
-        end = Offset(x = translateAnim, y = translateAnim)
+        start = Offset(x = translateAnim, y = translateAnim),
+        end = Offset(x = translateAnim + 300f, y = translateAnim + 300f)
     )
     background(brush)
 }

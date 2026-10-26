@@ -19,6 +19,7 @@ import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -86,43 +87,41 @@ fun ClassicMovieList(
         }
     }
 
+    val refreshState = movies.loadState.refresh
+    val isInitialLoading = refreshState is LoadState.Loading && movies.itemCount == 0
+    val isInitialWaiting = movies.itemCount == 0 && refreshState !is LoadState.Error && !refreshState.endOfPaginationReached
+    val showShimmer = isInitialLoading || isInitialWaiting
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .pullRefresh(pullRefreshState)
     ) {
-        if (movies.loadState.refresh is LoadState.Loading && movies.itemCount == 0) {
-            MovieRowShimmer(modifier = modifier)
-        } else {
-            LazyRow(
-                modifier = modifier.height(185.dp),
-                state = lazyListState,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                contentPadding = PaddingValues(start = 10.dp, end = 10.dp)
-            ) {
-                items(
-                    count = movies.itemCount,
-                    key = movies.itemKey { it.id }
-                ) { index ->
-                    val movie = movies[index]
-                    if (movie?.posterImage != null) {
-                        MovieCard(
-                            modifier = modifier.width(150.dp),
-                            movie = movie,
-                            onMovieClick = { actions.goToMovieDetail(it) }
-                        )
-                    }
-                }
-
-                if (movies.loadState.append is LoadState.Loading) {
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            CircularProgressIndicator(color = White, modifier = Modifier.size(48.dp))
+        when {
+            refreshState is LoadState.Error && movies.itemCount == 0 -> {
+                ErrorRow(movies)
+            }
+            showShimmer -> {
+                MovieRowShimmer(modifier = modifier)
+            }
+            else -> {
+                LazyRow(
+                    modifier = modifier.height(185.dp),
+                    state = lazyListState,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(start = 10.dp, end = 10.dp)
+                ) {
+                    items(
+                        count = movies.itemCount,
+                        key = movies.itemKey { it.id }
+                    ) { index ->
+                        val movie = movies[index]
+                        if (movie?.posterImage != null) {
+                            MovieCard(
+                                modifier = modifier.width(150.dp),
+                                movie = movie,
+                                onMovieClick = { actions.goToMovieDetail(it) }
+                            )
                         }
                     }
                 }

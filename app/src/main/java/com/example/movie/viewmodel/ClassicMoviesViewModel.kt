@@ -10,8 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-const val MOVIES_LIMIT = 300
-
 @HiltViewModel
 class ClassicMoviesViewModel @Inject constructor(
     movieRepository: MovieRepository
