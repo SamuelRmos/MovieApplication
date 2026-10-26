@@ -24,6 +24,7 @@ navigationCompose = '2.5.3'
 composeBom = '2024.10.00'
 landscapist = "2.1.0"
 roomVersion = "2.6.1"
+pagingVersion = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -62,6 +63,9 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockkVersion" }
 mock-web-server = { group = "com.squareup.okhttp3", name = "mockwebserver", version.ref = "mockWebVersion" }
 androidx-test = { group = "androidx.test", name = "core", version.ref = "testCoreVersion" }
 landscapist-coil = { group = "com.github.skydoves", name = "landscapist-coil", version.ref = "landscapist" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingVersion" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingVersion" }
+paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "pagingVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
