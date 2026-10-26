@@ -47,7 +47,7 @@ fun ClassicMovieListRow(
     Box(
         modifier
             .height(220.dp)
-            .padding(bottom = 12.dp)
+            .padding(bottom = 20.dp)
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

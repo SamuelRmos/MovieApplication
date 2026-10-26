@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.hilt.android)
     id("org.jetbrains.kotlin.plugin.parcelize")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -15,9 +15,9 @@ android {
         targetCompatibility = javaVersion
 
     }
-    kotlinOptions {
-        jvmTarget = javaVersion.toString()
-    }
+//    kotlinOptions {
+//        jvmTarget = javaVersion.toString()
+//    }
 
     defaultConfig {
         applicationId = "com.samuelrmos.cinebook"
