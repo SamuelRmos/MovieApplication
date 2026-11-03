@@ -1,13 +1,7 @@
 package com.example.movie.ui.details
 
-import com.example.movie.model.MovieCredits
-import com.example.movie.model.VideosList
-
-sealed class DetailRequestState {
-    data object Loading : DetailRequestState()
-    data class Success(
-        val credits: MovieCredits? = null,
-        val videos: VideosList? = null
-    ) : DetailRequestState()
-    data class Error(val message: String) : DetailRequestState()
+sealed interface DetailRequestState<out T> {
+    data object Loading : DetailRequestState<Nothing>
+    data class Success<out T>(val data: T) : DetailRequestState<T>
+    data class Error(val message: String) : DetailRequestState<Nothing>
 }

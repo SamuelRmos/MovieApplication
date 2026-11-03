@@ -14,6 +14,6 @@ import javax.inject.Inject
 class PopularMoviesViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
 
     val movies: Flow<PagingData<Movie>> = movieRepository
-        .getListTodayMovies()
+        .getListPopularMovies()
         .cachedIn(viewModelScope)
 }

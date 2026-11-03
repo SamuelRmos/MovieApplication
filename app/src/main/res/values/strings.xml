@@ -5,9 +5,9 @@
     <string name="bein">BeinVienido</string>
     <string name="movie_db">movie.db</string>
     <string name="poster_movie_most_popular">Poster Movie Most Popular</string>
-    <string name="most_popular">Most Popular</string>
-    <string name="top_rated">Top Rated</string>
-    <string name="top_10_today">Top 10 Today</string>
+    <string name="most_watched_title">Most Watched</string>
+    <string name="indications_today_title">Indications of Today</string>
+    <string name="upcoming_title">Upcoming</string>
     <string name="carrousel_title_classics">Classics</string>
     <string name="cast_section_title">Cast</string>
     <string name="image_cover">Image Cover</string>

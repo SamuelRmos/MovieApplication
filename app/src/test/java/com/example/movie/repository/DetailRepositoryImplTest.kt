@@ -42,7 +42,15 @@ class DetailRepositoryImplTest {
 
     @Test
     fun getMovieVideo_whenSuccessful_emitsLoadingThenSuccess() = runBlocking {
-        val videos = VideosList(id = 1, results = listOf(Video("key123", "Trailer")))
+        val videos = VideosList(
+            results = listOf(
+                Video(
+                    "key123",
+                    "Trailer",
+                    key = ""
+                )
+            )
+        )
         coEvery { movieApi.getVideosMovie(1) } returns Response.success(videos)
 
         val emissions = repository.getMovieVideo(1).toList()

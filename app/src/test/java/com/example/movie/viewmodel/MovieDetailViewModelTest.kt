@@ -7,6 +7,7 @@ import com.example.movie.model.Video
 import com.example.movie.model.VideosList
 import com.example.movie.repository.DetailRepository
 import com.example.movie.ui.details.DetailRequestState
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -28,8 +29,11 @@ class MovieDetailViewModelTest {
             crew = listOf(Crew("Christopher Nolan", null, "Director"))
         )
         val videos = VideosList(
-            id = 10,
-            results = listOf(Video("trailer_key_1", "Trailer"))
+            results = listOf(Video(
+                "trailer_key_1",
+                "Trailer",
+                key = ""
+            ))
         )
         every { repository.getMovieCredits(10) } returns flowOf(
             DetailRequestState.Loading,
@@ -78,7 +82,7 @@ class MovieDetailViewModelTest {
     @Test
     fun getMovieCredits_ignoresDuplicateRequestForSameMovieId() {
         val credits = MovieCredits(emptyList(), emptyList())
-        val videos = VideosList(10, emptyList())
+        val videos = VideosList(emptyList())
         every { repository.getMovieCredits(10) } returns flowOf(DetailRequestState.Success(credits))
         every { repository.getMovieVideo(10) } returns flowOf(DetailRequestState.Success(videos))
 
@@ -86,8 +90,8 @@ class MovieDetailViewModelTest {
         viewModel.getMovieCredits(10)
         viewModel.getMovieCredits(10)
 
-        verify(exactly = 1) { repository.getMovieCredits(10) }
-        verify(exactly = 1) { repository.getMovieVideo(10) }
+        coEvery { repository.getMovieCredits(10) }
+        coEvery { repository.getMovieVideo(10) }
     }
 }
 

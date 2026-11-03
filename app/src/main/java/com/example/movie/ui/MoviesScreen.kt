@@ -17,8 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.movie.R
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorBackground
 import com.example.movie.ui.components.ClassicMovieListRow
@@ -79,22 +81,22 @@ private fun CarouselList(
     ) {
         RatedMovieListRow(
             viewModel = ratedViewModel,
-            carouselTitle = "Most Watched",
+            carouselTitle = stringResource(R.string.most_watched_title),
             actions = actions
         )
         TodayMovieListRow(
             viewModel = todayViewModel,
-            carouselTitle = "Indications of Today",
+            carouselTitle = stringResource(R.string.indications_today_title),
             actions = actions
         )
         PopularMovieListRow(
             viewModel = popularMoviesViewModel,
-            carouselTitle = "Populars",
+            carouselTitle = stringResource(R.string.upcoming_title),
             actions = actions
         )
         ClassicMovieListRow(
             viewModel = classicMoviesViewModel,
-            carouselTitle = "Classics",
+            carouselTitle = stringResource(R.string.carrousel_title_classics),
             actions = actions
         )
     }

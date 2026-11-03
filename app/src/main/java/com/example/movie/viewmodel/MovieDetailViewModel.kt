@@ -12,86 +12,99 @@ import com.example.movie.ui.details.DetailRequestState.Loading
 import com.example.movie.ui.details.DetailRequestState.Success
 import com.example.movie.ui.state.DetailsState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-private const val EMPTY_STRING = ""
+private const val DIRECTOR_JOB = "Director"
+private const val TRAILER_TYPE = "Trailer"
+private const val DEFAULT_ERROR_MESSAGE = "Unexpected Error"
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val detailRepository: DetailRepository) :
-    ViewModel() {
+class MovieDetailViewModel(
+    private val detailRepository: DetailRepository,
+    private val dispatcher: CoroutineDispatcher
+) : ViewModel() {
 
-    private var _stateDetails = MutableStateFlow(DetailsState())
+    @Inject
+    constructor(detailRepository: DetailRepository) : this(detailRepository, Dispatchers.IO)
+
+    private val _stateDetails = MutableStateFlow(DetailsState())
     val stateDetails = _stateDetails.asStateFlow()
 
+    private var currentMovieId: Int? = null
+    private var fetchJob: Job? = null
+
     fun getMovieCredits(id: Int) {
-        viewModelScope.launch(IO) {
-            detailRepository.getMovieCredits(id)
-                .distinctUntilChanged()
-                .collectLatest { result ->
-                    checkResult(result)
-                }
-
-            detailRepository.getMovieVideo(id)
-                .distinctUntilChanged()
-                .collectLatest {
-                    checkResult(it)
-                }
-        }
-    }
-
-    private fun checkResult(result: DetailRequestState) {
-        when (result) {
-            is Success -> result.credits?.let {
-                onSuccess(it)
-            } ?: run {
-                onSuccessVideo(result.videos!!)
-            }
-
-            is Error -> onRequestError(result.message)
-            is Loading -> onRequestLoading()
-        }
-    }
-
-    private fun onRequestLoading() {
-        if (_stateDetails.value.director.isBlank()) {
-            _stateDetails.update {
-                it.copy(isLoading = true)
+        if (currentMovieId == id && _stateDetails.value.error.isEmpty()) return
+        currentMovieId = id
+        fetchJob?.cancel()
+        fetchJob = viewModelScope.launch(dispatcher) {
+            combine(
+                detailRepository.getMovieCredits(id).distinctUntilChanged(),
+                detailRepository.getMovieVideo(id).distinctUntilChanged(),
+                ::mergeStates
+            ).collectLatest { newState ->
+                _stateDetails.value = newState
             }
         }
     }
 
-    private fun onSuccess(movieCredits: MovieCredits) {
-        val crew = movieCredits.crew.firstOrNull { it.job == "Director" }
-        _stateDetails.update {
-            it.copy(
-                director = crew?.name ?: EMPTY_STRING,
-                cast = movieCredits.cast,
-                isLoading = false
-            )
-        }
-    }
+    private fun mergeStates(
+        creditsState: DetailRequestState<MovieCredits>,
+        videoState: DetailRequestState<VideosList>
+    ): DetailsState {
+        val current = _stateDetails.value
+        val isLoading = creditsState is Loading || videoState is Loading
 
-    private fun onSuccessVideo(videosList: VideosList) {
-        val video = videosList.results.firstOrNull { it.type == "Trailer" }
-        _stateDetails.update {
-            it.copy(
-                key = video?.key ?: EMPTY_STRING,
-                isLoading = false
-            )
+        val director = when (creditsState) {
+            is Success -> creditsState.data.crew
+                .firstOrNull { it.job == DIRECTOR_JOB }
+                ?.name
+                .orEmpty()
+            else -> current.director
         }
+
+        val cast = when (creditsState) {
+            is Success -> creditsState.data.cast
+            else -> current.cast
+        }
+
+        val trailerKey = when (videoState) {
+            is Success -> videoState.data.results
+                .firstOrNull { it.type == TRAILER_TYPE }
+                ?.key
+                .orEmpty()
+            else -> current.key
+        }
+
+        val error = when {
+            creditsState is Error -> creditsState.message
+            videoState is Error -> videoState.message
+            else -> ""
+        }
+
+        return DetailsState(
+            director = director,
+            cast = cast,
+            isLoading = isLoading,
+            error = error,
+            key = trailerKey
+        )
     }
 
     @VisibleForTesting
     internal fun onRequestError(message: String?) {
         _stateDetails.update {
-            it.copy(error = message ?: "Unexpected Error", isLoading = false)
+            it.copy(error = message ?: DEFAULT_ERROR_MESSAGE, isLoading = false)
         }
     }
 }
