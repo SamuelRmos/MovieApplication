@@ -72,6 +72,7 @@ class MovieDetailViewModel @Inject constructor(private val detailRepository: Det
         _stateDetails.update {
             it.copy(
                 director = crew?.name ?: EMPTY_STRING,
+                cast = movieCredits.cast,
                 isLoading = false
             )
         }

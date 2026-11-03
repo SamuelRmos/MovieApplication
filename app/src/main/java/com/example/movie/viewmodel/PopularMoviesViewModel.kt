@@ -11,9 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
-class PopularMoviesViewModel @Inject constructor(
-    movieRepository: MovieRepository
-) : ViewModel() {
+class PopularMoviesViewModel @Inject constructor(movieRepository: MovieRepository) : ViewModel() {
 
     val movies: Flow<PagingData<Movie>> = movieRepository
         .getListTodayMovies()

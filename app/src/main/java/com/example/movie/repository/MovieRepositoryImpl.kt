@@ -9,9 +9,7 @@ import com.example.movie.network.MovieApi
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MovieRepositoryImpl @Inject constructor(
-    private val movieApi: MovieApi
-) : BaseRepository(), MovieRepository {
+class MovieRepositoryImpl @Inject constructor(private val movieApi: MovieApi) : MovieRepository {
 
     override fun getListPopularMovies(): Flow<PagingData<Movie>> =
         Pager(

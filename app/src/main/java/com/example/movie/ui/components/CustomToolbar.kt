@@ -29,15 +29,19 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
 import com.example.movie.navigation.Actions
+import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorPrimary
 import kotlinx.coroutines.launch
 
@@ -162,3 +166,19 @@ fun EmbeddedSearchBar(
         // Search suggestions or results
     }
 }
+
+@Preview
+@Composable
+private fun CustomToolbarScreenPreview() {
+    val navController = rememberNavController()
+    val actions = remember(navController) { Actions(navController) }
+    MovieTheme {
+        CustomToolbarScreen(
+            actions = actions,
+            title = "Movie App",
+            backgroundColor = colorPrimary,
+            isBack = true
+        )
+    }
+}
+

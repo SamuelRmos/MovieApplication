@@ -13,6 +13,7 @@ import org.jetbrains.annotations.VisibleForTesting
 import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val ERROR_MESSAGE = "Error while fetching movies credits"
 
@@ -25,7 +26,7 @@ class DetailRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
     override suspend fun getMovieVideo(id: Int): Flow<DetailRequestState> = flow {
         try {
             emit(Loading)
-            delay(1000)
+            delay(1000.milliseconds)
             movieApi.getVideosMovie(id).run {
                 body()?.let {
                     if (isSuccessful) {
@@ -36,7 +37,7 @@ class DetailRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
                 } ?: emit(Error(ERROR_MESSAGE))
             }
         } catch (exception: Exception) {
-            Timber.e(exception, exception.message)
+            Timber.e(exception)
             emit(Error(ERROR_MESSAGE))
         }
     }
@@ -47,7 +48,7 @@ class DetailRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
     ): Flow<DetailRequestState> = flow {
         try {
             emit(Loading)
-            delay(1000)
+            delay(1000.milliseconds)
             call().run {
                 body()?.let {
                     if (isSuccessful) {
@@ -58,7 +59,7 @@ class DetailRepositoryImpl @Inject constructor(private val movieApi: MovieApi) :
                 } ?: emit(Error("Error response body is null"))
             }
         } catch (exception: Exception) {
-            Timber.e(exception, exception.message)
+            Timber.e(exception)
             emit(Error(ERROR_MESSAGE))
         }
     }
