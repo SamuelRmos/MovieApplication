@@ -24,8 +24,7 @@ import com.example.movie.R
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorBackground
 import com.example.movie.ui.components.ClassicMovieListRow
-import com.example.movie.ui.components.CustomToolbarScreen
-import com.example.movie.ui.components.EmbeddedSearchBar
+import com.example.movie.ui.components.CustomToolbar
 import com.example.movie.ui.components.PopularMovieListRow
 import com.example.movie.ui.components.RatedMovieListRow
 import com.example.movie.ui.components.TodayMovieListRow
@@ -46,16 +45,12 @@ fun MoviesScreen(actions: Actions, todayViewModel: TodayMoviesViewModel = hiltVi
     val isSearchActive by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
-            Column {
-                CustomToolbarScreen(actions = actions, title = "CineBook", colorBackground)
-                EmbeddedSearchBar(
-                    onQueryChange = {},
-                    isSearchActive = isSearchActive,
-                    onActiveChanged = {}
-                ) {
-
-                }
-            }
+            CustomToolbar(
+                actions = actions,
+                title = "CineBook",
+                backgroundColor = colorBackground,
+                isSearchActive = isSearchActive
+            )
         },
         containerColor = colorBackground
     ) { innerPadding ->

@@ -5,6 +5,7 @@ import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -42,12 +43,41 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.MovieTheme
+import com.example.movie.theme.colorBackground
 import com.example.movie.theme.colorPrimary
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomToolbarScreen(
+fun CustomToolbar(
+    actions: Actions,
+    title: String,
+    backgroundColor: Color,
+    isBack: Boolean = false,
+    isSearchActive: Boolean,
+    windowsInsets: WindowInsets = TopAppBarDefaults.windowInsets
+) {
+    Column {
+        CustomToolbarContent(
+            actions = actions,
+            title = title,
+            backgroundColor = backgroundColor,
+            isBack,
+            windowsInsets
+        )
+        EmbeddedSearchBar(
+            onQueryChange = {},
+            isSearchActive = isSearchActive,
+            onActiveChanged = {}
+        ) {
+
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomToolbarContent(
     actions: Actions,
     title: String,
     backgroundColor: Color,
@@ -157,8 +187,9 @@ fun EmbeddedSearchBar(
         expanded = isSearchActive,
         onExpandedChange = activeChanged,
         modifier = modifier
-            .padding(start = 12.dp, end = 12.dp, bottom = 12.dp)
+            .padding(start = 6.dp, end = 6.dp, bottom = 6.dp)
             .fillMaxWidth(),
+        windowInsets = WindowInsets(0, 0, 0, 0),
         colors = SearchBarDefaults.colors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
         )
@@ -173,7 +204,7 @@ private fun CustomToolbarScreenPreview() {
     val navController = rememberNavController()
     val actions = remember(navController) { Actions(navController) }
     MovieTheme {
-        CustomToolbarScreen(
+        CustomToolbarContent(
             actions = actions,
             title = "Movie App",
             backgroundColor = colorPrimary,
