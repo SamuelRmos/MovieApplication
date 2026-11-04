@@ -1,6 +1,8 @@
 package com.example.movie.navigation
 
+import android.os.Build
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
@@ -35,6 +37,7 @@ fun NavController.navigate(route: String, vararg args: Pair<String, Parcelable>)
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 inline fun <reified T : Parcelable> NavBackStackEntry.requiredArg(key: String): T =
     requireNotNull(arguments) { "arguments bundle is null" }.run {
         requireNotNull(getParcelable(key, T::class.java)) { "argument for $key is null" }
