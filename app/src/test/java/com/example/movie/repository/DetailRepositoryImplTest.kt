@@ -45,9 +45,9 @@ class DetailRepositoryImplTest {
         val videos = VideosList(
             results = listOf(
                 Video(
-                    "key123",
-                    "Trailer",
-                    key = ""
+                    site = "YouTube",
+                    type = "Trailer",
+                    key = "key123"
                 )
             )
         )

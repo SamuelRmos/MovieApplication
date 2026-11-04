@@ -30,9 +30,9 @@ class MovieDetailViewModelTest {
         )
         val videos = VideosList(
             results = listOf(Video(
-                "trailer_key_1",
-                "Trailer",
-                key = ""
+                site = "YouTube",
+                type = "Trailer",
+                key = "trailer_key_1"
             ))
         )
         every { repository.getMovieCredits(10) } returns flowOf(

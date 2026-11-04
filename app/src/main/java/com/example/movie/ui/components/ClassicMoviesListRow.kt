@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,7 +28,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemKey
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorText
 import com.example.movie.ui.MovieCard
@@ -113,7 +111,10 @@ fun ClassicMovieList(
                 ) {
                     items(
                         count = movies.itemCount,
-                        key = movies.itemKey { it.id }
+                        key = { index ->
+                            val movie = movies.peek(index)
+                            if (movie != null) "${movie.id}_$index" else index
+                        }
                     ) { index ->
                         val movie = movies[index]
                         if (movie?.posterImage != null) {

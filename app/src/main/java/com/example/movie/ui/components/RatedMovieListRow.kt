@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.itemKey
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.colorText
 import com.example.movie.ui.MovieCard
@@ -108,7 +107,10 @@ fun RatedMovieList(
                 ) {
                     items(
                         count = movies.itemCount,
-                        key = movies.itemKey { it.id }
+                        key = { index ->
+                            val movie = movies.peek(index)
+                            if (movie != null) "${movie.id}_$index" else index
+                        }
                     ) { index ->
                         val movie = movies[index]
                         if (movie?.posterImage != null) {

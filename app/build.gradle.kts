@@ -95,6 +95,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.util)
     implementation(libs.landscapist.coil)
+    implementation(libs.androidx.palette)
     implementation(libs.paging.runtime)
     implementation(libs.paging.compose)
     testImplementation(libs.paging.testing)

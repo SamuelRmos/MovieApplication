@@ -25,6 +25,7 @@ composeBom = '2024.10.00'
 landscapist = "2.1.0"
 roomVersion = "2.6.1"
 pagingVersion = "3.3.0"
+paletteVersion = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -66,6 +67,7 @@ landscapist-coil = { group = "com.github.skydoves", name = "landscapist-coil", v
 paging-runtime = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingVersion" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingVersion" }
 paging-testing = { group = "androidx.paging", name = "paging-testing", version.ref = "pagingVersion" }
+androidx-palette = { group = "androidx.palette", name = "palette-ktx", version.ref = "paletteVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

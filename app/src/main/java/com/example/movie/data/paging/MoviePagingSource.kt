@@ -25,7 +25,7 @@ class MoviePagingSource(
         return try {
             val response = fetchMovies(page)
             if (response.isSuccessful && response.body() != null) {
-                val movies = response.body()!!.results
+                val movies = response.body()!!.results.distinctBy { it.id }
                 val nextKey = if (movies.isEmpty() || (page * params.loadSize) >= maxLimit) {
                     null
                 } else {
