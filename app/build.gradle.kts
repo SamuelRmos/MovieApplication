@@ -59,7 +59,7 @@ android {
         }
     }
     lint {
-        baseline = File("/lint-baseline.xml")
+        baseline = file("lint-baseline.xml")
     }
     namespace = "com.example.movie"
 }
