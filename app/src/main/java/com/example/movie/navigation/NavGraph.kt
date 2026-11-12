@@ -12,8 +12,10 @@ import androidx.navigation.compose.composable
 import com.example.movie.model.Movie
 import com.example.movie.navigation.Screens.MovieDetails
 import com.example.movie.navigation.Screens.MoviesScreen
+import com.example.movie.navigation.Screens.SearchScreen
 import com.example.movie.ui.MoviesScreen
 import com.example.movie.ui.details.MovieDetailsScreen
+import com.example.movie.ui.search.SearchScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, actions: Actions) {
@@ -24,6 +26,9 @@ fun NavGraph(navController: NavHostController, actions: Actions) {
         composable(route = MovieDetails.route) {
             val movie = it.requiredArg<Movie>("movie_detail")
             MovieDetailsScreen(movie, actions)
+        }
+        composable(route = SearchScreen.route) {
+            SearchScreen(actions = actions)
         }
     }
 }

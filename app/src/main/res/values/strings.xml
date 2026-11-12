@@ -11,4 +11,6 @@
     <string name="carrousel_title_classics">Classics</string>
     <string name="cast_section_title">Cast</string>
     <string name="image_cover">Image Cover</string>
+    <string name="search_placeholder">Search</string>
+    <string name="directed_by_prefix">, directed by </string>
 </resources>

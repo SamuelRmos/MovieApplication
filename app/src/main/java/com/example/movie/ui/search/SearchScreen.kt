@@ -9,12 +9,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,9 +51,12 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -116,7 +122,7 @@ fun SearchScreenContent(
     val padding6 = dimensionResource(R.dimen.dimen_6)
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
             .background(colorBackground)
     ) {
         Surface(
@@ -125,7 +131,7 @@ fun SearchScreenContent(
                 .padding(
                     start = padding6,
                     end = padding6,
-                    top = dimensionResource(R.dimen.dimen_30),
+                    top = dimensionResource(R.dimen.dimen_2),
                     bottom = padding6
                 ),
             shape = SearchBarDefaults.inputFieldShape,
@@ -184,7 +190,9 @@ fun SearchScreenContent(
             }
         } else {
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = dimensionResource(R.dimen.dimen_14))
             ) {
                 items(
                     items = searchState.results,
@@ -196,7 +204,7 @@ fun SearchScreenContent(
                     )
                     HorizontalDivider(
                         thickness = dimensionResource(R.dimen.dimen_1),
-                        color = Color.DarkGray
+                        color = Color.LightGray
                     )
                 }
             }
@@ -283,7 +291,7 @@ private fun SearchResultRow(
                         fontWeight = FontWeight.Normal
                     )
                 ) {
-                    append(directedByPrefix)
+                    append("$directedByPrefix ")
                 }
                 withStyle(
                     SpanStyle(
@@ -302,8 +310,51 @@ private fun SearchResultRow(
 }
 
 @Composable
-private fun textSizeResource(@DimenRes id: Int): TextUnit =
-    with(LocalDensity.current) { dimensionResource(id).toSp() }
+private fun dimensionResource(@DimenRes id: Int): Dp {
+    val isInEditMode = LocalInspectionMode.current
+    return if (isInEditMode) {
+        when (id) {
+            R.dimen.dimen_1 -> 1.dp
+            R.dimen.dimen_4 -> 4.dp
+            R.dimen.dimen_6 -> 6.dp
+            R.dimen.dimen_10 -> 10.dp
+            R.dimen.dimen_12 -> 12.dp
+            R.dimen.dimen_14 -> 14.dp
+            R.dimen.dimen_30 -> 30.dp
+            R.dimen.dimen_48 -> 48.dp
+            R.dimen.dimen_50 -> 50.dp
+            R.dimen.dimen_70 -> 70.dp
+            R.dimen.dimen_75 -> 75.dp
+            R.dimen.dimen_80 -> 80.dp
+            R.dimen.dimen_100 -> 100.dp
+            R.dimen.dimen_130 -> 130.dp
+            R.dimen.dimen_150 -> 150.dp
+            R.dimen.dimen_200 -> 200.dp
+            else -> 0.dp
+        }
+    } else {
+        androidx.compose.ui.res.dimensionResource(id)
+    }
+}
+
+@Composable
+private fun textSizeResource(@DimenRes id: Int): TextUnit {
+    val isInEditMode = LocalInspectionMode.current
+    return if (isInEditMode) {
+        when (id) {
+            R.dimen.text_size_10 -> 10.sp
+            R.dimen.text_size_12 -> 12.sp
+            R.dimen.text_size_13 -> 13.sp
+            R.dimen.text_size_14 -> 14.sp
+            R.dimen.text_size_15 -> 15.sp
+            R.dimen.text_size_16 -> 16.sp
+            R.dimen.text_size_25 -> 25.sp
+            else -> 16.sp
+        }
+    } else {
+        with(LocalDensity.current) { dimensionResource(id).toSp() }
+    }
+}
 
 @Preview
 @Composable

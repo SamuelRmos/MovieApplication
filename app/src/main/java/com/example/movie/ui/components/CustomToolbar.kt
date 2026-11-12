@@ -4,7 +4,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -43,7 +42,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.MovieTheme
-import com.example.movie.theme.colorBackground
 import com.example.movie.theme.colorPrimary
 import kotlinx.coroutines.launch
 
@@ -62,16 +60,19 @@ fun CustomToolbar(
             actions = actions,
             title = title,
             backgroundColor = backgroundColor,
-            isBack,
-            windowsInsets
+            isBack = isBack,
+            windowsInsets = windowsInsets
         )
         EmbeddedSearchBar(
             onQueryChange = {},
             isSearchActive = isSearchActive,
-            onActiveChanged = {}
-        ) {
-
-        }
+            onActiveChanged = { active ->
+                if (active) {
+                    actions.goToSearch()
+                }
+            },
+            onSearch = { actions.goToSearch() }
+        )
     }
 }
 
@@ -212,4 +213,3 @@ private fun CustomToolbarScreenPreview() {
         )
     }
 }
-

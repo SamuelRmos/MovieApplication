@@ -87,3 +87,4 @@ class SearchRepositoryImplTest {
         assertTrue(emissions[1] is DetailRequestState.Error)
     }
 }
+

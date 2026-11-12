@@ -79,3 +79,4 @@ class SearchRepositoryImpl @Inject constructor(
         }
     }
 }
+

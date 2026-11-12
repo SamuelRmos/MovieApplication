@@ -65,3 +65,4 @@ class SearchViewModelTest {
         assertEquals("Search failed", state.error)
     }
 }
+

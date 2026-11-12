@@ -7,3 +7,4 @@ import kotlinx.coroutines.flow.Flow
 interface SearchRepository {
     fun searchMovies(query: String): Flow<DetailRequestState<List<SearchMovieItem>>>
 }
+

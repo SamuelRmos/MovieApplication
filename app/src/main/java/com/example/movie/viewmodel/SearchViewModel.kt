@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val DEFAULT_DEBOUNCE_MS = 350L
 
@@ -65,7 +66,7 @@ class SearchViewModel(
         searchJob?.cancel()
         searchJob = viewModelScope.launch(dispatcher) {
             if (debounceMs > 0L) {
-                delay(debounceMs)
+                delay(debounceMs.milliseconds)
             }
             lastSearchedQuery = trimmedQuery
             searchRepository.searchMovies(trimmedQuery)
@@ -94,3 +95,4 @@ class SearchViewModel(
         }
     }
 }
+
