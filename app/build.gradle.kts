@@ -1,10 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ktlint.gradle)
     alias(libs.plugins.hilt.android)
-    id("org.jetbrains.kotlin.plugin.parcelize")
     alias(libs.plugins.ksp)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -15,9 +14,9 @@ android {
         targetCompatibility = javaVersion
 
     }
-    kotlinOptions {
-        jvmTarget = javaVersion.toString()
-    }
+//    kotlinOptions {
+//        jvmTarget = javaVersion.toString()
+//    }
 
     defaultConfig {
         applicationId = "com.samuelrmos.cinebook"
@@ -60,7 +59,7 @@ android {
         }
     }
     lint {
-        baseline = File("/lint-baseline.xml")
+        baseline = file("lint-baseline.xml")
     }
     namespace = "com.example.movie"
 }
@@ -96,6 +95,10 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.compose.util)
     implementation(libs.landscapist.coil)
+    implementation(libs.androidx.palette)
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+    testImplementation(libs.paging.testing)
     androidTestImplementation(libs.mock.web.server)
     testImplementation(libs.mockk)
     testImplementation(libs.mock.web.server)

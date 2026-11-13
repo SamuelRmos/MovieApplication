@@ -1,30 +1,85 @@
 package com.example.movie.ui.components
 
-import androidx.compose.foundation.background
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.Icons.AutoMirrored.Filled
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.rememberNavController
+import com.example.movie.R
 import com.example.movie.navigation.Actions
+import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorPrimary
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomToolbarScreen(
+fun CustomToolbar(
+    actions: Actions,
+    title: String,
+    backgroundColor: Color,
+    isBack: Boolean = false,
+    isSearchActive: Boolean,
+    windowsInsets: WindowInsets = TopAppBarDefaults.windowInsets
+) {
+    Column {
+        CustomToolbarContent(
+            actions = actions,
+            title = title,
+            backgroundColor = backgroundColor,
+            isBack = isBack,
+            windowsInsets = windowsInsets
+        )
+        EmbeddedSearchBar(
+            onQueryChange = {},
+            isSearchActive = isSearchActive,
+            onActiveChanged = { active ->
+                if (active) {
+                    actions.goToSearch()
+                }
+            },
+            onSearch = { actions.goToSearch() }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CustomToolbarContent(
     actions: Actions,
     title: String,
     backgroundColor: Color,
@@ -42,15 +97,15 @@ fun CustomToolbarScreen(
             Text(
                 text = title,
                 color = Color.White,
-                fontSize = 18.sp
+                fontSize = textSizeResource(R.dimen.text_size_18),
+                fontWeight = FontWeight.Bold,
             )
         },
-        modifier = Modifier.background(colorPrimary),
         navigationIcon = {
             if (isBack) {
                 IconButton(onClick = { actions.navigateUp() }) {
                     Icon(
-                        Icons.Filled.ArrowBack,
+                        Filled.ArrowBack,
                         "backIcon",
                         tint = Color.White
                     )
@@ -61,10 +116,102 @@ fun CustomToolbarScreen(
                         scaffoldState.open()
                     }
                 }) {
-                   // Icon(Icons.Filled.Menu, "backIcon", tint = Color.White)
+                    // Icon(Icons.Filled.Menu, "backIcon", tint = Color.White)
                 }
             }
         },
         windowInsets = windowsInsets
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopAppBarSurface(
+    modifier: Modifier = Modifier,
+    colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
+    scrollBehavior: TopAppBarScrollBehavior,
+    content: @Composable () -> Unit,
+) {
+    val colorTransitionFraction = scrollBehavior.state.overlappedFraction
+    val fraction = if (colorTransitionFraction > 0.01f) 1f else 0f
+    val appBarContainerColor by animateColorAsState(
+        targetValue = lerp(
+            colors.containerColor,
+            colors.scrolledContainerColor,
+            FastOutLinearInEasing.transform(fraction),
+        ),
+        animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
+        label = "TopBarSurfaceContainerColorAnimation",
+    )
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        color = appBarContainerColor,
+        content = content,
+    )
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun EmbeddedSearchBar(
+    onQueryChange: (String) -> Unit,
+    isSearchActive: Boolean,
+    onActiveChanged: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+    onSearch: ((String) -> Unit),
+) {
+    var searchQuery by rememberSaveable { mutableStateOf("") }
+
+    val activeChanged: (Boolean) -> Unit = { active ->
+        searchQuery = ""
+        onQueryChange("")
+        onActiveChanged(active)
+    }
+    SearchBar(
+        inputField = {
+            SearchBarDefaults.InputField(
+                query = searchQuery,
+                onQueryChange = { query ->
+                    searchQuery = query
+                    onQueryChange(query)
+                },
+                onSearch = onSearch,
+                expanded = isSearchActive,
+                onExpandedChange = activeChanged,
+                placeholder = { Text("Search") },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Search,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            )
+        },
+        expanded = isSearchActive,
+        onExpandedChange = activeChanged,
+        modifier = modifier
+            .padding(start = 6.dp, end = 6.dp, bottom = 6.dp)
+            .fillMaxWidth(),
+        windowInsets = WindowInsets(0, 0, 0, 0),
+        colors = SearchBarDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow,
+        )
+    ) {
+        // Search suggestions or results
+    }
+}
+
+@Preview
+@Composable
+private fun CustomToolbarScreenPreview() {
+    val navController = rememberNavController()
+    val actions = remember(navController) { Actions(navController) }
+    MovieTheme {
+        CustomToolbarContent(
+            actions = actions,
+            title = "Movie App",
+            backgroundColor = colorPrimary,
+            isBack = true
+        )
+    }
 }

@@ -1,8 +1,14 @@
 package com.example.movie.ui.details
 
 import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,33 +21,44 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.Icons.AutoMirrored.Filled
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.core.graphics.drawable.toBitmap
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import androidx.palette.graphics.Palette
+import com.example.movie.R
+import com.example.movie.model.Cast
 import com.example.movie.model.Constants
 import com.example.movie.model.Constants.artworkUrl
 import com.example.movie.model.Movie
@@ -50,10 +67,15 @@ import com.example.movie.model.sampleMovieData
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorBackground
+import com.example.movie.ui.components.dimensionResource
+import com.example.movie.ui.components.textSizeResource
+import com.example.movie.ui.state.DetailsState
 import com.example.movie.viewmodel.MovieDetailViewModel
 import com.skydoves.landscapist.coil.CoilImage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-private const val EMPTY_STRING = ""
+private const val DARK_LUMINANCE_THRESHOLD = 0.5f
 
 @Composable
 fun MovieDetailsScreen(
@@ -68,44 +90,175 @@ fun MovieDetailsScreen(
             window.statusBarColor = Color.Transparent.toArgb()
         }
     }
-    viewModel.getMovieCredits(movie.id)
+    LaunchedEffect(movie.id) {
+        viewModel.getMovieCredits(movie.id)
+    }
     val requestState by viewModel.stateDetails.collectAsState()
 
-    if (requestState.isLoading) {
-        Loading()
-    } else {
+    MovieDetailsContent(
+        movie = movie,
+        actions = actions,
+        requestState = requestState
+    )
+}
+
+@Composable
+fun MovieDetailsContent(
+    movie: Movie,
+    actions: Actions,
+    requestState: DetailsState
+) {
+    val isInEditMode = LocalView.current.isInEditMode
+    var backgroundColor by remember(movie.id) { mutableStateOf(colorBackground) }
+    var textColor by remember(movie.id) { mutableStateOf(Color.White) }
+    var backdropBitmap by remember(movie.id) { mutableStateOf<Bitmap?>(null) }
+    var isPaletteReady by remember(movie.id) {
+        mutableStateOf(isInEditMode || movie.backDropImage.isNullOrBlank())
+    }
+
+    LaunchedEffect(backdropBitmap) {
+        val bitmap = backdropBitmap ?: return@LaunchedEffect
+        val extractedColors = withContext(Dispatchers.Default) {
+            extractDominantSwatchColors(bitmap)
+        }
+        extractedColors?.let { (dominantBackground, contrastingText) ->
+            backgroundColor = dominantBackground
+            textColor = contrastingText
+        }
+        isPaletteReady = true
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+        val padding10 = dimensionResource(R.dimen.dimen_10)
         Column(
             modifier = Modifier
                 .padding()
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .background(colorBackground),
-            verticalArrangement = Arrangement.spacedBy(10.dp),
+                .background(backgroundColor),
+            verticalArrangement = Arrangement.spacedBy(padding10),
         ) {
-            BackdropView(movie, actions)
-            Row {
-                MovieInformation(movie, requestState.director)
-                Spacer(modifier = Modifier.weight(1f))
+            BackdropView(
+                movie = movie,
+                actions = actions,
+                onBitmapLoaded = { backdropBitmap = it },
+                onBitmapLoadFailed = { isPaletteReady = true }
+            )
+            if (!requestState.isLoading) {
+                Row {
+                    MovieInformation(
+                        movie = movie,
+                        directorName = requestState.director,
+                        videoKey = requestState.key,
+                        textColor = textColor
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Box(
+                        modifier = Modifier
+                            .height(dimensionResource(R.dimen.dimen_150))
+                            .width(dimensionResource(R.dimen.dimen_130))
+                            .padding(end = padding10)
+                    ) {
+                        ImageView(
+                            idImage = movie.id,
+                            description = movie.title,
+                            contentScale = ContentScale.Inside,
+                            imageUrl = Constants.artworkDetailImagePoster(movie.posterImage.orEmpty())
+                        )
+                    }
+                }
+                Text(
+                    modifier = Modifier.padding(start = padding10, end = padding10),
+                    text = movie.overview,
+                    color = textColor,
+                    fontSize = textSizeResource(R.dimen.text_size_15)
+                )
+                CastRow(
+                    movieId = movie.id,
+                    castList = requestState.cast,
+                    textColor = textColor
+                )
+            }
+        }
+
+        if (requestState.isLoading || !isPaletteReady) {
+            Loading()
+        }
+    }
+}
+
+internal fun extractDominantSwatchColors(bitmap: Bitmap): Pair<Color, Color>? {
+    val softwareBitmap = if (bitmap.config == Bitmap.Config.HARDWARE) {
+        bitmap.copy(Bitmap.Config.ARGB_8888, false)
+    } else {
+        bitmap
+    } ?: return null
+
+    val swatch = Palette.from(softwareBitmap).generate().dominantSwatch ?: return null
+    val backgroundColor = Color(swatch.rgb)
+    val textColor = if (backgroundColor.luminance() < DARK_LUMINANCE_THRESHOLD) {
+        Color.White
+    } else {
+        Color.Black
+    }
+    return backgroundColor to textColor
+}
+
+@Composable
+private fun CastRow(
+    movieId: Int,
+    castList: List<Cast>,
+    textColor: Color
+) {
+    val padding10 = dimensionResource(R.dimen.dimen_10)
+    val padding4 = dimensionResource(R.dimen.dimen_4)
+    val size70 = dimensionResource(R.dimen.dimen_70)
+    Text(
+        modifier = Modifier.padding(
+            horizontal = dimensionResource(R.dimen.dimen_14),
+            vertical = padding4
+        ),
+        text = stringResource(R.string.cast_section_title),
+        color = textColor,
+        fontSize = textSizeResource(R.dimen.text_size_16),
+        textAlign = TextAlign.Center,
+        fontWeight = FontWeight.Bold
+    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState())
+            .padding(start = padding10, end = padding10),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.dimen_12))
+    ) {
+        castList.forEach { cast ->
+            Column(
+                modifier = Modifier.width(dimensionResource(R.dimen.dimen_80)),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 Box(
                     modifier = Modifier
-                        .height(150.dp)
-                        .width(130.dp)
-                        .padding(end = 10.dp)
+                        .size(size70)
+                        .clip(CircleShape)
                 ) {
                     ImageView(
-                        idImage = movie.id,
-                        description = movie.title,
-                        ContentScale.Inside,
-                        Constants.artworkDetailImagePoster(movie.posterImage ?: EMPTY_STRING)
+                        idImage = movieId,
+                        description = cast.name,
+                        contentScale = ContentScale.Crop,
+                        imageUrl = Constants.artworkDetailImagePoster(cast.imageProfile.orEmpty()),
+                        modifier = Modifier
+                            .size(size70)
+                            .clip(CircleShape)
                     )
                 }
+                Spacer(modifier = Modifier.height(padding4))
+                Text(
+                    text = cast.name,
+                    color = textColor,
+                    fontSize = textSizeResource(R.dimen.text_size_12),
+                    textAlign = TextAlign.Center
+                )
             }
-            Text(
-                modifier = Modifier.padding(start = 10.dp, end = 10.dp),
-                text = movie.overview,
-                color = Color.White,
-                fontSize = 15.sp
-            )
         }
     }
 }
@@ -119,7 +272,8 @@ private fun Loading() {
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator(
-            color = Color.White, modifier = Modifier.size(48.dp)
+            color = Color.White,
+            modifier = Modifier.size(dimensionResource(R.dimen.dimen_48))
         )
     }
 }
@@ -127,23 +281,27 @@ private fun Loading() {
 @Composable
 private fun BackdropView(
     movie: Movie,
-    actions: Actions
+    actions: Actions,
+    onBitmapLoaded: ((Bitmap) -> Unit)? = null,
+    onBitmapLoadFailed: (() -> Unit)? = null
 ) {
     Box(
         modifier = Modifier
-            .height(200.dp)
+            .height(dimensionResource(R.dimen.dimen_200))
             .fillMaxWidth()
     ) {
         ImageView(
-            movie.id,
-            movie.title,
-            ContentScale.Crop,
-            artworkUrl(movie.backDropImage ?: "")
+            idImage = movie.id,
+            description = movie.title,
+            contentScale = ContentScale.Crop,
+            imageUrl = artworkUrl(movie.backDropImage.orEmpty()),
+            onBitmapLoaded = onBitmapLoaded,
+            onBitmapLoadFailed = onBitmapLoadFailed
         )
-        Box(modifier = Modifier.padding(top = 30.dp)) {
-            IconButton(onClick = { actions.navigateUp() }) {
+        Box(modifier = Modifier.padding(top = dimensionResource(R.dimen.dimen_30))) {
+            IconButton(onClick = { actions.goToMovies() }) {
                 Icon(
-                    Icons.Filled.ArrowBack,
+                    Filled.ArrowBack,
                     "backIcon",
                     tint = Color.White
                 )
@@ -153,33 +311,70 @@ private fun BackdropView(
 }
 
 @Composable
-private fun MovieInformation(movie: Movie, directorName: String) {
-    Column(modifier = Modifier.width(200.dp)) {
+private fun MovieInformation(
+    movie: Movie,
+    directorName: String,
+    videoKey: String,
+    textColor: Color
+) {
+    val context = LocalContext.current
+    val padding10 = dimensionResource(R.dimen.dimen_10)
+    val textSize13 = textSizeResource(R.dimen.text_size_13)
+    Column(modifier = Modifier.width(dimensionResource(R.dimen.dimen_200))) {
         Text(
-            modifier = Modifier.padding(start = 10.dp, bottom = 10.dp, end = 10.dp),
+            modifier = Modifier.padding(start = padding10, bottom = padding10, end = padding10),
             text = movie.title,
-            color = Color.White,
-            fontSize = 25.sp,
+            color = textColor,
+            fontSize = textSizeResource(R.dimen.text_size_25),
             fontWeight = FontWeight.Bold
         )
         Text(
-            modifier = Modifier.padding(start = 10.dp),
+            modifier = Modifier.padding(start = padding10),
             text = "DIRECTED BY",
-            color = Color.White,
-            fontSize = 10.sp
+            color = textColor,
+            fontSize = textSizeResource(R.dimen.text_size_10)
         )
         Text(
-            modifier = Modifier.padding(start = 10.dp),
+            modifier = Modifier.padding(start = padding10),
             text = directorName,
-            color = Color.White,
-            fontSize = 13.sp
+            color = textColor,
+            fontSize = textSize13
         )
-        Text(
-            modifier = Modifier.padding(start = 10.dp),
-            text = movie.releaseDate.dropLast(6),
-            color = Color.White,
-            fontSize = 13.sp
-        )
+        Row {
+            Text(
+                modifier = Modifier.padding(start = padding10),
+                text = movie.releaseDate.dropLast(6),
+                color = textColor,
+                fontSize = textSize13
+            )
+            Text(
+                modifier = Modifier
+                    .padding(start = dimensionResource(R.dimen.dimen_100))
+                    .clickable {
+                        openYoutubeLink(videoKey, context)
+                    },
+                text = "Trailer",
+                color = textColor,
+                fontSize = textSizeResource(R.dimen.text_size_16),
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+fun openYoutubeLink(youtubeID: String, context: Context) {
+    val intentApp = Intent(
+        Intent.ACTION_VIEW,
+        "vnd.youtube:$youtubeID".toUri()
+    )
+    val intentBrowser = Intent(
+        Intent.ACTION_VIEW,
+        "http://www.youtube.com/watch?v=$youtubeID".toUri()
+    )
+    try {
+        context.startActivity(intentApp)
+    } catch (_: ActivityNotFoundException) {
+        context.startActivity(intentBrowser)
     }
 }
 
@@ -188,18 +383,32 @@ private fun ImageView(
     idImage: Int,
     description: String,
     contentScale: ContentScale,
-    imageUrl: String
+    imageUrl: String,
+    modifier: Modifier = Modifier,
+    onBitmapLoaded: ((Bitmap) -> Unit)? = null,
+    onBitmapLoadFailed: (() -> Unit)? = null
 ) {
     CoilImage(
+        modifier = modifier,
         imageModel = { imageUrl },
         previewPlaceholder = placeholderImage(idImage),
         success = { imageState ->
-            imageState.drawable?.let {
+            imageState.drawable?.let { drawable ->
+                val bitmap = remember(drawable) { drawable.toBitmap() }
+                LaunchedEffect(bitmap) {
+                    onBitmapLoaded?.invoke(bitmap)
+                }
                 Image(
-                    bitmap = it.toBitmap().asImageBitmap(),
+                    modifier = modifier,
+                    bitmap = bitmap.asImageBitmap(),
                     contentDescription = description,
                     contentScale = contentScale
                 )
+            }
+        },
+        failure = {
+            LaunchedEffect(Unit) {
+                onBitmapLoadFailed?.invoke()
             }
         }
     )
@@ -217,9 +426,15 @@ private fun MovieDetailScreenPreview() {
             Column(
                 modifier = Modifier.fillMaxSize(),
             ) {
-                MovieDetailsScreen(
-                    movie = sampleMovieData[0],
-                    actions = actions
+                MovieDetailsContent(
+                    movie = sampleMovieData[1],
+                    actions = actions,
+                    requestState = DetailsState(
+                        isLoading = false,
+                        director = "Director Name",
+                        key = "videoKey",
+                        cast = emptyList()
+                    )
                 )
             }
         }

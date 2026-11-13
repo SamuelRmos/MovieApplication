@@ -1,6 +1,8 @@
 package com.example.movie.navigation
 
+import android.os.Build
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
@@ -10,8 +12,10 @@ import androidx.navigation.compose.composable
 import com.example.movie.model.Movie
 import com.example.movie.navigation.Screens.MovieDetails
 import com.example.movie.navigation.Screens.MoviesScreen
+import com.example.movie.navigation.Screens.SearchScreen
 import com.example.movie.ui.MoviesScreen
 import com.example.movie.ui.details.MovieDetailsScreen
+import com.example.movie.ui.search.SearchScreen
 
 @Composable
 fun NavGraph(navController: NavHostController, actions: Actions) {
@@ -22,6 +26,9 @@ fun NavGraph(navController: NavHostController, actions: Actions) {
         composable(route = MovieDetails.route) {
             val movie = it.requiredArg<Movie>("movie_detail")
             MovieDetailsScreen(movie, actions)
+        }
+        composable(route = SearchScreen.route) {
+            SearchScreen(actions = actions)
         }
     }
 }
@@ -35,6 +42,7 @@ fun NavController.navigate(route: String, vararg args: Pair<String, Parcelable>)
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 inline fun <reified T : Parcelable> NavBackStackEntry.requiredArg(key: String): T =
     requireNotNull(arguments) { "arguments bundle is null" }.run {
         requireNotNull(getParcelable(key, T::class.java)) { "argument for $key is null" }

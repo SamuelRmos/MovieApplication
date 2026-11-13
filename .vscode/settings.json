@@ -1,0 +1,7 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "files.associations": {
+        "*.kt": "kotlin",
+        "*.kts": "kotlin"
+    }
+}

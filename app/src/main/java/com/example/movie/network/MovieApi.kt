@@ -2,6 +2,7 @@ package com.example.movie.network
 
 import com.example.movie.model.MovieCredits
 import com.example.movie.model.MovieResponse
+import com.example.movie.model.VideosList
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,9 +19,18 @@ interface MovieApi {
     @GET("trending/movie/day")
     suspend fun getTodayMovieAsync(@Query("page") page: Int): Response<MovieResponse>
 
-    @GET("discover/movie?language=en-US&page=1&sort_by=popularity.desc&release_date.gte=1940-01-01&release_date.lte=2010-12-31")
+    @GET("discover/movie?language=en-US&sort_by=popularity.desc&release_date.gte=1940-01-01&release_date.lte=2010-12-31")
     suspend fun getClassicMovieAsync(@Query("page") page: Int): Response<MovieResponse>
 
     @GET("movie/{id}/credits")
     suspend fun getCreditsMovie(@Path("id") id: Int): Response<MovieCredits>
+
+    @GET("movie/{id}/videos?language=en-US")
+    suspend fun getVideosMovie(@Path("id") id: Int): Response<VideosList>
+
+    @GET("search/movie")
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("page") page: Int = 1
+    ): Response<MovieResponse>
 }

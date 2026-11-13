@@ -1,6 +1,5 @@
 plugins {
     id("com.android.library")
-    alias(libs.plugins.jetbrains.kotlin.android)
     id("org.jetbrains.kotlin.plugin.parcelize")
     alias(libs.plugins.ksp)
 }
@@ -33,9 +32,9 @@ android {
         sourceCompatibility = javaVersion
         targetCompatibility = javaVersion
     }
-    kotlinOptions {
-        jvmTarget = javaVersion.toString()
-    }
+//    kotlinOptions {
+//        jvmTarget = javaVersion.toString()
+//    }
     namespace = "com.example.commons"
     buildFeatures {
         buildConfig = true
