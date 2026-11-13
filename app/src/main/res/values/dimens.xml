@@ -8,6 +8,7 @@
     <dimen name="dimen_10">10dp</dimen>
     <dimen name="dimen_12">12dp</dimen>
     <dimen name="dimen_14">14dp</dimen>
+    <dimen name="dimen_20">20dp</dimen>
     <dimen name="dimen_30">30dp</dimen>
     <dimen name="dimen_48">48dp</dimen>
     <dimen name="dimen_50">50dp</dimen>
@@ -24,6 +25,7 @@
     <dimen name="text_size_14">14sp</dimen>
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
     <dimen name="text_size_25">25sp</dimen>
     <integer name="anim_duration_long">400</integer>
 </resources>

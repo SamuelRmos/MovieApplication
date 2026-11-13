@@ -13,4 +13,5 @@
     <string name="image_cover">Image Cover</string>
     <string name="search_placeholder">Search</string>
     <string name="directed_by_prefix">, directed by </string>
+    <string name="cine_book_title">CineBook</string>
 </resources>

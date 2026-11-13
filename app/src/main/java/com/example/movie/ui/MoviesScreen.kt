@@ -47,7 +47,7 @@ fun MoviesScreen(actions: Actions, todayViewModel: TodayMoviesViewModel = hiltVi
         topBar = {
             CustomToolbar(
                 actions = actions,
-                title = "CineBook",
+                title = stringResource(R.string.cine_book_title),
                 backgroundColor = colorBackground,
                 isSearchActive = isSearchActive
             )

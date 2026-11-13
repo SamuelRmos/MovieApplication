@@ -36,10 +36,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
+import com.example.movie.R
 import com.example.movie.navigation.Actions
 import com.example.movie.theme.MovieTheme
 import com.example.movie.theme.colorPrimary
@@ -96,7 +97,8 @@ fun CustomToolbarContent(
             Text(
                 text = title,
                 color = Color.White,
-                fontSize = 18.sp
+                fontSize = textSizeResource(R.dimen.text_size_18),
+                fontWeight = FontWeight.Bold,
             )
         },
         navigationIcon = {
